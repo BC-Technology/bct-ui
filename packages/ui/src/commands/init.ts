@@ -22,6 +22,30 @@ function cwdPath(...parts: string[]) {
 	return path.join(process.cwd(), ...parts)
 }
 
+function ensureCssImportsAtTop(css: string, importLines: string[]) {
+	const lines = css.split(/\r?\n/)
+
+	// `@import` must come before other rules; keep `@charset` (if any) first.
+	const charsetLine = lines[0]?.trim().startsWith("@charset") ? lines[0] : null
+	const startIndex = charsetLine ? 1 : 0
+
+	const importSet = new Set(importLines.map((l) => l.trim()))
+	const rest = lines
+		.slice(startIndex)
+		.filter((line) => !importSet.has(line.trim()))
+		.join("\n")
+		.trimStart()
+
+	const prefix = [
+		...(charsetLine ? [charsetLine] : []),
+		...importLines,
+		"",
+	].join("\n")
+
+	const combined = `${prefix}${rest}`
+	return combined.endsWith("\n") ? combined : `${combined}\n`
+}
+
 async function readTextIfExists(filePath: string) {
 	if (!(await fs.pathExists(filePath))) return null
 	return fs.readFile(filePath, "utf8")
@@ -30,24 +54,6 @@ async function readTextIfExists(filePath: string) {
 async function writeText(filePath: string, contents: string) {
 	await fs.ensureDir(path.dirname(filePath))
 	await fs.writeFile(filePath, contents, "utf8")
-}
-
-function ensureCssImportAtTop(css: string, importLine: string) {
-	if (css.includes(importLine)) return css
-	return `${importLine}\n${css}`
-}
-
-function stripExistingTailwindDirectives(css: string) {
-	return css
-		.split("\n")
-		.filter((line) => {
-			const t = line.trim()
-			if (t === '@import "tailwindcss";' || t === "@import 'tailwindcss';")
-				return false
-			if (t.startsWith("@tailwind ")) return false
-			return true
-		})
-		.join("\n")
 }
 
 async function writeProjectConfig(config: BctProjectConfig) {
@@ -64,6 +70,11 @@ async function postProcessViteForSrcDirFalse() {
 	// Move src/* contents up one level and update imports
 	const srcDir = cwdPath("src")
 	const rootDir = cwdPath(".")
+
+	if (!(await fs.pathExists(srcDir))) {
+		// Nothing to do (project may already be non-src layout).
+		return
+	}
 
 	// Get all files in src directory
 	const files = await fs.readdir(srcDir, { recursive: true })
@@ -96,8 +107,8 @@ async function postProcessViteForSrcDirFalse() {
 		// Update vite config if it exists
 		if (file === "vite.config.ts" || file === "vite.config.js") {
 			content = content.replace(
-				/resolve\.alias\['@'\]\s*:\s*path\.resolve\(__dirname,\s*['"]src['"]\)/g,
-				`resolve.alias['@'] : path.resolve(__dirname, '.')`,
+				/resolve\.alias\['@'\]\s*:\s*path\.resolve\([^)]*?['"]src['"][^)]*?\)/g,
+				`resolve.alias['@'] : path.resolve(process.cwd(), '.')`,
 			)
 		}
 
@@ -143,12 +154,12 @@ async function patchViteApp(srcDir: boolean) {
 	if (!nextViteConfig.includes("resolve:")) {
 		nextViteConfig = nextViteConfig.replace(
 			/export default defineConfig\(\{/,
-			`export default defineConfig({\n\tresolve: {\n\t\talias: {\n\t\t\t"@": path.resolve(__dirname, "${srcDir ? "src" : "."}")\n\t\t}\n\t},\n`,
+			`export default defineConfig({\n\tresolve: {\n\t\talias: {\n\t\t\t"@": path.resolve(process.cwd(), "${srcDir ? "src" : "."}")\n\t\t}\n\t},\n`,
 		)
 	} else if (!nextViteConfig.includes('"@":')) {
 		nextViteConfig = nextViteConfig.replace(
 			/(resolve:\s*\{)/,
-			`$1\n\t\talias: {\n\t\t\t"@": path.resolve(__dirname, "${srcDir ? "src" : "."}")\n\t\t},`,
+			`$1\n\t\talias: {\n\t\t\t"@": path.resolve(process.cwd(), "${srcDir ? "src" : "."}")\n\t\t},`,
 		)
 	}
 
@@ -229,21 +240,42 @@ export default function App() {
 }
 
 async function patchNextApp() {
-	// Tailwind v4 uses the PostCSS plugin
-	await execa(
-		"pnpm",
-		["add", "-D", "tailwindcss", "@tailwindcss/postcss", "postcss"],
-		{
-			stdio: "inherit",
-		},
-	)
+	// Next scaffolding can generate Tailwind/PostCSS config; be careful not to clobber.
+	// Only add a minimal Tailwind setup if it looks missing.
+	const pkgJsonPath = cwdPath("package.json")
+	const pkgRaw = await readTextIfExists(pkgJsonPath)
+	const pkg = pkgRaw ? JSON.parse(pkgRaw) : null
+	const deps = (pkg?.dependencies ?? {}) as Record<string, string>
+	const devDeps = (pkg?.devDependencies ?? {}) as Record<string, string>
 
-	// Ensure postcss config uses @tailwindcss/postcss (Tailwind v4 docs).
-	const postcssConfigPath = cwdPath("postcss.config.mjs")
-	const postcssConfig = `const config = {\n\tplugins: {\n\t\t"@tailwindcss/postcss": {},\n\t},\n}\n\nexport default config\n`
-	await writeText(postcssConfigPath, postcssConfig)
+	const hasTailwindDep = Boolean(deps.tailwindcss || devDeps.tailwindcss)
+	let tailwindAvailable = hasTailwindDep
+	const postcssConfigCandidates = [
+		"postcss.config.mjs",
+		"postcss.config.js",
+		"postcss.config.cjs",
+	].map((p) => cwdPath(p))
+	const hasPostcssConfig = postcssConfigCandidates.some((p) => fs.existsSync(p))
 
-	// Inject tokens import into globals.css (prefer Next app router locations)
+	if (!hasTailwindDep) {
+		// Tailwind v4 uses the PostCSS plugin (works with Next via PostCSS).
+		await execa(
+			"pnpm",
+			["add", "-D", "tailwindcss", "@tailwindcss/postcss", "postcss"],
+			{ stdio: "inherit" },
+		)
+		tailwindAvailable = true
+
+		// Only create a PostCSS config if none exists (avoid ambiguity).
+		if (!hasPostcssConfig) {
+			const postcssConfigPath = cwdPath("postcss.config.mjs")
+			const postcssConfig = `const config = {\n\tplugins: {\n\t\t"@tailwindcss/postcss": {},\n\t},\n}\n\nexport default config\n`
+			await writeText(postcssConfigPath, postcssConfig)
+		}
+	}
+
+	// Token import is handled centrally after scaffolding.
+	// If Tailwind is missing from globals.css, ensure a minimal Tailwind entrypoint.
 	const globalsCandidates = [
 		cwdPath("src/app/globals.css"),
 		cwdPath("app/globals.css"),
@@ -254,9 +286,19 @@ async function patchNextApp() {
 		globalsCandidates.find((p) => fs.existsSync(p)) ?? globalsCandidates[0]
 
 	const existingCss = (await readTextIfExists(globalsPath)) ?? ""
-	const stripped = stripExistingTailwindDirectives(existingCss)
-	// Token import is handled centrally after scaffolding
-	await writeText(globalsPath, stripped)
+	const hasV4Import =
+		existingCss.includes('@import "tailwindcss";') ||
+		existingCss.includes("@import 'tailwindcss';")
+	const hasV3Directives = existingCss
+		.split(/\r?\n/)
+		.some((l) => l.trim().startsWith("@tailwind "))
+
+	if (!hasV4Import && !hasV3Directives && tailwindAvailable) {
+		await writeText(
+			globalsPath,
+			ensureCssImportsAtTop(existingCss, ['@import "tailwindcss";']),
+		)
+	}
 }
 
 export async function runInit(args: ParsedArgs) {
@@ -365,6 +407,16 @@ export async function runInit(args: ParsedArgs) {
 		}
 		const name = String(namePicked || "bct-app")
 
+		const targetDir = cwdPath(name)
+		if (await fs.pathExists(targetDir)) {
+			const entries = await fs.readdir(targetDir)
+			if (entries.length > 0) {
+				throw new Error(
+					`Target directory already exists and is not empty: ${targetDir}`,
+				)
+			}
+		}
+
 		const proceed = await confirm({
 			message: `Create project "${name}"?`,
 			initialValue: true,
@@ -374,48 +426,44 @@ export async function runInit(args: ParsedArgs) {
 			return
 		}
 
-		const s = spinner()
-		s.start("Scaffolding project…")
-		try {
-			if (template === "vite") {
-				await execa(
-					"pnpm",
-					["create", "vite", name, "--template", "react-ts"],
-					{
-						stdio: "inherit",
-					},
-				)
+		note(
+			"This will run the template scaffolder. If it prompts, answer in the terminal.",
+			"Scaffolding project",
+		)
+		if (template === "vite") {
+			await execa("pnpm", ["create", "vite", name, "--template", "react-ts"], {
+				stdio: "inherit",
+			})
+		} else {
+			const nextArgs = [
+				"create",
+				"next-app",
+				name,
+				"--ts",
+				"--eslint",
+				"--tailwind",
+				"--app",
+				"--import-alias",
+				"@/*",
+			]
+			if (srcDir) {
+				nextArgs.push("--src-dir")
 			} else {
-				const nextArgs = [
-					"create",
-					"next-app",
-					name,
-					"--ts",
-					"--eslint",
-					"--tailwind",
-					"--app",
-					"--import-alias",
-					"@/*",
-				]
-				if (srcDir) {
-					nextArgs.push("--src-dir")
-				}
-				await execa("pnpm", nextArgs, { stdio: "inherit" })
+				// Prefer explicit false to avoid interactive prompts in newer create-next-app versions.
+				nextArgs.push("--no-src-dir")
 			}
-			s.stop("Scaffolded")
-		} catch (e) {
-			s.stop("Scaffold failed")
-			throw e
+			await execa("pnpm", nextArgs, { stdio: "inherit" })
 		}
 
-		// Post-process Vite if srcDir is false
+		process.chdir(targetDir)
+
+		// Post-process Vite if srcDir is false (must run inside project).
 		if (template === "vite" && !srcDir) {
+			const s = spinner()
 			s.start("Configuring project structure…")
 			await postProcessViteForSrcDirFalse()
 			s.stop("Project structure configured")
 		}
-
-		process.chdir(cwdPath(name))
 	}
 
 	await writeProjectConfig(config)
@@ -438,7 +486,7 @@ export async function runInit(args: ParsedArgs) {
 			useIgnoreFile: true,
 		},
 		files: {
-			includes: ["src/**/*"],
+			includes: srcDir ? ["src/**/*"] : ["**/*"],
 		},
 		formatter: {
 			enabled: true,
@@ -519,14 +567,15 @@ export async function runInit(args: ParsedArgs) {
 		`${JSON.stringify(vscodeSettings, null, 2)}\n`,
 	)
 
-	if (i18nEnabled) {
-		await execa("pnpm", ["add", "paraglide-js"], { stdio: "inherit" })
-		if (zustandLocaleStore)
-			await execa("pnpm", ["add", "zustand"], { stdio: "inherit" })
-	}
-
-	if (themeStore) {
-		await execa("pnpm", ["add", "zustand"], { stdio: "inherit" })
+	{
+		const extraDeps = new Set<string>()
+		if (i18nEnabled) extraDeps.add("paraglide-js")
+		if (zustandLocaleStore || themeStore) extraDeps.add("zustand")
+		if (extraDeps.size > 0) {
+			await execa("pnpm", ["add", ...Array.from(extraDeps)], {
+				stdio: "inherit",
+			})
+		}
 	}
 
 	if (template === "vite") await patchViteApp(srcDir)
@@ -549,20 +598,19 @@ export async function runInit(args: ParsedArgs) {
 	if (template === "vite") {
 		const cssPath = srcDir ? cwdPath("src/index.css") : cwdPath("index.css")
 		const existingCss = (await readTextIfExists(cssPath)) ?? ""
-		const withTokens = ensureCssImportAtTop(
-			existingCss,
-			`@import "./${path.relative(path.dirname(cssPath), tokensDest).replaceAll("\\\\", "/")}";`,
-		)
-		await writeText(cssPath, withTokens)
+		const tokenImport = `@import "./${path.relative(path.dirname(cssPath), tokensDest).replaceAll("\\\\", "/")}";`
+		const withImports = ensureCssImportsAtTop(existingCss, [
+			'@import "tailwindcss";',
+			tokenImport,
+		])
+		await writeText(cssPath, withImports)
 	} else if (template === "next") {
 		const globalsPath = srcDir
 			? cwdPath("src/app/globals.css")
 			: cwdPath("app/globals.css")
 		const existingCss = (await readTextIfExists(globalsPath)) ?? ""
-		const withTokens = ensureCssImportAtTop(
-			existingCss,
-			`@import "./${path.relative(path.dirname(globalsPath), tokensDest).replaceAll("\\\\", "/")}";`,
-		)
+		const tokenImport = `@import "./${path.relative(path.dirname(globalsPath), tokensDest).replaceAll("\\\\", "/")}";`
+		const withTokens = ensureCssImportsAtTop(existingCss, [tokenImport])
 		await writeText(globalsPath, withTokens)
 	}
 

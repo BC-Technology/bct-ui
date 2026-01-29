@@ -1,15 +1,36 @@
 {
-	"name": "@bct/ui",
+	"name": "bct-ui",
 	"version": "0.1.0",
 	"private": false,
-	"type": "module",
-	"bin": {
-		"bct": "./dist/cli.js"
+	"description": "A comprehensive, opinionated UI and design-system platform for BCT's frontend projects. Combines a centrally governed design system with a developer-friendly workflow inspired by shadcn/ui, tailored for BCT's needs.",
+	"keywords": [
+		"bct",
+		"ui",
+		"components",
+		"design",
+		"system",
+		"frontend",
+		"awesome"
+	],
+	"homepage": "https://github.com/BC-Technology/bct-ui#readme",
+	"bugs": {
+		"url": "https://github.com/BC-Technology/bct-ui/issues"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BC-Technology/bct-ui.git"
+	},
+	"license": "ISC",
+	"author": "BCT",
+	"type": "module",
 	"exports": {
 		".": "./dist/index.js"
 	},
+	"main": "./src/index.ts",
 	"types": "./dist/index.d.ts",
+	"bin": {
+		"bct": "dist/cli.js"
+	},
 	"files": [
 		"dist",
 		"src/assets"
