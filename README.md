@@ -27,25 +27,16 @@ bct-ui/
 │   │   │   │   ├── init.ts    # Project initialization
 │   │   │   │   ├── add.ts     # Component addition
 │   │   │   │   └── doctor.ts  # Project validation
-│   │   │   ├── registry/      # Component registry system
-│   │   │   │   ├── registry.ts # Versioned registry loader
-│   │   │   │   └── versions/  # Versioned component registries
+│   │   │   ├── registry/      # Versioned component registry (source-of-truth)
+│   │   │   │   ├── registry.ts            # Loader (fetches remote by tag)
+│   │   │   │   └── versions/              # Versioned registries + sources (tagged)
 │   │   │   │       └── 0.1.0/
-│   │   │   │           ├── registry.ts     # Component manifests
-│   │   │   │           └── components/     # Component source files
-│   │   │   │               ├── button.tsx
-│   │   │   │               ├── input.tsx
-│   │   │   │               └── ...
+│   │   │   │           ├── registry.json  # Component manifests
+│   │   │   │           └── components/    # Component source templates
 │   │   │   ├── lib/          # CLI utilities
+│   │   │   ├── assets/       # Assets shipped with the CLI (tokens)
 │   │   │   └── cli.ts        # CLI entry point
 │   │   └── dist/             # Built CLI
-│   ├── tokens/               # @bct/tokens - Design tokens
-│   │   ├── index.css         # Canonical Tailwind v4 tokens
-│   │   └── package.json
-│   └── env/                  # @bct/env - Environment helpers
-│       ├── src/
-│       │   └── index.ts      # Config types, version constants
-│       └── dist/
 ├── apps/
 │   └── docs/                 # Documentation site
 │       └── src/              # Generated docs from registry
@@ -111,7 +102,7 @@ bct init [options]
 
 **What gets installed:**
 - Framework-specific dependencies (`vite`, `next`, `react-router-dom`, etc.)
-- Design tokens (`@bct/tokens`) - copied locally as `bct/index.css` or `src/bct/index.css`
+- Design tokens (shipped inside `@bct/ui`) - copied locally as `bct/index.css` or `src/bct/index.css`
 - Base dependencies (`clsx`, `date-fns`, `@base-ui/react`)
 - Tailwind CSS v4 with proper configuration
 - Biome for linting/formatting
@@ -136,8 +127,8 @@ bct add <component-name>
 
 **What happens:**
 1. CLI reads your project's `bct.config.json` to get pinned version
-2. Loads the appropriate component registry for that version
-3. Copies component source files to your project
+2. Fetches the appropriate component registry for that version from GitHub tag `vX.Y.Z`
+3. Downloads only the component file(s) you requested
 4. Installs any required dependencies
 5. Updates your project structure
 
@@ -174,16 +165,15 @@ Validates:
    ```
 
 2. **Update the registry manifest**:
-   ```typescript
-   // packages/ui/src/registry/versions/0.1.0/registry.ts
-   export const registry: Record<string, RegistryEntry> = {
-     // ... existing entries
+   Edit `packages/ui/src/registry/versions/0.1.0/registry.json` and add an entry:
+   ```json
+   {
      "my-component": {
-       title: "My Component",
-       description: "Description of what this component does",
-       files: [{ src: "components/my-component.tsx", dst: "my-component.tsx" }],
-       deps: ["@base-ui/react", "clsx"], // Required dependencies
-     },
+       "title": "My Component",
+       "description": "Description of what this component does",
+       "files": [{ "src": "components/my-component.tsx", "dst": "my-component.tsx" }],
+       "deps": ["@base-ui/react", "clsx"]
+     }
    }
    ```
 
@@ -209,24 +199,35 @@ Validates:
 
 ### Versioning Components
 
-When releasing breaking changes:
+When releasing breaking changes (or adding new components in a new pinned version):
 
 1. **Create new version directory**:
    ```bash
    cp -r packages/ui/src/registry/versions/0.1.0 packages/ui/src/registry/versions/0.2.0
    ```
 
-2. **Update version in env package**:
-   ```typescript
-   // packages/env/src/index.ts
-   export const BCT_PLATFORM_VERSION = "0.2.0"
+2. **Update `@bct/ui` version**:
+   - Update `packages/ui/package.json` version to `0.2.0`
+   - Ensure `bct init` will pin projects to this version
+
+3. **Tag the release (required)**:
+   `bct add` fetches component sources from GitHub by tag. After merging to `main`:
+   ```bash
+   git tag v0.2.0
+   git push origin v0.2.0
    ```
 
-3. **Update registry loader** to handle version fallbacks if needed
+4. **Publish to npm**:
+   ```bash
+   cd packages/ui
+   npm publish --access public
+   ```
+
+**Important:** once a tag `vX.Y.Z` is published, treat `packages/ui/src/registry/versions/X.Y.Z` as immutable. If you need changes, create a new version folder and tag.
 
 ### Design Token Updates
 
-1. **Update canonical tokens** in `packages/tokens/index.css`
+1. **Update canonical tokens** in `packages/ui/src/assets/tokens/index.css`
 2. **Test with existing components** to ensure compatibility
 3. **Update component examples** if needed
 4. **Version bump** if breaking changes

@@ -1,7 +1,7 @@
 import path from "node:path"
-import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "@bct/env"
 import { note } from "@clack/prompts"
 import fs from "fs-extra"
+import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 
 function cwdPath(...parts: string[]) {
 	return path.join(process.cwd(), ...parts)
@@ -34,14 +34,16 @@ export async function runDoctor() {
 		for (const p of candidateCssFiles) {
 			if (!(await fs.pathExists(p))) continue
 			const c = await fs.readFile(p, "utf8")
-			if (c.includes("@bct/tokens/index.css")) return true
+			// After merging tokens into @bct/ui, projects import local tokens.
+			// We accept either a direct import of the pinned tokens file path or a generic /bct/index.css import.
+			if (c.includes("bct/index.css")) return true
 		}
 		return false
 	})()
 
 	if (!hasTokensImport) {
 		issues.push(
-			`Could not find an import of "@bct/tokens/index.css" in common global CSS locations. This import is mandatory.`,
+			`Could not find an import of the local tokens (e.g. "bct/index.css") in common global CSS locations. This import is mandatory.`,
 		)
 	}
 

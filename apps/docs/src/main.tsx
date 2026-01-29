@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import "@bct/tokens/index.css"
+import "../../../packages/ui/src/assets/tokens/index.css"
 import { App } from "./app"
 
 const rootEl = document.getElementById("root")

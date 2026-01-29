@@ -1,9 +1,19 @@
 import clsx from "clsx"
 import { useState } from "react"
-import { registry } from "../../../packages/ui/src/registry/registry"
+import registry from "../../../packages/ui/src/registry/versions/0.1.0/registry.json"
+
+type Registry = Record<
+	string,
+	{
+		title: string
+		description?: string
+		files: Array<{ src: string; dst: string }>
+		deps: string[]
+	}
+>
 
 const sources = import.meta.glob(
-	"../../../packages/ui/src/registry/components/*.tsx",
+	"../../../packages/ui/src/registry/versions/0.1.0/components/*.tsx",
 	{
 		as: "raw",
 		eager: true,
@@ -19,10 +29,11 @@ function sourceFor(componentName: string) {
 }
 
 export function App() {
-	const names = Object.keys(registry).sort()
+	const typedRegistry = registry as Registry
+	const names = Object.keys(typedRegistry).sort()
 	const [selected, setSelected] = useState<string>(names[0] ?? "")
 
-	const entry = selected ? registry[selected] : null
+	const entry = selected ? typedRegistry[selected] : null
 	const code = selected ? sourceFor(selected) : null
 
 	return (
@@ -75,7 +86,8 @@ export function App() {
 									Deps: {entry.deps.join(", ")}
 								</span>
 								<span className="rounded bg-(--bct-muted) px-2 py-1">
-									Files: {entry.files.map((f) => f.dst).join(", ")}
+									Files:{" "}
+									{entry.files.map((f: { dst: string }) => f.dst).join(", ")}
 								</span>
 							</div>
 

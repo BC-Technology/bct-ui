@@ -1,4 +1,4 @@
-export const BCT_PLATFORM_VERSION = "0.1.0"
+export const BCT_CONFIG_FILENAME = "bct.config.json"
 
 export type BctProjectConfig = {
 	bctVersion: string
@@ -24,5 +24,3 @@ export type BctProjectConfig = {
 		}
 	}
 }
-
-export const BCT_CONFIG_FILENAME = "bct.config.json"

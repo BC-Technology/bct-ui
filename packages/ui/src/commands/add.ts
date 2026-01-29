@@ -1,10 +1,12 @@
 import path from "node:path"
-import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "@bct/env"
 import { isCancel, note, outro, select, spinner } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
+import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagString } from "../lib/args.js"
+import { cachePath, readCacheText, writeCacheText } from "../lib/cache"
+import { fetchText } from "../lib/fetcher"
 import { loadRegistry } from "../registry/registry.js"
 
 function cwdPath(...parts: string[]) {
@@ -66,17 +68,20 @@ export async function runAdd(args: ParsedArgs) {
 	await fs.ensureDir(outDir)
 
 	for (const file of entry.files) {
-		const srcPath = path.join(
-			path.dirname(new URL(import.meta.url).pathname),
-			"..",
-			"registry",
-			"versions",
-			config.bctVersion,
-			file.src,
-		)
 		const dstPath = path.join(outDir, file.dst)
 		await fs.ensureDir(path.dirname(dstPath))
-		await fs.copyFile(srcPath, dstPath)
+
+		const ref = `v${config.bctVersion}`
+		const url = `https://raw.githubusercontent.com/BC-Technology/bct-ui/${ref}/packages/ui/src/registry/versions/${config.bctVersion}/${file.src}`
+
+		const cacheFile = cachePath(config.bctVersion, file.src)
+		let contents = await readCacheText(cacheFile)
+		if (!contents) {
+			contents = await fetchText(url)
+			await writeCacheText(cacheFile, contents)
+		}
+
+		await fs.writeFile(dstPath, contents, "utf8")
 	}
 
 	const pkg = await readPackageJson()

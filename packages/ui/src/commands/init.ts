@@ -1,10 +1,5 @@
 import path from "node:path"
 import {
-	BCT_CONFIG_FILENAME,
-	BCT_PLATFORM_VERSION,
-	type BctProjectConfig,
-} from "@bct/env"
-import {
 	confirm,
 	isCancel,
 	note,
@@ -15,8 +10,10 @@ import {
 } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
+import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagBoolean, flagString } from "../lib/args.js"
+import { getUiVersion } from "../lib/ui-version.js"
 
 type InitTemplate = "vite" | "next"
 type ParsedArgs = ReturnType<typeof parseArgs>
@@ -333,7 +330,7 @@ export async function runInit(args: ParsedArgs) {
 		return
 	}
 
-	const bctVersion = BCT_PLATFORM_VERSION
+	const bctVersion = await getUiVersion()
 	const config: BctProjectConfig = {
 		bctVersion,
 		appType: template,
@@ -423,7 +420,7 @@ export async function runInit(args: ParsedArgs) {
 
 	await writeProjectConfig(config)
 
-	const deps = ["@bct/tokens", "clsx", "date-fns", "@base-ui/react"]
+	const deps = ["clsx", "date-fns", "@base-ui/react"]
 	note(deps.join("\n"), "Installing base dependencies")
 	await execa("pnpm", ["add", ...deps], { stdio: "inherit" })
 
@@ -535,14 +532,12 @@ export async function runInit(args: ParsedArgs) {
 	if (template === "vite") await patchViteApp(srcDir)
 	if (template === "next") await patchNextApp()
 
-	// Copy tokens into the project
+	// Copy tokens into the project (shipped inside @bct/ui)
 	const tokensSource = path.join(
 		path.dirname(new URL(import.meta.url).pathname),
 		"..",
-		"..",
-		"..",
-		"..",
-		"packages",
+		"src",
+		"assets",
 		"tokens",
 		"index.css",
 	)
@@ -556,7 +551,7 @@ export async function runInit(args: ParsedArgs) {
 		const existingCss = (await readTextIfExists(cssPath)) ?? ""
 		const withTokens = ensureCssImportAtTop(
 			existingCss,
-			`@import "./${path.relative(path.dirname(cssPath), tokensDest)}";`,
+			`@import "./${path.relative(path.dirname(cssPath), tokensDest).replaceAll("\\\\", "/")}";`,
 		)
 		await writeText(cssPath, withTokens)
 	} else if (template === "next") {
@@ -566,7 +561,7 @@ export async function runInit(args: ParsedArgs) {
 		const existingCss = (await readTextIfExists(globalsPath)) ?? ""
 		const withTokens = ensureCssImportAtTop(
 			existingCss,
-			`@import "./${path.relative(path.dirname(globalsPath), tokensDest)}";`,
+			`@import "./${path.relative(path.dirname(globalsPath), tokensDest).replaceAll("\\\\", "/")}";`,
 		)
 		await writeText(globalsPath, withTokens)
 	}
