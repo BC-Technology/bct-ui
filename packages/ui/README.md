@@ -17,14 +17,16 @@ yarn global add @bctechnology/ui
 ### Create a new project
 
 ```bash
-# Create a Vite + React Router project
-bct init --template vite --name my-app
+# Create your project first
+pnpm create vite@latest my-app --template react-ts
+# OR
+npx create-next-app@latest my-app
 
-# Create a Next.js project
-bct init --template next --name my-app
-
-# Enter your new project
+# Navigate to your project and configure BCT UI
 cd my-app
+bct init
+
+# Start developing
 pnpm dev
 ```
 

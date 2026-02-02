@@ -51,14 +51,16 @@ bct-ui/
 # Install the CLI globally (once)
 npm install -g @bctechnology/ui
 
-# Create a new Vite + React Router project
-bct init --template vite --name my-app
+# Create your project first
+pnpm create vite@latest my-app --template react-ts
+# OR
+npx create-next-app@latest my-app
 
-# Create a Next.js project without src/ directory
-bct init --template next --src-dir false --name my-app
-
-# Enter the project and start developing
+# Navigate to your project and configure BCT UI
 cd my-app
+bct init
+
+# Start developing
 pnpm dev
 ```
 
@@ -79,35 +81,32 @@ pnpm dev
 
 ## 📖 Usage Guide
 
-### Creating New Projects
+### Setting Up Projects with BCT UI
 
-The `bct init` command scaffolds a complete, production-ready frontend project:
+The `bct init` command configures an existing Vite or Next.js project with BCT UI's design system and tooling:
 
 ```bash
 bct init [options]
 ```
 
 **Options:**
-- `--template <vite|next>`: Framework choice (required)
-- `--name <string>`: Project name (optional, will prompt if not provided)
-- `--src-dir <boolean>`: Use `src/` directory structure (default: true)
-- `--existing`: Configure current directory instead of creating new project
+- `--src-dir <boolean>`: Override detected `src/` directory structure (optional)
 
 **Interactive Prompts:**
-- Template selection (if not specified)
-- `src/` directory usage (if not specified)
 - i18n with Paraglide setup
 - Zustand store for locale management (if i18n enabled)
 - Theme store setup
 
 **What gets installed:**
-- Framework-specific dependencies (`vite`, `next`, `react-router-dom`, etc.)
 - Design tokens (shipped inside `@bctechnology/ui`) - copied locally as `bct/index.css` or `src/bct/index.css`
 - Base dependencies (`clsx`, `date-fns`, `@base-ui/react`)
 - Tailwind CSS v4 with proper configuration
 - Biome for linting/formatting
 - TypeScript path aliases (`@/*`)
 - Optional: i18n, theme stores
+
+**Requirements:**
+Run `bct init` from within an existing Vite or Next.js project directory. The CLI will automatically detect your framework and project structure.
 
 ### Adding Components
 

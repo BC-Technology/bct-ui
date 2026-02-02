@@ -1,19 +1,11 @@
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import {
-	confirm,
-	isCancel,
-	note,
-	outro,
-	select,
-	spinner,
-	text,
-} from "@clack/prompts"
+import { confirm, isCancel, note, outro, spinner } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
 import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
-import { flagBoolean, flagString } from "../lib/args.js"
+import { flagString } from "../lib/args.js"
 import { getUiVersion } from "../lib/ui-version.js"
 
 type InitTemplate = "vite" | "next"
@@ -67,53 +59,13 @@ async function ensurePnpm() {
 	}
 }
 
-function looksLikeUnknownOptionError(err: unknown) {
-	const msg =
-		err instanceof Error ? err.message : typeof err === "string" ? err : ""
-	const anyErr = err as { stderr?: unknown; stdout?: unknown } | null
-	const stderr = typeof anyErr?.stderr === "string" ? anyErr.stderr : ""
-	const stdout = typeof anyErr?.stdout === "string" ? anyErr.stdout : ""
-	const combined = `${msg}\n${stderr}\n${stdout}`.toLowerCase()
-	return (
-		combined.includes("unknown option") ||
-		combined.includes("unknown argument") ||
-		combined.includes("unrecognized option") ||
-		combined.includes("unexpected option")
-	)
-}
-
-async function runPnpm(args: string[]) {
-	// Forward TTY so upstream CLIs can prompt if needed, but set CI to reduce surprises.
-	return execa("pnpm", args, {
-		stdio: "inherit",
-		env: { ...process.env, CI: process.env.CI ?? "1" },
+async function runPnpmInstall(packages: string[], dev = false) {
+	// Run pnpm add with hidden stdio to prevent any potential interactive prompts
+	const args = dev ? ["add", "-D", ...packages] : ["add", ...packages]
+	await execa("pnpm", args, {
+		stdio: ["ignore", "pipe", "pipe"],
+		env: { ...process.env, CI: "1" },
 	})
-}
-
-async function runPnpmHidden(args: string[], label: string) {
-	// Avoid nested interactive CLIs:
-	// - stdin: ignore => prevents generators from prompting/hanging
-	// - stdout/stderr: pipe => prevents their TUI from taking over the terminal
-	const s = spinner()
-	s.start(label)
-	try {
-		await execa("pnpm", args, {
-			stdio: ["ignore", "pipe", "pipe"],
-			env: { ...process.env, CI: process.env.CI ?? "1" },
-		})
-		s.stop("Done")
-	} catch (err) {
-		s.stop("Failed")
-		const anyErr = err as { stdout?: unknown; stderr?: unknown }
-		const stdout = typeof anyErr.stdout === "string" ? anyErr.stdout : ""
-		const stderr = typeof anyErr.stderr === "string" ? anyErr.stderr : ""
-		const tail = `${stdout}\n${stderr}`.trim()
-		if (tail) {
-			// Keep it readable without overwhelming the terminal UI.
-			note(tail.slice(-6000), "Generator output (last 6000 chars)")
-		}
-		throw err
-	}
 }
 
 async function detectNextGlobalsCss() {
@@ -135,145 +87,13 @@ async function detectNextUsesSrcDir() {
 	)
 }
 
-async function scaffoldVite(name: string) {
-	await runPnpmHidden(
-		[
-			"create",
-			"vite",
-			name,
-			// The "--" separates pnpm args from create-vite args so flags reach the generator.
-			"--",
-			"--template",
-			"react-ts",
-			// Force non-interactive to avoid nested TUI prompts (e.g. rolldown-vite).
-			"--no-interactive",
-			// Explicitly answer the new experimental prompt.
-			"--no-rolldown",
-		],
-		"Scaffolding Vite app…",
-	)
-}
-
-async function scaffoldNext(name: string, preferredSrcDir: boolean) {
-	// Prefer deterministic flags (avoid generator questions), but retry with fewer flags if
-	// the user's create-next-app version doesn't support them.
-	// The "--" separates pnpm args from create-next-app args so flags reach the generator.
-	const base = [
-		"create",
-		"next-app",
-		name,
-		"--",
-		"--yes",
-		"--use-pnpm",
-		"--skip-install",
-		"--ts",
-		"--app",
-		"--import-alias",
-		"@/*",
-	]
-
-	const attempts: string[][] = [
-		[
-			...base,
-			"--eslint",
-			"--no-tailwind",
-			preferredSrcDir ? "--src-dir" : "--no-src-dir",
-		],
-		[
-			...base,
-			"--eslint",
-			"--no-tailwind",
-			...(preferredSrcDir ? ["--src-dir"] : []),
-		],
-		[
-			...base,
-			"--eslint",
-			"--tailwind",
-			...(preferredSrcDir ? ["--src-dir"] : []),
-		],
-		[...base, "--eslint", "--tailwind"],
-	]
-
-	let lastErr: unknown = null
-	for (const a of attempts) {
-		try {
-			await runPnpmHidden(a, "Scaffolding Next.js app…")
-			return
-		} catch (err) {
-			lastErr = err
-			if (!looksLikeUnknownOptionError(err)) break
-		}
-	}
-
-	throw lastErr
-}
-
-async function listFilesRecursive(rootDir: string): Promise<string[]> {
-	const out: string[] = []
-	async function walk(currentDir: string) {
-		const entries = await fs.readdir(currentDir, { withFileTypes: true })
-		for (const entry of entries) {
-			const abs = path.join(currentDir, entry.name)
-			if (entry.isDirectory()) {
-				await walk(abs)
-				continue
-			}
-			out.push(path.relative(rootDir, abs))
-		}
-	}
-	await walk(rootDir)
-	return out
-}
-
-async function postProcessViteForSrcDirFalse() {
-	// Move src/* contents up one level and update imports
-	const srcDir = cwdPath("src")
-	const rootDir = cwdPath(".")
-
-	if (!(await fs.pathExists(srcDir))) return
-
-	// Get all files in src directory
-	const files = await listFilesRecursive(srcDir)
-
-	for (const file of files) {
-		const srcPath = path.join(srcDir, file)
-		const dstPath = path.join(rootDir, file)
-
-		// Read file content
-		let content = await fs.readFile(srcPath, "utf8")
-
-		// Update import paths that reference src/
-		content = content.replace(/from\s+["'](\.\.?\/)?src\//g, 'from "./')
-		content = content.replace(
-			/import\s*\(\s*["'](\.\.?\/)?src\//g,
-			'import("./',
-		)
-
-		// Update tsconfig paths if they exist
-		if (file === "tsconfig.json") {
-			content = content.replace(/"src\/\*\*/g, '"**')
-			content = content.replace(/"src\/"/g, '"."')
-		}
-
-		// Update vite config if it exists
-		if (file === "vite.config.ts" || file === "vite.config.js") {
-			content = content.replace(
-				/resolve\.alias\['@'\]\s*:\s*path\.resolve\(__dirname,\s*['"]src['"]\)/g,
-				`resolve.alias['@'] : path.resolve(__dirname, '.')`,
-			)
-		}
-
-		await fs.ensureDir(path.dirname(dstPath))
-		await fs.writeFile(dstPath, content, "utf8")
-	}
-
-	// Remove the src directory
-	await fs.remove(srcDir)
-}
+// ============================================================================
+// Manual project scaffolding (avoids nested CLIs entirely)
+// ============================================================================
 
 async function patchViteApp(srcDir: boolean) {
 	// Tailwind v4 uses the Vite plugin
-	await runPnpm(["add", "-D", "tailwindcss", "@tailwindcss/vite"])
+	await runPnpmInstall(["tailwindcss", "@tailwindcss/vite"], true)
 
 	// Patch vite config to include tailwindcss() plugin and @ alias.
 	const viteConfigCandidates = [
@@ -346,12 +166,15 @@ async function patchViteApp(srcDir: boolean) {
 	if (!tsconfigObj.compilerOptions.paths) tsconfigObj.compilerOptions.paths = {}
 
 	tsconfigObj.compilerOptions.baseUrl = "."
-	tsconfigObj.compilerOptions.paths["@/*"] = [srcDir ? "src/*" : "*"]
+	// Only set @/* if not already defined to avoid overwriting custom paths
+	if (!tsconfigObj.compilerOptions.paths["@/*"]) {
+		tsconfigObj.compilerOptions.paths["@/*"] = [srcDir ? "src/*" : "*"]
+	}
 
 	await writeText(tsconfigPath, `${JSON.stringify(tsconfigObj, null, 2)}\n`)
 
 	// Install React Router and update App.tsx
-	await runPnpm(["add", "react-router-dom"])
+	await runPnpmInstall(["react-router-dom"])
 
 	// Update App.tsx to use React Router
 	const appTsxPath = cwdPath(srcDir ? "src/App.tsx" : "App.tsx")
@@ -398,7 +221,7 @@ export default function App() {
 
 async function patchNextApp(globalsPath: string) {
 	// Tailwind v4 uses the PostCSS plugin
-	await runPnpm(["add", "-D", "tailwindcss", "@tailwindcss/postcss", "postcss"])
+	await runPnpmInstall(["tailwindcss", "@tailwindcss/postcss", "postcss"], true)
 
 	// Ensure postcss config uses @tailwindcss/postcss (Tailwind v4 docs).
 	const postcssConfigPath = cwdPath("postcss.config.mjs")
@@ -411,47 +234,130 @@ async function patchNextApp(globalsPath: string) {
 	await writeText(globalsPath, stripped)
 }
 
+async function removeCompetingLinters() {
+	try {
+		const pkgPath = cwdPath("package.json")
+		const pkgContent = await readTextIfExists(pkgPath)
+		if (!pkgContent) return
+
+		const pkg = JSON.parse(pkgContent)
+		const deps = pkg.dependencies || {}
+		const devDeps = pkg.devDependencies || {}
+
+		// Linters/formatters to remove
+		const toRemove = [
+			"prettier",
+			"eslint",
+			"@typescript-eslint/eslint-plugin",
+			"@typescript-eslint/parser",
+			"stylelint",
+			"tslint",
+			"standard",
+			"semistandard",
+			"happiness",
+			"xo",
+			"standardx",
+		]
+
+		const foundToRemove: string[] = []
+		for (const dep of toRemove) {
+			if (deps[dep] || devDeps[dep]) {
+				foundToRemove.push(dep)
+			}
+		}
+
+		if (foundToRemove.length > 0) {
+			note(
+				`Removing competing linters/formatters: ${foundToRemove.join(", ")}`,
+				"Cleanup",
+			)
+			await execa("pnpm", ["remove", ...foundToRemove], {
+				stdio: ["ignore", "pipe", "pipe"],
+				env: { ...process.env, CI: "1" },
+			})
+		}
+
+		// Also remove config files
+		const configFilesToRemove = [
+			".prettierrc",
+			".prettierrc.js",
+			".prettierrc.json",
+			".prettierrc.yaml",
+			".prettierrc.yml",
+			"prettier.config.js",
+			"prettier.config.cjs",
+			".eslintrc",
+			".eslintrc.js",
+			".eslintrc.json",
+			".eslintrc.yaml",
+			".eslintrc.yml",
+			"eslint.config.js",
+			"eslint.config.cjs",
+			".stylelintrc",
+			".stylelintrc.js",
+			".stylelintrc.json",
+			"stylelint.config.js",
+			"stylelint.config.cjs",
+		]
+
+		for (const configFile of configFilesToRemove) {
+			const configPath = cwdPath(configFile)
+			if (fs.existsSync(configPath)) {
+				await fs.remove(configPath)
+			}
+		}
+	} catch {
+		// Non-critical, just continue
+		// Note: We don't show warnings to user for cleaner UX
+	}
+}
+
+async function detectProjectStructure(): Promise<{
+	appType: InitTemplate
+	srcDir: boolean
+}> {
+	// Check for Next.js indicators
+	if (
+		fs.existsSync("next.config.ts") ||
+		fs.existsSync("next.config.js") ||
+		fs.existsSync("next.config.mjs")
+	) {
+		return {
+			appType: "next",
+			srcDir: await detectNextUsesSrcDir(),
+		}
+	}
+
+	// Check for Vite indicators
+	if (
+		fs.existsSync("vite.config.ts") ||
+		fs.existsSync("vite.config.js") ||
+		fs.existsSync("vite.config.mjs")
+	) {
+		return {
+			appType: "vite",
+			srcDir: fs.existsSync("src"),
+		}
+	}
+
+	throw new Error(
+		"No Vite or Next.js project detected. Please run 'bct init' from within an existing Vite or Next.js project directory.\n\n" +
+			"To create a new project first:\n" +
+			"  Vite: pnpm create vite my-app --template react-ts\n" +
+			"  Next: npx create-next-app@latest my-app\n\n" +
+			"Then: cd my-app && bct init",
+	)
+}
+
 export async function runInit(args: ParsedArgs) {
 	await ensurePnpm()
 
-	const templateFromFlag = flagString(args.flags, "template")
-	const templateFromFlags: InitTemplate | undefined =
-		templateFromFlag === "vite" || templateFromFlag === "next"
-			? templateFromFlag
-			: undefined
+	// Detect framework and src structure from existing project
+	const { appType, srcDir: projectSrcDir } = await detectProjectStructure()
 
 	const srcDirFromFlag = flagString(args.flags, "src-dir")
-	const srcDirDefault =
-		srcDirFromFlag === undefined ? true : srcDirFromFlag === "true"
-
-	const existing = flagBoolean(args.flags, "existing")
-
-	const templatePicked = templateFromFlags
-		? templateFromFlags
-		: await select({
-				message: "Which template?",
-				options: [
-					{ label: "Vite + React + TypeScript", value: "vite" },
-					{ label: "Next.js + TypeScript", value: "next" },
-				],
-			})
-	if (isCancel(templatePicked)) {
-		outro("Cancelled.")
-		return
-	}
-	const template: InitTemplate = templatePicked
-
 	const srcDir =
-		srcDirFromFlag !== undefined
-			? srcDirDefault
-			: await confirm({
-					message: "Use `src/` directory?",
-					initialValue: true,
-				})
-	if (isCancel(srcDir)) {
-		outro("Cancelled.")
-		return
-	}
+		srcDirFromFlag !== undefined ? srcDirFromFlag === "true" : projectSrcDir
 
 	const i18nEnabled = await confirm({
 		message: "Add i18n with Paraglide?",
@@ -483,69 +389,20 @@ export async function runInit(args: ParsedArgs) {
 	}
 
 	const bctVersion = await getUiVersion()
-	const preferredSrcDir = Boolean(srcDir)
-
-	if (!existing) {
-		const nameFromFlag = flagString(args.flags, "name")
-		const namePicked = nameFromFlag
-			? nameFromFlag
-			: await text({ message: "Project name?", placeholder: "bct-app" })
-		if (isCancel(namePicked)) {
-			outro("Cancelled.")
-			return
-		}
-		const name = String(namePicked || "bct-app")
-
-		const proceed = await confirm({
-			message: `Create project "${name}"?`,
-			initialValue: true,
-		})
-		if (isCancel(proceed) || !proceed) {
-			outro("Cancelled.")
-			return
-		}
-
-		if (await fs.pathExists(cwdPath(name))) {
-			throw new Error(
-				`Directory "${name}" already exists. Choose a different name or remove the directory.`,
-			)
-		}
-
-		if (template === "vite") {
-			await scaffoldVite(name)
-		} else {
-			await scaffoldNext(name, preferredSrcDir)
-		}
-
-		// Move into the generated project before any post-processing.
-		process.chdir(cwdPath(name))
-
-		// Post-process Vite if srcDir is false
-		if (template === "vite" && !preferredSrcDir) {
-			const s = spinner()
-			s.start("Configuring project structure…")
-			await postProcessViteForSrcDirFalse()
-			s.stop("Project structure configured")
-		}
-	}
-
-	const projectSrcDir =
-		template === "next" ? await detectNextUsesSrcDir() : preferredSrcDir
-	const globalsPath = template === "next" ? await detectNextGlobalsCss() : null
 
 	const config: BctProjectConfig = {
 		bctVersion,
-		appType: template,
-		srcDir: projectSrcDir,
+		appType,
+		srcDir,
 		paths: {
 			aliasPrefix: "@",
-			aliasTarget: projectSrcDir ? "src" : ".",
+			aliasTarget: srcDir ? "src" : ".",
 		},
 		tokens: {
-			filePath: projectSrcDir ? "src/bct/index.css" : "bct/index.css",
+			filePath: srcDir ? "src/bct/index.css" : "bct/index.css",
 		},
 		components: {
-			outDir: projectSrcDir ? "src/components" : "components",
+			outDir: srcDir ? "src/components" : "components",
 		},
 		features: {
 			i18n: {
@@ -558,15 +415,17 @@ export async function runInit(args: ParsedArgs) {
 
 	await writeProjectConfig(config)
 
+	// Remove competing linters/formatters before installing Biome
+	await removeCompetingLinters()
+
 	const deps = ["clsx", "date-fns", "@base-ui/react"]
-	note(deps.join("\n"), "Installing base dependencies")
-	await runPnpm(["add", ...deps])
+	const s2 = spinner()
+	s2.start("Installing dependencies…")
+	await runPnpmInstall(deps)
+	await runPnpmInstall(["@biomejs/biome"], true)
+	s2.stop("Dependencies installed")
 
-	// Install Biome
-	note("@biomejs/biome", "Installing Biome")
-	await runPnpm(["add", "-D", "@biomejs/biome"])
-
-	// Write biome.json
+	// Write biome.json (always overwrite since we removed competing linters)
 	const biomeConfig = {
 		$schema: "./node_modules/@biomejs/biome/configuration_schema.json",
 		root: true,
@@ -576,7 +435,7 @@ export async function runInit(args: ParsedArgs) {
 			useIgnoreFile: true,
 		},
 		files: {
-			includes: projectSrcDir ? ["src/**/*"] : ["**/*"],
+			includes: srcDir ? ["src/**/*"] : ["**/*"],
 		},
 		formatter: {
 			enabled: true,
@@ -631,7 +490,7 @@ export async function runInit(args: ParsedArgs) {
 		`${JSON.stringify(biomeConfig, null, 2)}\n`,
 	)
 
-	// Write .vscode/settings.json
+	// Write .vscode/settings.json (always overwrite for Biome integration)
 	const vscodeSettings = {
 		"biome.enabled": true,
 		"biome.requireConfiguration": true,
@@ -658,17 +517,16 @@ export async function runInit(args: ParsedArgs) {
 	)
 
 	if (i18nEnabled) {
-		await runPnpm(["add", "paraglide-js"])
-		if (zustandLocaleStore) await runPnpm(["add", "zustand"])
+		await runPnpmInstall(["paraglide-js"])
+		if (zustandLocaleStore) await runPnpmInstall(["zustand"])
 	}
 
 	if (themeStore) {
-		await runPnpm(["add", "zustand"])
+		await runPnpmInstall(["zustand"])
 	}
 
-	if (template === "vite") await patchViteApp(projectSrcDir)
-	if (template === "next")
-		await patchNextApp(globalsPath ?? cwdPath("app/globals.css"))
+	if (appType === "vite") await patchViteApp(srcDir)
+	if (appType === "next") await patchNextApp(await detectNextGlobalsCss())
 
 	// Copy tokens into the project (shipped inside @bct/ui)
 	const packageRoot = path.resolve(
@@ -688,18 +546,16 @@ export async function runInit(args: ParsedArgs) {
 	await fs.copyFile(tokensSource, tokensDest)
 
 	// Update global CSS to import local tokens
-	if (template === "vite") {
-		const cssPath = projectSrcDir
-			? cwdPath("src/index.css")
-			: cwdPath("index.css")
+	if (appType === "vite") {
+		const cssPath = srcDir ? cwdPath("src/index.css") : cwdPath("index.css")
 		const existingCss = (await readTextIfExists(cssPath)) ?? ""
 		const withTokens = ensureCssImportAtTop(
 			existingCss,
 			`@import "./${path.relative(path.dirname(cssPath), tokensDest).replaceAll("\\\\", "/")}";`,
 		)
 		await writeText(cssPath, withTokens)
-	} else if (template === "next") {
-		const globalsPathResolved = globalsPath ?? (await detectNextGlobalsCss())
+	} else if (appType === "next") {
+		const globalsPathResolved = await detectNextGlobalsCss()
 		const existingCss = (await readTextIfExists(globalsPathResolved)) ?? ""
 		const withTokens = ensureCssImportAtTop(
 			existingCss,
