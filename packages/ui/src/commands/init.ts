@@ -141,6 +141,8 @@ async function scaffoldVite(name: string) {
 			"create",
 			"vite",
 			name,
+			// The "--" separates pnpm args from create-vite args so flags reach the generator.
+			"--",
 			"--template",
 			"react-ts",
 			// Force non-interactive to avoid nested TUI prompts (e.g. rolldown-vite).
@@ -155,10 +157,12 @@ async function scaffoldVite(name: string) {
 async function scaffoldNext(name: string, preferredSrcDir: boolean) {
 	// Prefer deterministic flags (avoid generator questions), but retry with fewer flags if
 	// the user's create-next-app version doesn't support them.
+	// The "--" separates pnpm args from create-next-app args so flags reach the generator.
 	const base = [
 		"create",
 		"next-app",
 		name,
+		"--",
 		"--yes",
 		"--use-pnpm",
 		"--skip-install",
