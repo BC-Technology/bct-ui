@@ -157,22 +157,6 @@ async function patchViteApp(srcDir: boolean) {
 
 	await writeText(viteConfigPath, nextViteConfig)
 
-	// Update tsconfig.json paths
-	const tsconfigPath = cwdPath("tsconfig.json")
-	const tsconfig = (await readTextIfExists(tsconfigPath)) ?? "{}"
-	const tsconfigObj = JSON.parse(tsconfig)
-
-	if (!tsconfigObj.compilerOptions) tsconfigObj.compilerOptions = {}
-	if (!tsconfigObj.compilerOptions.paths) tsconfigObj.compilerOptions.paths = {}
-
-	tsconfigObj.compilerOptions.baseUrl = "."
-	// Only set @/* if not already defined to avoid overwriting custom paths
-	if (!tsconfigObj.compilerOptions.paths["@/*"]) {
-		tsconfigObj.compilerOptions.paths["@/*"] = [srcDir ? "src/*" : "*"]
-	}
-
-	await writeText(tsconfigPath, `${JSON.stringify(tsconfigObj, null, 2)}\n`)
-
 	// Install React Router and update App.tsx
 	await runPnpmInstall(["react-router-dom"])
 
@@ -341,8 +325,12 @@ async function detectProjectStructure(): Promise<{
 	}
 
 	throw new Error(
-		"No Vite or Next.js project detected. Please run 'bct init' from within an existing Vite or Next.js project directory.\n\n" +
-			"To create a new project first:\n" +
+		"No Vite or Next.js project detected in the current directory.\n\n" +
+			"BCT init only works on existing Vite or Next.js projects.\n\n" +
+			"Please ensure you're in a project directory with one of:\n" +
+			"  - vite.config.ts/js/mjs (for Vite projects)\n" +
+			"  - next.config.ts/js/mjs (for Next.js projects)\n\n" +
+			"If you need to create a new project first:\n" +
 			"  Vite: pnpm create vite my-app --template react-ts\n" +
 			"  Next: npx create-next-app@latest my-app\n\n" +
 			"Then: cd my-app && bct init",
@@ -527,6 +515,22 @@ export async function runInit(args: ParsedArgs) {
 
 	if (appType === "vite") await patchViteApp(srcDir)
 	if (appType === "next") await patchNextApp(await detectNextGlobalsCss())
+
+	// Update tsconfig.json paths for @ alias (works for both Vite and Next.js)
+	const tsconfigPath = cwdPath("tsconfig.json")
+	const tsconfig = (await readTextIfExists(tsconfigPath)) ?? "{}"
+	const tsconfigObj = JSON.parse(tsconfig)
+
+	if (!tsconfigObj.compilerOptions) tsconfigObj.compilerOptions = {}
+	if (!tsconfigObj.compilerOptions.paths) tsconfigObj.compilerOptions.paths = {}
+
+	tsconfigObj.compilerOptions.baseUrl = "."
+	// Only set @/* if not already defined to avoid overwriting custom paths
+	if (!tsconfigObj.compilerOptions.paths["@/*"]) {
+		tsconfigObj.compilerOptions.paths["@/*"] = [srcDir ? "src/*" : "*"]
+	}
+
+	await writeText(tsconfigPath, `${JSON.stringify(tsconfigObj, null, 2)}\n`)
 
 	// Copy tokens into the project (shipped inside @bct/ui)
 	const packageRoot = path.resolve(
