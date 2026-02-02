@@ -505,7 +505,7 @@ export async function runInit(args: ParsedArgs) {
 	)
 
 	if (i18nEnabled) {
-		await runPnpmInstall(["paraglide-js"])
+		await runPnpmInstall(["@inlang/paraglide-js"])
 		if (zustandLocaleStore) await runPnpmInstall(["zustand"])
 	}
 
