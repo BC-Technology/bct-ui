@@ -21,7 +21,7 @@ The BCT UI Platform ensures **consistency, speed, and long-term maintainability*
 ```
 bct-ui/
 ├── packages/
-│   ├── ui/                    # @bct/ui - Main CLI package
+│   ├── ui/                    # @bctechnology/ui - Main CLI package
 │   │   ├── src/
 │   │   │   ├── commands/      # CLI command implementations
 │   │   │   │   ├── init.ts    # Project initialization
@@ -49,7 +49,7 @@ bct-ui/
 
 ```bash
 # Install the CLI globally (once)
-npm install -g @bct/ui
+npm install -g @bctechnology/ui
 
 # Create a new Vite + React Router project
 bct init --template vite --name my-app
@@ -102,7 +102,7 @@ bct init [options]
 
 **What gets installed:**
 - Framework-specific dependencies (`vite`, `next`, `react-router-dom`, etc.)
-- Design tokens (shipped inside `@bct/ui`) - copied locally as `bct/index.css` or `src/bct/index.css`
+- Design tokens (shipped inside `@bctechnology/ui`) - copied locally as `bct/index.css` or `src/bct/index.css`
 - Base dependencies (`clsx`, `date-fns`, `@base-ui/react`)
 - Tailwind CSS v4 with proper configuration
 - Biome for linting/formatting
@@ -206,7 +206,7 @@ When releasing breaking changes (or adding new components in a new pinned versio
    cp -r packages/ui/src/registry/versions/0.1.0 packages/ui/src/registry/versions/0.2.0
    ```
 
-2. **Update `@bct/ui` version**:
+2. **Update `@bctechnology/ui` version**:
    - Update `packages/ui/package.json` version to `0.2.0`
    - Ensure `bct init` will pin projects to this version
 
@@ -283,9 +283,9 @@ pnpm dev
 2. **Build and test** all packages
 3. **Publish packages** to npm:
    ```bash
-   cd packages/ui && npm publish
-   cd ../tokens && npm publish
-   cd ../env && npm publish
+   cd packages/ui && npm publish --access public
+   cd ../tokens && npm publish --access public
+   cd ../env && npm publish --access public
    ```
 4. **Tag release** in git with version number
 

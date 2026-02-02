@@ -96,10 +96,18 @@ export async function runAdd(args: ParsedArgs) {
 		const s = spinner()
 		s.start("pnpm add …")
 		try {
-			await execa("pnpm", ["add", ...missingDeps], { stdio: "inherit" })
+			await execa("pnpm", ["add", ...missingDeps], {
+				stdio: ["ignore", "pipe", "pipe"],
+				env: { ...process.env, CI: process.env.CI ?? "1" },
+			})
 			s.stop("Dependencies installed")
 		} catch (e) {
 			s.stop("Failed installing dependencies")
+			const anyErr = e as { stdout?: unknown; stderr?: unknown }
+			const stdout = typeof anyErr.stdout === "string" ? anyErr.stdout : ""
+			const stderr = typeof anyErr.stderr === "string" ? anyErr.stderr : ""
+			const tail = `${stdout}\n${stderr}`.trim()
+			if (tail) note(tail.slice(-6000), "pnpm output (last 6000 chars)")
 			throw e
 		}
 	}

@@ -23,8 +23,6 @@ function cwdPath(...parts: string[]) {
 	return path.join(process.cwd(), ...parts)
 }
 
-const IS_TTY = Boolean(process.stdin.isTTY && process.stdout.isTTY)
-
 async function readTextIfExists(filePath: string) {
 	if (!(await fs.pathExists(filePath))) return null
 	return fs.readFile(filePath, "utf8")
@@ -92,6 +90,32 @@ async function runPnpm(args: string[]) {
 	})
 }
 
+async function runPnpmHidden(args: string[], label: string) {
+	// Avoid nested interactive CLIs:
+	// - stdin: ignore => prevents generators from prompting/hanging
+	// - stdout/stderr: pipe => prevents their TUI from taking over the terminal
+	const s = spinner()
+	s.start(label)
+	try {
+		await execa("pnpm", args, {
+			stdio: ["ignore", "pipe", "pipe"],
+			env: { ...process.env, CI: process.env.CI ?? "1" },
+		})
+		s.stop("Done")
+	} catch (err) {
+		s.stop("Failed")
+		const anyErr = err as { stdout?: unknown; stderr?: unknown }
+		const stdout = typeof anyErr.stdout === "string" ? anyErr.stdout : ""
+		const stderr = typeof anyErr.stderr === "string" ? anyErr.stderr : ""
+		const tail = `${stdout}\n${stderr}`.trim()
+		if (tail) {
+			// Keep it readable without overwhelming the terminal UI.
+			note(tail.slice(-6000), "Generator output (last 6000 chars)")
+		}
+		throw err
+	}
+}
+
 async function detectNextGlobalsCss() {
 	const globalsCandidates = [
 		cwdPath("src/app/globals.css"),
@@ -112,7 +136,10 @@ async function detectNextUsesSrcDir() {
 }
 
 async function scaffoldVite(name: string) {
-	await runPnpm(["create", "vite", name, "--template", "react-ts"])
+	await runPnpmHidden(
+		["create", "vite", name, "--template", "react-ts"],
+		"Scaffolding Vite app…",
+	)
 }
 
 async function scaffoldNext(name: string, preferredSrcDir: boolean) {
@@ -122,6 +149,7 @@ async function scaffoldNext(name: string, preferredSrcDir: boolean) {
 		"create",
 		"next-app",
 		name,
+		"--yes",
 		"--ts",
 		"--app",
 		"--import-alias",
@@ -153,7 +181,7 @@ async function scaffoldNext(name: string, preferredSrcDir: boolean) {
 	let lastErr: unknown = null
 	for (const a of attempts) {
 		try {
-			await runPnpm(a)
+			await runPnpmHidden(a, "Scaffolding Next.js app…")
 			return
 		} catch (err) {
 			lastErr = err
@@ -466,9 +494,6 @@ export async function runInit(args: ParsedArgs) {
 				`Directory "${name}" already exists. Choose a different name or remove the directory.`,
 			)
 		}
-
-		// Avoid running a spinner while an upstream generator may prompt on the same TTY.
-		if (IS_TTY) note("", "Scaffolding project (generator may output prompts)")
 
 		if (template === "vite") {
 			await scaffoldVite(name)
