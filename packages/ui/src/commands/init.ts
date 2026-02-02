@@ -137,7 +137,17 @@ async function detectNextUsesSrcDir() {
 
 async function scaffoldVite(name: string) {
 	await runPnpmHidden(
-		["create", "vite", name, "--template", "react-ts"],
+		[
+			"create",
+			"vite",
+			name,
+			"--template",
+			"react-ts",
+			// Force non-interactive to avoid nested TUI prompts (e.g. rolldown-vite).
+			"--no-interactive",
+			// Explicitly answer the new experimental prompt.
+			"--no-rolldown",
+		],
 		"Scaffolding Vite app…",
 	)
 }
@@ -150,6 +160,8 @@ async function scaffoldNext(name: string, preferredSrcDir: boolean) {
 		"next-app",
 		name,
 		"--yes",
+		"--use-pnpm",
+		"--skip-install",
 		"--ts",
 		"--app",
 		"--import-alias",
