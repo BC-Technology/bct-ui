@@ -58,10 +58,12 @@ npx create-next-app@latest my-app
 
 # Navigate to your project and configure BCT UI
 cd my-app
-bct init
+npx bct init
 
 # Start developing
 pnpm dev
+
+> **Note**: The CLI automatically detects your package manager (npm, pnpm, or yarn) and uses it for all installations during setup.
 ```
 
 ### For Platform Contributors (Working on BCT UI itself)
@@ -83,10 +85,10 @@ pnpm dev
 
 ### Setting Up Projects with BCT UI
 
-The `bct init` command configures an existing Vite or Next.js project with BCT UI's design system and tooling:
+The `npx bct init` command configures an existing Vite or Next.js project with BCT UI's design system and tooling:
 
 ```bash
-bct init [options]
+npx bct init [options]
 ```
 
 **Options:**
@@ -114,7 +116,7 @@ After initializing a project, add components on-demand:
 
 ```bash
 cd your-project
-bct add <component-name>
+npx bct add <component-name>
 ```
 
 **Available Components:**
@@ -134,7 +136,7 @@ bct add <component-name>
 **Example:**
 ```bash
 # Add a button component
-bct add button
+npx bct add button
 
 # Components are placed in src/components/ (or components/ if no src/)
 # Files created: src/components/button.tsx
@@ -145,7 +147,7 @@ bct add button
 Check if your project matches BCT UI platform requirements:
 
 ```bash
-bct doctor
+npx bct doctor
 ```
 
 Validates:

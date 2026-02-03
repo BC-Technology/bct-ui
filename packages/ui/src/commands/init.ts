@@ -48,21 +48,69 @@ async function writeProjectConfig(config: BctProjectConfig) {
 	await fs.writeFile(outPath, `${JSON.stringify(config, null, 2)}\n`, "utf8")
 }
 
-async function ensurePnpm() {
+// Detect the active package manager
+function detectPackageManager(): "npm" | "pnpm" | "yarn" {
+	// Check npm_config_user_agent first (most reliable)
+	const userAgent = process.env.npm_config_user_agent || ""
+
+	if (userAgent.includes("pnpm")) return "pnpm"
+	if (userAgent.includes("yarn")) return "yarn"
+	if (userAgent.includes("npm")) return "npm"
+
+	// Fallback: check if pnpm is available in PATH, otherwise assume npm
 	try {
-		// Best-effort: if pnpm isn't available, commands will fail loudly.
-		await execa("pnpm", ["-v"])
+		// Use child_process.spawnSync for synchronous check
+		const { spawnSync } = require("node:child_process")
+		const result = spawnSync("pnpm", ["-v"], { stdio: "ignore" })
+		if (result.status === 0) return "pnpm"
 	} catch {
-		throw new Error(
-			"`pnpm` is required. Install it first (https://pnpm.io/installation) and try again.",
-		)
+		// Ignore errors and fall back to npm
 	}
+
+	return "npm"
 }
 
-async function runPnpmInstall(packages: string[], dev = false) {
-	// Run pnpm add with hidden stdio to prevent any potential interactive prompts
-	const args = dev ? ["add", "-D", ...packages] : ["add", ...packages]
-	await execa("pnpm", args, {
+async function runPackageInstall(packages: string[], dev = false) {
+	const pm = detectPackageManager()
+	let command: string, args: string[]
+
+	if (pm === "pnpm") {
+		command = "pnpm"
+		args = dev ? ["add", "-D", ...packages] : ["add", ...packages]
+	} else if (pm === "yarn") {
+		command = "yarn"
+		args = dev ? ["add", "-D", ...packages] : ["add", ...packages]
+	} else {
+		command = "npm"
+		args = dev
+			? ["install", "--save-dev", ...packages]
+			: ["install", ...packages]
+	}
+
+	// Run install with hidden stdio to prevent any potential interactive prompts
+	await execa(command, args, {
+		stdio: ["ignore", "pipe", "pipe"],
+		env: { ...process.env, CI: "1" },
+	})
+}
+
+async function runPackageRemove(packages: string[]) {
+	const pm = detectPackageManager()
+	let command: string, args: string[]
+
+	if (pm === "pnpm") {
+		command = "pnpm"
+		args = ["remove", ...packages]
+	} else if (pm === "yarn") {
+		command = "yarn"
+		args = ["remove", ...packages]
+	} else {
+		command = "npm"
+		args = ["uninstall", ...packages]
+	}
+
+	// Run remove with hidden stdio to prevent any potential interactive prompts
+	await execa(command, args, {
 		stdio: ["ignore", "pipe", "pipe"],
 		env: { ...process.env, CI: "1" },
 	})
@@ -93,7 +141,7 @@ async function detectNextUsesSrcDir() {
 
 async function patchViteApp(srcDir: boolean) {
 	// Tailwind v4 uses the Vite plugin
-	await runPnpmInstall(["tailwindcss", "@tailwindcss/vite"], true)
+	await runPackageInstall(["tailwindcss", "@tailwindcss/vite"], true)
 
 	// Patch vite config to include tailwindcss() plugin and @ alias.
 	const viteConfigCandidates = [
@@ -158,7 +206,7 @@ async function patchViteApp(srcDir: boolean) {
 	await writeText(viteConfigPath, nextViteConfig)
 
 	// Install React Router and update App.tsx
-	await runPnpmInstall(["react-router-dom"])
+	await runPackageInstall(["react-router-dom"])
 
 	// Update App.tsx to use React Router
 	const appTsxPath = cwdPath(srcDir ? "src/App.tsx" : "App.tsx")
@@ -205,7 +253,10 @@ export default function App() {
 
 async function patchNextApp(globalsPath: string) {
 	// Tailwind v4 uses the PostCSS plugin
-	await runPnpmInstall(["tailwindcss", "@tailwindcss/postcss", "postcss"], true)
+	await runPackageInstall(
+		["tailwindcss", "@tailwindcss/postcss", "postcss"],
+		true,
+	)
 
 	// Ensure postcss config uses @tailwindcss/postcss (Tailwind v4 docs).
 	const postcssConfigPath = cwdPath("postcss.config.mjs")
@@ -255,10 +306,7 @@ async function removeCompetingLinters() {
 				`Removing competing linters/formatters: ${foundToRemove.join(", ")}`,
 				"Cleanup",
 			)
-			await execa("pnpm", ["remove", ...foundToRemove], {
-				stdio: ["ignore", "pipe", "pipe"],
-				env: { ...process.env, CI: "1" },
-			})
+			await runPackageRemove(foundToRemove)
 		}
 
 		// Also remove config files
@@ -338,8 +386,6 @@ async function detectProjectStructure(): Promise<{
 }
 
 export async function runInit(args: ParsedArgs) {
-	await ensurePnpm()
-
 	// Detect framework and src structure from existing project
 	const { appType, srcDir: projectSrcDir } = await detectProjectStructure()
 
@@ -409,8 +455,8 @@ export async function runInit(args: ParsedArgs) {
 	const deps = ["clsx", "date-fns", "@base-ui/react"]
 	const s2 = spinner()
 	s2.start("Installing dependencies…")
-	await runPnpmInstall(deps)
-	await runPnpmInstall(["@biomejs/biome"], true)
+	await runPackageInstall(deps)
+	await runPackageInstall(["@biomejs/biome"], true)
 	s2.stop("Dependencies installed")
 
 	// Write biome.json (always overwrite since we removed competing linters)
@@ -505,12 +551,12 @@ export async function runInit(args: ParsedArgs) {
 	)
 
 	if (i18nEnabled) {
-		await runPnpmInstall(["@inlang/paraglide-js"])
-		if (zustandLocaleStore) await runPnpmInstall(["zustand"])
+		await runPackageInstall(["@inlang/paraglide-js"])
+		if (zustandLocaleStore) await runPackageInstall(["zustand"])
 	}
 
 	if (themeStore) {
-		await runPnpmInstall(["zustand"])
+		await runPackageInstall(["zustand"])
 	}
 
 	if (appType === "vite") await patchViteApp(srcDir)

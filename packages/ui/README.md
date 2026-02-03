@@ -12,6 +12,8 @@ pnpm add -g @bctechnology/ui
 yarn global add @bctechnology/ui
 ```
 
+> **Note**: The CLI automatically detects your package manager (npm, pnpm, or yarn) and uses it for all installations during `bct init`.
+
 ## Quick Start
 
 ### Create a new project
@@ -24,7 +26,7 @@ npx create-next-app@latest my-app
 
 # Navigate to your project and configure BCT UI
 cd my-app
-bct init
+npx bct init
 
 # Start developing
 pnpm dev
@@ -34,19 +36,19 @@ pnpm dev
 
 ```bash
 # Add a button component
-bct add button
+npx bct add button
 
 # Add multiple components
-bct add input checkbox
+npx bct add input checkbox
 ```
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `bct init` | Initialize a new project with BCT UI conventions |
-| `bct add <component>` | Add components to your project |
-| `bct doctor` | Validate project setup and requirements |
+| `npx bct init` | Initialize a new project with BCT UI conventions |
+| `npx bct add <component>` | Add components to your project |
+| `npx bct doctor` | Validate project setup and requirements |
 
 ### `bct init` Options
 
@@ -68,7 +70,7 @@ When you initialize a project with BCT UI, you get:
 ## Requirements
 
 - Node.js 20+
-- pnpm (recommended) or npm/yarn
+- npm, pnpm, or yarn (pnpm recommended for performance)
 
 ## Available Components
 
