@@ -4,8 +4,9 @@ import { runDoctor } from "./commands/doctor.js"
 import { runInit } from "./commands/init.js"
 import { parseArgs } from "./lib/args.js"
 import { cliIntro } from "./lib/cli-ui.js"
+import { getUiVersionSync } from "./lib/ui-version.js"
 
-const VERSION = "0.1.0"
+const VERSION = getUiVersionSync()
 
 function printHelp() {
 	// Keep this minimal and stable (no framework dependency).

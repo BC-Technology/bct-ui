@@ -1,4 +1,6 @@
-export const BCT_UI_VERSION = "0.1.0"
+import { getUiVersionSync } from "./lib/ui-version.js"
+
+export const BCT_UI_VERSION = getUiVersionSync()
 
 export type { BctProjectConfig } from "./config"
 export { BCT_CONFIG_FILENAME } from "./config"

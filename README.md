@@ -209,7 +209,7 @@ When releasing breaking changes (or adding new components in a new pinned versio
 
 2. **Update `@bctechnology/ui` version**:
    - Update `packages/ui/package.json` version to `0.2.0`
-   - Ensure `bct init` will pin projects to this version
+   - The CLI and library will automatically use this version (no need to update constants in code)
 
 3. **Tag the release (required)**:
    `bct add` fetches component sources from GitHub by tag. After merging to `main`:
@@ -280,7 +280,7 @@ pnpm dev
 
 ### Release Process
 
-1. **Update version** in `packages/env/src/index.ts`
+1. **Update version** in `packages/ui/package.json` (the CLI automatically uses this version)
 2. **Build and test** all packages
 3. **Publish packages** to npm:
    ```bash
