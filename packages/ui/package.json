@@ -1,6 +1,6 @@
 {
 	"name": "@bctechnology/ui",
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"private": false,
 	"description": "A comprehensive, opinionated UI and design-system platform for BCT's frontend projects. Combines a centrally governed design system with a developer-friendly workflow inspired by shadcn/ui, tailored for BCT's needs.",
 	"keywords": [
@@ -43,7 +43,7 @@
 		"dev": "tsup src/index.ts src/cli.ts --format esm --dts --splitting --watch",
 		"lint": "biome check .",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
-		"prepublishOnly": "pnpm build"
+		"prepublishOnly": "node scripts/verify-registry-version.mjs && pnpm build"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.1.0",

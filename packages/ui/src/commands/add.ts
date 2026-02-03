@@ -2,21 +2,15 @@ import path from "node:path"
 import { isCancel, note, outro, select, spinner } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
-import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagString } from "../lib/args.js"
 import { cachePath, readCacheText, writeCacheText } from "../lib/cache"
 import { FetchError, fetchText } from "../lib/fetcher"
+import { getUiVersion } from "../lib/ui-version.js"
 import { loadRegistry } from "../registry/registry.js"
 
 function cwdPath(...parts: string[]) {
 	return path.join(process.cwd(), ...parts)
-}
-
-async function readProjectConfig(): Promise<BctProjectConfig> {
-	const p = cwdPath(BCT_CONFIG_FILENAME)
-	const raw = await fs.readFile(p, "utf8")
-	return JSON.parse(raw) as BctProjectConfig
 }
 
 type PkgJson = {
@@ -32,10 +26,9 @@ async function readPackageJson(): Promise<PkgJson> {
 type ParsedArgs = ReturnType<typeof parseArgs>
 
 export async function runAdd(args: ParsedArgs) {
-	const config = await readProjectConfig()
-
-	// Load the versioned registry
-	const registry = await loadRegistry(config.bctVersion)
+	// Load the versioned registry using the installed package version
+	const version = await getUiVersion()
+	const registry = await loadRegistry(version)
 
 	let component = args.positionals[0]
 	if (!component) {
@@ -64,24 +57,27 @@ export async function runAdd(args: ParsedArgs) {
 	}
 
 	const outFromFlag = flagString(args.flags, "out")
-	const outDir = cwdPath(outFromFlag ?? config.components.outDir)
+	const defaultOutDir = fs.existsSync(cwdPath("src"))
+		? "src/components"
+		: "components"
+	const outDir = cwdPath(outFromFlag ?? defaultOutDir)
 	await fs.ensureDir(outDir)
 
 	for (const file of entry.files) {
 		const dstPath = path.join(outDir, file.dst)
 		await fs.ensureDir(path.dirname(dstPath))
 
-		const cacheFile = cachePath(config.bctVersion, file.src)
+		const cacheFile = cachePath(version, file.src)
 		let contents = await readCacheText(cacheFile)
 		if (!contents) {
-			const ref = `v${config.bctVersion}`
-			const url = `https://raw.githubusercontent.com/BC-Technology/bct-ui/${ref}/packages/ui/src/registry/versions/${config.bctVersion}/${file.src}`
+			const ref = `v${version}`
+			const url = `https://raw.githubusercontent.com/BC-Technology/bct-ui/${ref}/packages/ui/src/registry/versions/${version}/${file.src}`
 			try {
 				contents = await fetchText(url)
 			} catch (e) {
 				if (e instanceof FetchError && e.status === 404) {
 					throw new Error(
-						`Could not fetch component files for version ${config.bctVersion}.\n\n` +
+						`Could not fetch component files for version ${version}.\n\n` +
 							`Expected a GitHub tag/release named "${ref}" and the file at:\n` +
 							`  ${url}\n\n` +
 							`Please ensure the release/tag exists for this package version.`,
@@ -125,7 +121,7 @@ export async function runAdd(args: ParsedArgs) {
 	}
 
 	const copied = entry.files
-		.map((f) => path.join(outFromFlag ?? config.components.outDir, f.dst))
+		.map((f) => path.join(outFromFlag ?? defaultOutDir, f.dst))
 		.join("\n")
 	note(copied, `Added ${component}`)
 

@@ -2,11 +2,9 @@ import path from "node:path"
 import { confirm, isCancel, note, outro, spinner } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
-import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagString } from "../lib/args.js"
 import { findUiPackageRoot } from "../lib/package-root.js"
-import { getUiVersion } from "../lib/ui-version.js"
 
 type InitTemplate = "vite" | "next"
 type ParsedArgs = ReturnType<typeof parseArgs>
@@ -41,11 +39,6 @@ function stripExistingTailwindDirectives(css: string) {
 			return true
 		})
 		.join("\n")
-}
-
-async function writeProjectConfig(config: BctProjectConfig) {
-	const outPath = cwdPath(BCT_CONFIG_FILENAME)
-	await fs.writeFile(outPath, `${JSON.stringify(config, null, 2)}\n`, "utf8")
 }
 
 // Detect the active package manager
@@ -422,33 +415,6 @@ export async function runInit(args: ParsedArgs) {
 		return
 	}
 
-	const bctVersion = await getUiVersion()
-
-	const config: BctProjectConfig = {
-		bctVersion,
-		appType,
-		srcDir,
-		paths: {
-			aliasPrefix: "@",
-			aliasTarget: srcDir ? "src" : ".",
-		},
-		tokens: {
-			filePath: srcDir ? "src/index.css" : "index.css",
-		},
-		components: {
-			outDir: srcDir ? "src/components" : "components",
-		},
-		features: {
-			i18n: {
-				enabled: Boolean(i18nEnabled),
-				zustandLocaleStore: Boolean(zustandLocaleStore),
-			},
-			themeStore: { enabled: Boolean(themeStore) },
-		},
-	}
-
-	await writeProjectConfig(config)
-
 	// Remove competing linters/formatters before installing Biome
 	await removeCompetingLinters()
 
@@ -587,7 +553,7 @@ export async function runInit(args: ParsedArgs) {
 		"tokens",
 		"index.css",
 	)
-	const tokensDest = cwdPath(config.tokens.filePath)
+	const tokensDest = cwdPath(srcDir ? "src/index.css" : "index.css")
 	await fs.ensureDir(path.dirname(tokensDest))
 	if (!(await fs.pathExists(tokensSource))) {
 		throw new Error(

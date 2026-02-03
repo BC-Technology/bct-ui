@@ -1,18 +1,19 @@
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import fs from "fs-extra"
+import { findUiPackageRoot, findUiPackageRootSync } from "./package-root.js"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export async function getUiVersion(): Promise<string> {
-	// When running from installed package, look for package.json in the package root
-	// In development, this will be the monorepo root. In production, it will be the package root.
+	// Always resolve the version of the @bctechnology/ui package itself (not the user's app).
 	try {
-		const packageJsonPath = path.join(process.cwd(), "package.json")
+		const packageRoot = await findUiPackageRoot()
+		const packageJsonPath = path.join(packageRoot, "package.json")
 		const packageJson = await fs.readJson(packageJsonPath)
 		return packageJson.version
 	} catch {
-		// Fallback: try relative to this file (for development)
+		// Legacy fallback (development)
 		const packageJsonPath = path.join(__dirname, "..", "..", "package.json")
 		const packageJson = await fs.readJson(packageJsonPath)
 		return packageJson.version
@@ -20,14 +21,14 @@ export async function getUiVersion(): Promise<string> {
 }
 
 export function getUiVersionSync(): string {
-	// When running from installed package, look for package.json in the package root
-	// In development, this will be the monorepo root. In production, it will be the package root.
+	// Always resolve the version of the @bctechnology/ui package itself (not the user's app).
 	try {
-		const packageJsonPath = path.join(process.cwd(), "package.json")
+		const packageRoot = findUiPackageRootSync()
+		const packageJsonPath = path.join(packageRoot, "package.json")
 		const packageJson = fs.readJsonSync(packageJsonPath)
 		return packageJson.version
 	} catch {
-		// Fallback: try relative to this file (for development)
+		// Legacy fallback (development)
 		const packageJsonPath = path.join(__dirname, "..", "..", "package.json")
 		const packageJson = fs.readJsonSync(packageJsonPath)
 		return packageJson.version

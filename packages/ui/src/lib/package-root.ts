@@ -2,6 +2,25 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import fs from "fs-extra"
 
+export function findUiPackageRootSync(): string {
+	let dir = path.dirname(fileURLToPath(import.meta.url))
+	for (let i = 0; i < 12; i++) {
+		const pkgJsonPath = path.join(dir, "package.json")
+		if (fs.pathExistsSync(pkgJsonPath)) {
+			try {
+				const pkg = fs.readJsonSync(pkgJsonPath)
+				if (pkg?.name === "@bctechnology/ui") return dir
+			} catch {
+				// ignore and continue walking upwards
+			}
+		}
+		const parent = path.dirname(dir)
+		if (parent === dir) break
+		dir = parent
+	}
+	return path.dirname(fileURLToPath(import.meta.url))
+}
+
 export async function findUiPackageRoot(): Promise<string> {
 	// When installed, code runs from `dist/**`. We need the real package root
 	// (the directory that contains the package.json with name "@bctechnology/ui").
