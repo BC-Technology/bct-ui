@@ -1,11 +1,11 @@
 import path from "node:path"
-import { fileURLToPath } from "node:url"
 import { confirm, isCancel, note, outro, spinner } from "@clack/prompts"
 import { execa } from "execa"
 import fs from "fs-extra"
 import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagString } from "../lib/args.js"
+import { findUiPackageRoot } from "../lib/package-root.js"
 import { getUiVersion } from "../lib/ui-version.js"
 
 type InitTemplate = "vite" | "next"
@@ -578,12 +578,8 @@ export async function runInit(args: ParsedArgs) {
 
 	await writeText(tsconfigPath, `${JSON.stringify(tsconfigObj, null, 2)}\n`)
 
-	// Copy tokens into the project (shipped inside @bct/ui)
-	const packageRoot = path.resolve(
-		path.dirname(fileURLToPath(import.meta.url)),
-		"..",
-		"..",
-	)
+	// Copy tokens into the project (shipped inside @bctechnology/ui)
+	const packageRoot = await findUiPackageRoot()
 	const tokensSource = path.join(
 		packageRoot,
 		"src",
@@ -593,6 +589,14 @@ export async function runInit(args: ParsedArgs) {
 	)
 	const tokensDest = cwdPath(config.tokens.filePath)
 	await fs.ensureDir(path.dirname(tokensDest))
+	if (!(await fs.pathExists(tokensSource))) {
+		throw new Error(
+			`Could not find tokens source file at:\n` +
+				`  ${tokensSource}\n\n` +
+				`This usually means the package was published without including src/assets, ` +
+				`or the CLI dist was not built from the latest sources.`,
+		)
+	}
 	await fs.copyFile(tokensSource, tokensDest)
 
 	// Update global CSS to import local tokens

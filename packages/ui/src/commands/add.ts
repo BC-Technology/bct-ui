@@ -6,7 +6,7 @@ import { BCT_CONFIG_FILENAME, type BctProjectConfig } from "../config.js"
 import type { parseArgs } from "../lib/args.js"
 import { flagString } from "../lib/args.js"
 import { cachePath, readCacheText, writeCacheText } from "../lib/cache"
-import { fetchText } from "../lib/fetcher"
+import { FetchError, fetchText } from "../lib/fetcher"
 import { loadRegistry } from "../registry/registry.js"
 
 function cwdPath(...parts: string[]) {
@@ -71,13 +71,25 @@ export async function runAdd(args: ParsedArgs) {
 		const dstPath = path.join(outDir, file.dst)
 		await fs.ensureDir(path.dirname(dstPath))
 
-		const ref = `v${config.bctVersion}`
-		const url = `https://raw.githubusercontent.com/BC-Technology/bct-ui/${ref}/packages/ui/src/registry/versions/${config.bctVersion}/${file.src}`
-
 		const cacheFile = cachePath(config.bctVersion, file.src)
 		let contents = await readCacheText(cacheFile)
 		if (!contents) {
-			contents = await fetchText(url)
+			const ref = `v${config.bctVersion}`
+			const url = `https://raw.githubusercontent.com/BC-Technology/bct-ui/${ref}/packages/ui/src/registry/versions/${config.bctVersion}/${file.src}`
+			try {
+				contents = await fetchText(url)
+			} catch (e) {
+				if (e instanceof FetchError && e.status === 404) {
+					throw new Error(
+						`Could not fetch component files for version ${config.bctVersion}.\n\n` +
+							`Expected a GitHub tag/release named "${ref}" and the file at:\n` +
+							`  ${url}\n\n` +
+							`Please ensure the release/tag exists for this package version.`,
+					)
+				}
+				throw e
+			}
+
 			await writeCacheText(cacheFile, contents)
 		}
 
