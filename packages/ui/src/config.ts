@@ -9,7 +9,7 @@ export type BctProjectConfig = {
 		aliasTarget: "src" | "."
 	}
 	tokens: {
-		filePath: string // e.g. "src/bct/index.css" or "bct/index.css"
+		filePath: string // e.g. "src/index.css" or "index.css"
 	}
 	components: {
 		outDir: string // e.g. "src/components" or "components"

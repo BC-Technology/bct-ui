@@ -21,29 +21,17 @@ export async function runDoctor() {
 	// Note: In production, we would check if the CLI supports this bctVersion.
 	// For now, we just note the version for compatibility info.
 
-	// Token CSS import presence check is intentionally heuristic (we don’t want framework-specific assumptions here yet).
-	const candidateCssFiles = [
-		"src/index.css",
-		"src/styles.css",
-		"src/app/globals.css",
-		"styles/globals.css",
-		"app/globals.css",
-	].map((p) => cwdPath(p))
-
-	const hasTokensImport = await (async () => {
-		for (const p of candidateCssFiles) {
-			if (!(await fs.pathExists(p))) continue
-			const c = await fs.readFile(p, "utf8")
-			// After merging tokens into @bct/ui, projects import local tokens.
-			// We accept either a direct import of the pinned tokens file path or a generic /bct/index.css import.
-			if (c.includes("bct/index.css")) return true
-		}
-		return false
+	// Token CSS presence check - tokens are now directly in the configured file path for both frameworks
+	const hasTokens = await (async () => {
+		const tokensPath = cwdPath(_config.tokens.filePath)
+		if (!(await fs.pathExists(tokensPath))) return false
+		const content = await fs.readFile(tokensPath, "utf8")
+		return content.trim().length > 0
 	})()
 
-	if (!hasTokensImport) {
+	if (!hasTokens) {
 		issues.push(
-			`Could not find an import of the local tokens (e.g. "bct/index.css") in common global CSS locations. This import is mandatory.`,
+			`Could not find tokens file at "${_config.tokens.filePath}". This file is mandatory.`,
 		)
 	}
 

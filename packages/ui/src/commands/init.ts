@@ -433,7 +433,7 @@ export async function runInit(args: ParsedArgs) {
 			aliasTarget: srcDir ? "src" : ".",
 		},
 		tokens: {
-			filePath: srcDir ? "src/bct/index.css" : "bct/index.css",
+			filePath: srcDir ? "src/index.css" : "index.css",
 		},
 		components: {
 			outDir: srcDir ? "src/components" : "components",
@@ -596,15 +596,7 @@ export async function runInit(args: ParsedArgs) {
 	await fs.copyFile(tokensSource, tokensDest)
 
 	// Update global CSS to import local tokens
-	if (appType === "vite") {
-		const cssPath = srcDir ? cwdPath("src/index.css") : cwdPath("index.css")
-		const existingCss = (await readTextIfExists(cssPath)) ?? ""
-		const withTokens = ensureCssImportAtTop(
-			existingCss,
-			`@import "./${path.relative(path.dirname(cssPath), tokensDest).replaceAll("\\\\", "/")}";`,
-		)
-		await writeText(cssPath, withTokens)
-	} else if (appType === "next") {
+	if (appType === "next") {
 		const globalsPathResolved = await detectNextGlobalsCss()
 		const existingCss = (await readTextIfExists(globalsPathResolved)) ?? ""
 		const withTokens = ensureCssImportAtTop(
