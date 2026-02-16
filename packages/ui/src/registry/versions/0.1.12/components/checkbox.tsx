@@ -13,15 +13,15 @@ export function Checkbox({ className, label, ...props }: CheckboxProps) {
 		<div className="inline-flex cursor-pointer items-center gap-2">
 			<BaseCheckbox.Root
 				className={clsx(
-					"grid size-4 place-content-center rounded-(--bct-radius-sm) border border-(--bct-border) bg-(--bct-card) outline-none" +
-						"ring-offset-(--bct-bg) ring-offset-2 transition" +
-						"focus-visible:ring-(--bct-ring) focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50",
+					"grid size-4 place-content-center rounded-sm border border-border bg-surface-1 outline-none" +
+						"ring-offset-2 ring-offset-background transition" +
+						"focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
 					className,
 				)}
 				{...props}
 			>
 				<BaseCheckbox.Indicator
-					className="size-3 rounded-[2px] bg-(--bct-primary)"
+					className="size-3 rounded-sm bg-primary"
 					keepMounted
 				/>
 			</BaseCheckbox.Root>

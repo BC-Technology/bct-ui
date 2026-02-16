@@ -1,6 +1,6 @@
 {
 	"name": "@bctechnology/ui",
-	"version": "0.1.11",
+	"version": "0.2.0",
 	"private": false,
 	"description": "A comprehensive, opinionated UI and design-system platform for BCT's frontend projects. Combines a centrally governed design system with a developer-friendly workflow inspired by shadcn/ui, tailored for BCT's needs.",
 	"keywords": [
@@ -48,15 +48,24 @@
 	"dependencies": {
 		"@base-ui/react": "^1.1.0",
 		"@clack/prompts": "^0.11.0",
+		"@rehookify/datepicker": "^6.6.8",
+		"@tiptap/pm": "^2.10.0",
+		"@tiptap/react": "^2.10.0",
+		"@tiptap/starter-kit": "^2.10.0",
 		"clsx": "^2.1.1",
+		"date-fns": "^3.0.0",
 		"execa": "^9.5.2",
 		"fs-extra": "^11.2.0",
+		"lucide-react": "^0.460.0",
+		"tailwind-merge": "^2.5.0",
 		"tailwindcss": "^4.1.0"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.4",
 		"@types/react": "^18.3.18",
+		"@types/react-dom": "^18.3.5",
 		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"tsup": "^8.0.1"
 	}
 }

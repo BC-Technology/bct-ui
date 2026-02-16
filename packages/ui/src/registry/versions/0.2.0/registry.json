@@ -1,0 +1,243 @@
+{
+	"button": {
+		"title": "Button",
+		"description": "Versatile button component with multiple variants (default, text, icon) and sizes, built on Base UI.",
+		"files": [{ "src": "components/button.tsx", "dst": "button.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"text-input": {
+		"title": "Text Input",
+		"description": "Single-line text input field with label, error, and helper text support.",
+		"files": [{ "src": "components/text-input.tsx", "dst": "text-input.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"text-area": {
+		"title": "Text Area",
+		"description": "Multi-line text input field with customizable rows.",
+		"files": [{ "src": "components/text-area.tsx", "dst": "text-area.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"checkbox": {
+		"title": "Checkbox",
+		"description": "Checkbox input with label support, built on Base UI.",
+		"files": [{ "src": "components/checkbox.tsx", "dst": "checkbox.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"radio": {
+		"title": "Radio",
+		"description": "Individual radio button component.",
+		"files": [{ "src": "components/radio.tsx", "dst": "radio.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"radio-group": {
+		"title": "Radio Group",
+		"description": "Radio button group wrapper with horizontal and vertical orientation support.",
+		"files": [
+			{ "src": "components/radio-group.tsx", "dst": "radio-group.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"select": {
+		"title": "Select",
+		"description": "Dropdown select component with custom styling, built on Base UI.",
+		"files": [{ "src": "components/select.tsx", "dst": "select.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"switch": {
+		"title": "Switch",
+		"description": "Toggle switch component with label support.",
+		"files": [{ "src": "components/switch.tsx", "dst": "switch.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"number-input": {
+		"title": "Number Input",
+		"description": "Numeric input with increment/decrement buttons, built on Base UI NumberField.",
+		"files": [
+			{ "src": "components/number-input.tsx", "dst": "number-input.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"slider": {
+		"title": "Slider",
+		"description": "Range slider component with value display support.",
+		"files": [{ "src": "components/slider.tsx", "dst": "slider.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"color-picker": {
+		"title": "Color Picker",
+		"description": "Color picker using native HTML5 color input with hex text input.",
+		"files": [
+			{ "src": "components/color-picker.tsx", "dst": "color-picker.tsx" }
+		],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"date-picker": {
+		"title": "Date Picker",
+		"description": "Single date selection with custom calendar grid using Base UI Popover and @rehookify/datepicker.",
+		"files": [
+			{ "src": "components/date-picker.tsx", "dst": "date-picker.tsx" }
+		],
+		"deps": [
+			"@base-ui/react",
+			"@rehookify/datepicker",
+			"clsx",
+			"date-fns",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"date-range-picker": {
+		"title": "Date Range Picker",
+		"description": "Date range selection with start/end date display and custom calendar.",
+		"files": [
+			{
+				"src": "components/date-range-picker.tsx",
+				"dst": "date-range-picker.tsx"
+			}
+		],
+		"deps": [
+			"@base-ui/react",
+			"@rehookify/datepicker",
+			"clsx",
+			"date-fns",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"file-upload": {
+		"title": "File Upload",
+		"description": "File input with drag-and-drop support and file list display.",
+		"files": [
+			{ "src": "components/file-upload.tsx", "dst": "file-upload.tsx" }
+		],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"rich-text-input": {
+		"title": "Rich Text Input",
+		"description": "Tiptap-based rich text editor with integrated formatting toolbar.",
+		"files": [
+			{ "src": "components/rich-text-input.tsx", "dst": "rich-text-input.tsx" }
+		],
+		"deps": [
+			"@tiptap/react",
+			"@tiptap/starter-kit",
+			"clsx",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"dialog": {
+		"title": "Dialog",
+		"description": "Modal dialog component with title, description, and close button.",
+		"files": [{ "src": "components/dialog.tsx", "dst": "dialog.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"alert-dialog": {
+		"title": "Alert Dialog",
+		"description": "Confirmation dialog with cancel and confirm actions.",
+		"files": [
+			{ "src": "components/alert-dialog.tsx", "dst": "alert-dialog.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"alert": {
+		"title": "Alert",
+		"description": "Inline alert component with variants for info, success, warning, and error.",
+		"files": [{ "src": "components/alert.tsx", "dst": "alert.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"tooltip": {
+		"title": "Tooltip",
+		"description": "Hover tooltip component with customizable positioning.",
+		"files": [{ "src": "components/tooltip.tsx", "dst": "tooltip.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"spinner": {
+		"title": "Spinner",
+		"description": "Loading spinner with size variants.",
+		"files": [{ "src": "components/spinner.tsx", "dst": "spinner.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"badge": {
+		"title": "Badge",
+		"description": "Status badge component with color variants and sizes.",
+		"files": [{ "src": "components/badge.tsx", "dst": "badge.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"avatar": {
+		"title": "Avatar",
+		"description": "User avatar component with image and fallback text support.",
+		"files": [{ "src": "components/avatar.tsx", "dst": "avatar.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"card": {
+		"title": "Card",
+		"description": "Container card component with header, content, and footer sections.",
+		"files": [{ "src": "components/card.tsx", "dst": "card.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"accordion": {
+		"title": "Accordion",
+		"description": "Collapsible accordion component built on Base UI.",
+		"files": [{ "src": "components/accordion.tsx", "dst": "accordion.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"tabs": {
+		"title": "Tabs",
+		"description": "Tabbed navigation component with panel content.",
+		"files": [{ "src": "components/tabs.tsx", "dst": "tabs.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"progress": {
+		"title": "Progress",
+		"description": "Progress bar component with label and value display.",
+		"files": [{ "src": "components/progress.tsx", "dst": "progress.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"skeleton": {
+		"title": "Skeleton",
+		"description": "Loading skeleton component with text, circular, and rectangular variants.",
+		"files": [{ "src": "components/skeleton.tsx", "dst": "skeleton.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"breadcrumbs": {
+		"title": "Breadcrumbs",
+		"description": "Navigation breadcrumb trail component.",
+		"files": [
+			{ "src": "components/breadcrumbs.tsx", "dst": "breadcrumbs.tsx" }
+		],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"pagination": {
+		"title": "Pagination",
+		"description": "Page navigation component with customizable sibling count.",
+		"files": [{ "src": "components/pagination.tsx", "dst": "pagination.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"dropdown-menu": {
+		"title": "Dropdown Menu",
+		"description": "Dropdown menu component built on Base UI Menu.",
+		"files": [
+			{ "src": "components/dropdown-menu.tsx", "dst": "dropdown-menu.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"popover": {
+		"title": "Popover",
+		"description": "Popover overlay component with customizable positioning.",
+		"files": [{ "src": "components/popover.tsx", "dst": "popover.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"divider": {
+		"title": "Divider",
+		"description": "Horizontal or vertical divider component.",
+		"files": [{ "src": "components/divider.tsx", "dst": "divider.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"portal": {
+		"title": "Portal",
+		"description": "Portal wrapper component for rendering content outside the DOM hierarchy.",
+		"files": [{ "src": "components/portal.tsx", "dst": "portal.tsx" }],
+		"deps": ["react-dom"]
+	}
+}
