@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Breadcrumbs } from "../../packages/ui/src/registry/versions/0.2.0/components/breadcrumbs"
+// @ts-expect-error
+import { Breadcrumbs } from "@/registry/versions/0.2.0/components/breadcrumbs"
 
 const meta = {
 	title: "Components/Breadcrumbs",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Breadcrumbs>
 
 export default meta

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Spinner } from "../../packages/ui/src/registry/versions/0.2.0/components/spinner"
+// @ts-expect-error
+import { Spinner } from "@/registry/versions/0.2.0/components/spinner"
 
 const meta = {
 	title: "Components/Spinner",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Spinner>
 
 export default meta

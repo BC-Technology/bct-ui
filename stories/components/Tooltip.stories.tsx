@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Button } from "../../packages/ui/src/registry/versions/0.2.0/components/button"
-import { Tooltip } from "../../packages/ui/src/registry/versions/0.2.0/components/tooltip"
+// @ts-expect-error
+import { Button } from "@/registry/versions/0.2.0/components/button"
+// @ts-expect-error
+import { Tooltip } from "@/registry/versions/0.2.0/components/tooltip"
 
 const meta = {
 	title: "Components/Tooltip",
@@ -10,7 +12,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Tooltip>
 
 export default meta

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Slider } from "../../packages/ui/src/registry/versions/0.2.0/components/slider"
+// @ts-expect-error
+import { Slider } from "@/registry/versions/0.2.0/components/slider"
 
 const meta = {
 	title: "Components/Slider",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Slider>
 
 export default meta

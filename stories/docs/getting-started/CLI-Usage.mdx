@@ -1,0 +1,409 @@
+
+<Meta title="Getting Started/CLI Usage" />
+
+# CLI Usage
+
+The BCT UI CLI provides commands for initializing projects, adding components, and validating your setup.
+
+## Commands Overview
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '1rem',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <code style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-primary)' }}>
+      bct init
+    </code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Initialize BCT UI in your project
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <code style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-primary)' }}>
+      bct add
+    </code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Add components to your project
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <code style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-weight-bold)', color: 'var(--color-primary)' }}>
+      bct doctor
+    </code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Validate your project setup
+    </p>
+  </div>
+</div>
+
+## bct init
+
+Initialize BCT UI in an existing Vite or Next.js project.
+
+### Usage
+
+```bash
+npx bct init [options]
+```
+
+### Options
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>--src-dir &lt;boolean&gt;</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Override detected src/ directory structure
+    </p>
+  </div>
+  
+  <div>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>--help</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Display help information
+    </p>
+  </div>
+</div>
+
+### Interactive Prompts
+
+The init command will ask you:
+
+1. **i18n Setup**: Do you want to set up internationalization with Paraglide?
+2. **Locale Store**: (If i18n enabled) Do you want a Zustand store for locale management?
+3. **Theme Store**: Do you want a Zustand store for theme switching?
+
+### What It Does
+
+- ✅ Detects your framework (Vite or Next.js)
+- ✅ Detects project structure (src/ directory or not)
+- ✅ Copies design tokens to your project
+- ✅ Installs base dependencies
+- ✅ Configures Tailwind CSS v4
+- ✅ Sets up Biome for linting/formatting
+- ✅ Configures TypeScript path aliases
+- ✅ Creates `bct.config.json`
+- ✅ Installs optional features based on your choices
+
+### Example
+
+```bash
+# Basic initialization
+npx bct init
+
+# Force src directory structure
+npx bct init --src-dir true
+
+# Skip src directory
+npx bct init --src-dir false
+```
+
+## bct add
+
+Add components from the BCT UI registry to your project.
+
+### Usage
+
+```bash
+npx bct add <component-name>
+```
+
+### Available Components
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '0.5rem',
+  marginTop: '1rem',
+  marginBottom: '2rem',
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)'
+}}>
+  <code>button</code>
+  <code>input</code>
+  <code>textarea</code>
+  <code>checkbox</code>
+  <code>radio</code>
+  <code>radio-group</code>
+  <code>select</code>
+  <code>switch</code>
+  <code>slider</code>
+  <code>number-input</code>
+  <code>color-picker</code>
+  <code>date-picker</code>
+  <code>date-range-picker</code>
+  <code>file-upload</code>
+  <code>rich-text-input</code>
+  <code>alert</code>
+  <code>dialog</code>
+  <code>alert-dialog</code>
+  <code>tooltip</code>
+  <code>spinner</code>
+  <code>progress</code>
+  <code>skeleton</code>
+  <code>badge</code>
+  <code>avatar</code>
+  <code>card</code>
+  <code>breadcrumbs</code>
+  <code>pagination</code>
+  <code>divider</code>
+  <code>tabs</code>
+  <code>accordion</code>
+  <code>dropdown-menu</code>
+  <code>popover</code>
+  <code>portal</code>
+</div>
+
+### What It Does
+
+1. Reads your `bct.config.json` to get the pinned version
+2. Fetches the component from GitHub tag (e.g., `v0.2.0`)
+3. Downloads component files to your components directory
+4. Installs required npm dependencies
+5. Makes the component ready to import and use
+
+### Examples
+
+```bash
+# Add a single component
+npx bct add button
+
+# Add multiple components
+npx bct add button input checkbox
+
+# Add all form components
+npx bct add button input textarea checkbox radio select switch
+```
+
+### Component Location
+
+Components are placed in:
+- `src/components/` if you have a src directory
+- `components/` if you don't have a src directory
+
+### Import Path
+
+After adding a component, import it using the `@/` alias:
+
+```tsx
+import { Button } from '@/components/button'
+import { TextInput } from '@/components/input'
+```
+
+## bct doctor
+
+Validate your BCT UI project setup and check for issues.
+
+### Usage
+
+```bash
+npx bct doctor
+```
+
+### What It Checks
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>✓ BCT Configuration</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Verifies bct.config.json exists and is valid
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>✓ Design Tokens</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Checks that token CSS file exists and is imported
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>✓ Dependencies</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Verifies required dependencies are installed
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>✓ TypeScript Configuration</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Checks path aliases are configured correctly
+    </p>
+  </div>
+  
+  <div>
+    <strong>✓ Project Structure</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Validates component and token directories
+    </p>
+  </div>
+</div>
+
+### Example Output
+
+```bash
+$ npx bct doctor
+
+Checking BCT UI setup...
+
+✓ Configuration file found
+✓ Design tokens present
+✓ Token import detected in main.tsx
+✓ Required dependencies installed
+✓ TypeScript path aliases configured
+✓ Component directory exists
+
+All checks passed! Your BCT UI setup is healthy.
+```
+
+## Global vs npx Usage
+
+### Global Installation
+
+Install once, use anywhere:
+
+```bash
+npm install -g @bctechnology/ui
+
+# Then use directly
+bct init
+bct add button
+bct doctor
+```
+
+### npx Usage
+
+No installation needed:
+
+```bash
+npx @bctechnology/ui init
+npx @bctechnology/ui add button
+npx @bctechnology/ui doctor
+```
+
+## Configuration File
+
+The `bct.config.json` file stores your project configuration:
+
+```json
+{
+  "version": "0.2.0",
+  "srcDir": true,
+  "features": {
+    "i18n": false,
+    "themeStore": true
+  }
+}
+```
+
+### Fields
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>version</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Pinned BCT UI version for component compatibility
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>srcDir</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Whether your project uses a src/ directory
+    </p>
+  </div>
+  
+  <div>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>features</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Optional features enabled in your project
+    </p>
+  </div>
+</div>
+
+## Troubleshooting
+
+### Command Not Found
+
+```bash
+# If globally installed but not found
+npm install -g @bctechnology/ui
+
+# Or use npx
+npx @bctechnology/ui <command>
+```
+
+### Version Mismatch
+
+If you see version compatibility warnings:
+
+```bash
+# Check your pinned version
+cat bct.config.json
+
+# Update to latest version
+npm install -g @bctechnology/ui@latest
+```
+
+### Component Not Found
+
+If a component isn't available:
+
+1. Check the available components list above
+2. Verify your BCT version supports that component
+3. Try running `bct doctor` to check your setup
+
+## Best Practices
+
+1. **Pin your version**: Don't change the version in `bct.config.json` manually
+2. **Run doctor regularly**: Use `bct doctor` to catch issues early
+3. **Add components as needed**: Don't add all components at once
+4. **Keep CLI updated**: Update the global CLI periodically for bug fixes
+
+## Next Steps
+
+- [Add components to your project](/docs/getting-started-quick-start--docs)
+- [Explore component examples](/docs/components-button--docs)
+- [Learn about customization](/docs/guides-component-patterns--docs)

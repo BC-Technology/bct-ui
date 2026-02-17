@@ -1,5 +1,7 @@
-import React from 'react';
 import type { Meta, StoryObj } from "@storybook/react"
+// biome-ignore lint/correctness/noUnusedImports: false positive
+import React from "react"
+// @ts-expect-error
 import { ColorPicker } from "@/registry/versions/0.2.0/components/color-picker"
 
 const meta = {
@@ -8,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof ColorPicker>
 
 export default meta

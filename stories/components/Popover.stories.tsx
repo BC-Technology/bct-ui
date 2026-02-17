@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Button } from "../../packages/ui/src/registry/versions/0.2.0/components/button"
-import { Popover } from "../../packages/ui/src/registry/versions/0.2.0/components/popover"
+// @ts-expect-error
+import { Button } from "@/registry/versions/0.2.0/components/button"
+// @ts-expect-error
+import { Popover } from "@/registry/versions/0.2.0/components/popover"
 
 const meta = {
 	title: "Components/Popover",
@@ -10,7 +12,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Popover>
 
 export default meta

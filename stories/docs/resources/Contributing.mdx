@@ -1,0 +1,446 @@
+
+<Meta title="Resources/Contributing" />
+
+# Contributing
+
+Thank you for your interest in contributing to BCT UI! This guide will help you get started.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm 9+
+- Git
+
+### Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/BC-Technology/bct-ui.git
+cd bct-ui
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Build all packages:
+
+```bash
+pnpm build
+```
+
+4. Start Storybook:
+
+```bash
+pnpm storybook
+```
+
+## Project Structure
+
+```
+bct-ui/
+├── packages/
+│   └── ui/                    # CLI package
+│       ├── src/
+│       │   ├── commands/      # CLI commands
+│       │   ├── registry/      # Component registry
+│       │   └── assets/        # Design tokens
+│       └── package.json
+├── stories/                   # Storybook stories
+│   ├── Introduction.mdx
+│   ├── docs/                  # Documentation
+│   └── components/            # Component stories
+├── .storybook/               # Storybook config
+└── package.json              # Root workspace
+```
+
+## Adding Components
+
+### 1. Create Component Source
+
+Add your component to the registry:
+
+```bash
+mkdir -p packages/ui/src/registry/versions/0.2.0/components
+```
+
+Create `my-component.tsx`:
+
+```tsx
+import { ComponentPropsWithoutRef } from 'react'
+import { clsx } from 'clsx'
+
+export interface MyComponentProps extends ComponentPropsWithoutRef<'div'> {
+  variant?: 'primary' | 'secondary'
+}
+
+export function MyComponent({ 
+  variant = 'primary',
+  className,
+  ...props 
+}: MyComponentProps) {
+  return (
+    <div
+      className={clsx(
+        'p-4 rounded-md',
+        variant === 'primary' && 'bg-primary text-primary-on',
+        variant === 'secondary' && 'bg-secondary text-secondary-on',
+        className
+      )}
+      {...props}
+    />
+  )
+}
+```
+
+### 2. Update Registry
+
+Edit `packages/ui/src/registry/versions/0.2.0/registry.json`:
+
+```json
+{
+  "my-component": {
+    "title": "My Component",
+    "description": "A custom component for BCT UI",
+    "files": [
+      {
+        "src": "components/my-component.tsx",
+        "dst": "my-component.tsx"
+      }
+    ],
+    "deps": ["clsx"]
+  }
+}
+```
+
+### 3. Create Storybook Story
+
+Create `stories/components/MyComponent.stories.tsx`:
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react'
+import { MyComponent } from '@/registry/versions/0.2.0/components/my-component'
+
+const meta = {
+  title: 'Components/MyComponent',
+  component: MyComponent,
+  parameters: {
+    layout: 'centered',
+  },
+} satisfies Meta<typeof MyComponent>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Primary: Story = {
+  args: {
+    variant: 'primary',
+    children: 'Primary variant',
+  },
+}
+
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    children: 'Secondary variant',
+  },
+}
+```
+
+### 4. Test Component
+
+```bash
+# Build CLI
+pnpm build
+
+# Test in a sample project
+mkdir test-project && cd test-project
+pnpm create vite@latest . --template react-ts
+node ../packages/ui/dist/cli.js init
+node ../packages/ui/dist/cli.js add my-component
+```
+
+## Component Guidelines
+
+### Design Principles
+
+1. **Accessibility First**: Use Base UI primitives
+2. **Token-Based Styling**: Only use BCT design tokens
+3. **Composability**: Build simple, composable components
+4. **Type Safety**: Full TypeScript support
+5. **No CSS Files**: Use Tailwind classes only
+
+### Code Style
+
+Follow these conventions:
+
+```tsx
+// ✅ Good: Clear prop types
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  variant?: 'primary' | 'secondary' | 'tertiary'
+  size?: 'sm' | 'md' | 'lg'
+}
+
+// ✅ Good: Default values
+export function Button({ 
+  variant = 'primary',
+  size = 'md',
+  ...props 
+}: ButtonProps) {
+  // ...
+}
+
+// ✅ Good: Using clsx for conditional classes
+className={clsx(
+  'base-classes',
+  variant === 'primary' && 'primary-classes',
+  size === 'lg' && 'large-classes',
+  className
+)}
+
+// ✅ Good: Spreading remaining props
+<button {...props} />
+```
+
+### Accessibility Requirements
+
+- Keyboard navigation support
+- ARIA attributes where needed
+- Focus management
+- Screen reader compatibility
+- Sufficient color contrast
+
+## Design Token Updates
+
+### Updating Tokens
+
+1. Edit `packages/ui/src/assets/tokens/index.css`
+2. Test with existing components
+3. Update documentation if needed
+4. Version bump if breaking changes
+
+### Token Guidelines
+
+- Maintain semantic naming
+- Support both light and dark themes
+- Ensure WCAG contrast compliance
+- Document usage examples
+
+## Documentation
+
+### Adding Documentation
+
+Create MDX files in `stories/docs/`:
+
+```markdown
+
+<Meta title="Category/Page Title" />
+
+# Page Title
+
+Your documentation content here...
+```
+
+### Documentation Standards
+
+- Clear, concise writing
+- Code examples for all concepts
+- Visual examples where helpful
+- Links to related documentation
+
+## Versioning
+
+### Creating a New Version
+
+1. Create new version directory:
+
+```bash
+cp -r packages/ui/src/registry/versions/0.2.0 packages/ui/src/registry/versions/0.3.0
+```
+
+2. Update `packages/ui/package.json`:
+
+```json
+{
+  "version": "0.3.0"
+}
+```
+
+3. Make your changes in the new version
+
+4. Build and test:
+
+```bash
+pnpm build
+pnpm typecheck
+```
+
+5. Tag the release:
+
+```bash
+git tag v0.3.0
+git push origin v0.3.0
+```
+
+6. Publish to npm:
+
+```bash
+cd packages/ui
+npm publish --access public
+```
+
+### Version Guidelines
+
+- **Patch (0.2.1)**: Bug fixes only
+- **Minor (0.3.0)**: New features, backward compatible
+- **Major (1.0.0)**: Breaking changes
+
+## Testing
+
+### Running Tests
+
+```bash
+# Type checking
+pnpm typecheck
+
+# Linting
+pnpm lint
+
+# Format checking
+pnpm check
+```
+
+### Writing Tests
+
+Add tests for new components:
+
+```tsx
+import { render, screen } from '@testing-library/react'
+import { MyComponent } from './my-component'
+
+describe('MyComponent', () => {
+  it('renders with primary variant', () => {
+    render(<MyComponent variant="primary">Content</MyComponent>)
+    expect(screen.getByText('Content')).toBeInTheDocument()
+  })
+})
+```
+
+## Pull Request Process
+
+### Before Submitting
+
+1. Test your changes thoroughly
+2. Update documentation
+3. Add Storybook stories
+4. Run linting and type checking
+5. Write clear commit messages
+
+### PR Guidelines
+
+- One feature/fix per PR
+- Clear description of changes
+- Link related issues
+- Include screenshots for UI changes
+- Update changelog if needed
+
+### Commit Messages
+
+Follow conventional commits:
+
+```
+feat: add new component
+fix: resolve button hover state
+docs: update installation guide
+chore: update dependencies
+```
+
+## Code Review
+
+### Review Criteria
+
+- Code quality and style
+- Test coverage
+- Documentation completeness
+- Accessibility compliance
+- Performance impact
+- Breaking changes
+
+### Addressing Feedback
+
+- Respond to all comments
+- Make requested changes
+- Re-request review when ready
+- Be open to suggestions
+
+## Community
+
+### Getting Help
+
+- GitHub Issues: Bug reports and feature requests
+- GitHub Discussions: Questions and ideas
+- Storybook: Component examples and documentation
+
+### Code of Conduct
+
+- Be respectful and inclusive
+- Provide constructive feedback
+- Help others learn and grow
+- Follow project guidelines
+
+## Release Process
+
+### Release Checklist
+
+1. ✅ All tests passing
+2. ✅ Documentation updated
+3. ✅ Changelog updated
+4. ✅ Version bumped
+5. ✅ Git tag created
+6. ✅ npm package published
+7. ✅ GitHub release created
+
+### Changelog Format
+
+```markdown
+## [0.3.0] - 2024-02-17
+
+### Added
+- New MyComponent with primary and secondary variants
+- Support for custom className prop
+
+### Changed
+- Button component now uses Base UI primitives
+
+### Fixed
+- Input component focus state in dark mode
+
+### Breaking Changes
+- Removed deprecated `color` prop from Badge
+```
+
+## Best Practices
+
+1. **Start Small**: Begin with small contributions
+2. **Ask Questions**: Don't hesitate to ask for help
+3. **Follow Guidelines**: Adhere to project standards
+4. **Test Thoroughly**: Ensure changes work as expected
+5. **Document Well**: Help others understand your work
+6. **Be Patient**: Reviews take time
+7. **Stay Updated**: Keep up with project changes
+
+## Resources
+
+- [GitHub Repository](https://github.com/BC-Technology/bct-ui)
+- [Architecture Guide](/docs/resources-architecture--docs)
+- [Component Patterns](/docs/guides-component-patterns--docs)
+- [Best Practices](/docs/guides-best-practices--docs)
+
+## Thank You!
+
+Your contributions help make BCT UI better for everyone. We appreciate your time and effort!

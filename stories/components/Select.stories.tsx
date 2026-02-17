@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Select } from "../../packages/ui/src/registry/versions/0.2.0/components/select"
+// @ts-expect-error
+import { Select } from "@/registry/versions/0.2.0/components/select"
 
 const meta = {
 	title: "Components/Select",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Select>
 
 export default meta

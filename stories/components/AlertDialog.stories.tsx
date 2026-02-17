@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React, { useState } from "react"
-import { AlertDialog } from "../../packages/ui/src/registry/versions/0.2.0/components/alert-dialog"
-import { Button } from "../../packages/ui/src/registry/versions/0.2.0/components/button"
+// @ts-expect-error
+import { AlertDialog } from "@/registry/versions/0.2.0/components/alert-dialog"
+// @ts-expect-error
+import { Button } from "@/registry/versions/0.2.0/components/button"
 
 const meta = {
 	title: "Components/AlertDialog",
@@ -10,7 +12,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof AlertDialog>
 
 export default meta

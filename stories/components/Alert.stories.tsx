@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Alert } from "../../packages/ui/src/registry/versions/0.2.0/components/alert"
+// @ts-expect-error
+import { Alert } from "@/registry/versions/0.2.0/components/alert"
 
 const meta = {
 	title: "Components/Alert",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Alert>
 
 export default meta

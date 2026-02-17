@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React, { useState } from "react"
-import { Button } from "../../packages/ui/src/registry/versions/0.2.0/components/button"
-import { Dialog } from "../../packages/ui/src/registry/versions/0.2.0/components/dialog"
+// @ts-expect-error
+import { Button } from "@/registry/versions/0.2.0/components/button"
+// @ts-expect-error
+import { Dialog } from "@/registry/versions/0.2.0/components/dialog"
 
 const meta = {
 	title: "Components/Dialog",
@@ -10,7 +12,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Dialog>
 
 export default meta

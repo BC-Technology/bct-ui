@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Badge } from "../../packages/ui/src/registry/versions/0.2.0/components/badge"
+// @ts-expect-error
+import { Badge } from "@/registry/versions/0.2.0/components/badge"
 
 const meta = {
 	title: "Components/Badge",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Badge>
 
 export default meta

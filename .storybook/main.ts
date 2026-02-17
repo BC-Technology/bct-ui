@@ -7,12 +7,17 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const config: StorybookConfig = {
-	stories: ["../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-	addons: [],
+	stories: [
+		"../stories/Introduction.mdx",
+		"../stories/docs/**/*.mdx",
+		"../stories/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+	],
+
 	framework: {
 		name: "@storybook/react-vite",
 		options: {},
 	},
+
 	viteFinal: async (config) => {
 		// Ensure Tailwind CSS v4 is properly configured
 		if (!config.plugins) config.plugins = []
@@ -31,6 +36,7 @@ const config: StorybookConfig = {
 
 		return config
 	},
+
 	// Composition for future Vue/Angular support
 	refs: {
 		// Placeholder for Vue Storybook
@@ -46,6 +52,8 @@ const config: StorybookConfig = {
 		//   expanded: false,
 		// },
 	},
+
+	addons: ["@storybook/addon-docs"],
 }
 
 export default config

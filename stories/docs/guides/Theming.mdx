@@ -1,0 +1,382 @@
+
+<Meta title="Guides/Theming" />
+
+# Theming
+
+BCT UI supports light and dark themes out of the box. Learn how to implement theme switching and customize themes for your application.
+
+## Theme System
+
+BCT UI uses CSS variables that automatically switch based on the theme. All design tokens have light and dark variants defined in the `index.css` file.
+
+### Theme Structure
+
+```css
+/* Light theme */
+[data-theme="light"], :root {
+  --color-primary: #007bff;
+  --color-background: #ffffff;
+  --color-typography-primary: #000000;
+  /* ... more tokens */
+}
+
+/* Dark theme */
+.dark, [data-theme="dark"] {
+  --color-primary: #4dabf7;
+  --color-background: #121212;
+  --color-typography-primary: #ffffff;
+  /* ... more tokens */
+}
+```
+
+## Implementing Theme Switching
+
+### Method 1: Using data-theme Attribute
+
+The recommended approach is to use the `data-theme` attribute on the root element:
+
+```tsx
+import { useState, useEffect } from 'react'
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    // Load saved theme
+    const saved = localStorage.getItem('theme') || 'light'
+    setTheme(saved)
+    document.documentElement.setAttribute('data-theme', saved)
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+### Method 2: Using CSS Class
+
+Alternatively, use the `.dark` class:
+
+```tsx
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') || 'light'
+    setTheme(saved)
+    
+    if (saved === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    
+    localStorage.setItem('theme', newTheme)
+  }
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+## Theme Toggle Component
+
+Create a theme toggle button:
+
+```tsx
+import { Button } from '@/components/button'
+import { useTheme } from '@/contexts/theme'
+
+export function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme()
+
+  return (
+    <Button
+      variant="icon"
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+    >
+      {theme === 'light' ? '🌙' : '☀️'}
+    </Button>
+  )
+}
+```
+
+## System Preference Detection
+
+Detect and respect the user's system theme preference:
+
+```tsx
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState(() => {
+    // Check localStorage first
+    const saved = localStorage.getItem('theme')
+    if (saved) return saved
+
+    // Fall back to system preference
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+    return 'light'
+  })
+
+  useEffect(() => {
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    const handleChange = (e) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light')
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  // ... rest of implementation
+}
+```
+
+## Customizing Theme Colors
+
+### Using the Token Customizer
+
+The easiest way to customize themes is using the [Token Customizer](/docs/design-system-customize-tokens--docs) in Storybook. It allows you to:
+
+- Adjust colors for light and dark themes separately
+- See changes in real-time
+- Export customized CSS variables
+- Save preferences to localStorage
+
+### Manual Customization
+
+Override specific tokens in your CSS:
+
+```css
+/* Custom light theme colors */
+[data-theme="light"] {
+  --color-primary: #0066cc;
+  --color-primary-hover: #0052a3;
+  --color-success: #00a86b;
+}
+
+/* Custom dark theme colors */
+[data-theme="dark"] {
+  --color-primary: #66b3ff;
+  --color-primary-hover: #4da6ff;
+  --color-success: #00d68f;
+}
+```
+
+## Theme-Specific Styling
+
+Apply styles based on the current theme:
+
+### Using CSS
+
+```css
+/* Light theme specific */
+[data-theme="light"] .custom-element {
+  background: linear-gradient(to right, #007bff, #0056cc);
+}
+
+/* Dark theme specific */
+[data-theme="dark"] .custom-element {
+  background: linear-gradient(to right, #4dabf7, #339af0);
+}
+```
+
+### Using Tailwind
+
+```tsx
+<div className="bg-white dark:bg-gray-900">
+  <h1 className="text-black dark:text-white">
+    Theme-aware heading
+  </h1>
+</div>
+```
+
+## Multiple Theme Support
+
+Extend beyond light and dark themes:
+
+```tsx
+const themes = {
+  light: 'light',
+  dark: 'dark',
+  blue: 'blue',
+  green: 'green'
+}
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light')
+
+  const applyTheme = (newTheme) => {
+    setTheme(newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme: applyTheme, themes }}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+Define custom themes in CSS:
+
+```css
+[data-theme="blue"] {
+  --color-primary: #0066ff;
+  --color-background: #f0f4ff;
+  /* ... other tokens */
+}
+
+[data-theme="green"] {
+  --color-primary: #00aa55;
+  --color-background: #f0fff4;
+  /* ... other tokens */
+}
+```
+
+## Theme Persistence
+
+### localStorage
+
+Save theme preference to localStorage:
+
+```tsx
+// Save
+localStorage.setItem('theme', theme)
+
+// Load
+const savedTheme = localStorage.getItem('theme') || 'light'
+```
+
+### Cookies
+
+For SSR applications, use cookies:
+
+```tsx
+// Server-side
+import { cookies } from 'next/headers'
+
+export function getTheme() {
+  const cookieStore = cookies()
+  return cookieStore.get('theme')?.value || 'light'
+}
+
+// Client-side
+document.cookie = `theme=${theme}; path=/; max-age=31536000`
+```
+
+## SSR Considerations
+
+### Next.js App Router
+
+Prevent flash of unstyled content:
+
+```tsx
+// app/layout.tsx
+import { cookies } from 'next/headers'
+
+export default function RootLayout({ children }) {
+  const theme = cookies().get('theme')?.value || 'light'
+
+  return (
+    <html lang="en" data-theme={theme}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+Add a script to prevent flashing:
+
+```tsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `
+          }}
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+## Best Practices
+
+1. **Respect user preference**: Check system preference before defaulting to light theme
+2. **Persist choice**: Save theme selection to localStorage or cookies
+3. **Prevent flashing**: Apply theme before page renders (especially in SSR)
+4. **Test both themes**: Ensure all components work in both light and dark modes
+5. **Use design tokens**: Always use CSS variables instead of hardcoded colors
+6. **Provide toggle**: Make it easy for users to switch themes
+7. **Consider accessibility**: Ensure sufficient contrast in both themes
+
+## Testing Themes
+
+Test your application in both themes:
+
+```tsx
+// Test component
+import { render } from '@testing-library/react'
+
+describe('Component', () => {
+  it('renders in light theme', () => {
+    document.documentElement.setAttribute('data-theme', 'light')
+    render(<Component />)
+    // assertions
+  })
+
+  it('renders in dark theme', () => {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    render(<Component />)
+    // assertions
+  })
+})
+```
+
+## Next Steps
+
+- Try the [Token Customizer](/docs/design-system-customize-tokens--docs)
+- Learn about [component patterns](/docs/guides-component-patterns--docs)
+- Review [accessibility guidelines](/docs/guides-accessibility--docs)

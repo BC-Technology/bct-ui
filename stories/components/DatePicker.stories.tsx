@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { DatePicker } from "../../packages/ui/src/registry/versions/0.2.0/components/date-picker"
+// @ts-expect-error
+import { DatePicker } from "@/registry/versions/0.2.0/components/date-picker"
 
 const meta = {
 	title: "Components/DatePicker",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof DatePicker>
 
 export default meta
@@ -20,7 +20,7 @@ export const Default: Story = {
 		label: "Select a date",
 		value: "",
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onChange: (date) => console.log("Date changed", date),
+		onChange: (date: string) => console.log("Date changed", date),
 	},
 }
 
@@ -29,7 +29,7 @@ export const WithDefaultDate: Story = {
 		label: "Birthday",
 		value: "2000-01-01",
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onChange: (date) => console.log("Date changed", date),
+		onChange: (date: string) => console.log("Date changed", date),
 	},
 }
 
@@ -38,7 +38,7 @@ export const Disabled: Story = {
 		label: "Disabled",
 		value: "",
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onChange: (date) => console.log("Date changed", date),
+		onChange: (date: string) => console.log("Date changed", date),
 		disabled: true,
 	},
 }

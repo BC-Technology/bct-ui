@@ -1,0 +1,585 @@
+
+<Meta title="Guides/Best Practices" />
+
+# Best Practices
+
+Follow these best practices to build maintainable, performant, and accessible applications with BCT UI.
+
+## Design Tokens
+
+### Always Use Tokens
+
+Never hardcode design values:
+
+```tsx
+// ✅ Good: Using design tokens
+<div className="bg-primary text-primary-on p-4 rounded-md">
+  Content
+</div>
+
+// ❌ Bad: Hardcoded values
+<div style={{ 
+  backgroundColor: '#007bff',
+  color: '#ffffff',
+  padding: '16px',
+  borderRadius: '4px'
+}}>
+  Content
+</div>
+```
+
+### Semantic Token Usage
+
+Use tokens according to their semantic meaning:
+
+```tsx
+// ✅ Good: Semantic usage
+<Alert className="bg-error text-error-on">
+  Error message
+</Alert>
+
+// ❌ Bad: Using error color for non-error
+<Button className="bg-error">
+  Regular button
+</Button>
+```
+
+## Component Usage
+
+### Local Ownership
+
+Components are copied to your project, so customize them freely:
+
+```tsx
+// ✅ Good: Customize for your needs
+export function Button({ children, ...props }) {
+  // Add your custom logic
+  const handleClick = (e) => {
+    analytics.track('button_click')
+    props.onClick?.(e)
+  }
+
+  return (
+    <BaseButton {...props} onClick={handleClick}>
+      {children}
+    </BaseButton>
+  )
+}
+```
+
+### Composition Over Complexity
+
+Build complex UIs by composing simple components:
+
+```tsx
+// ✅ Good: Composition
+function UserCard({ user }) {
+  return (
+    <Card>
+      <Card.Header>
+        <Avatar src={user.avatar} alt={user.name} />
+        <h3>{user.name}</h3>
+      </Card.Header>
+      <Card.Body>
+        <p>{user.bio}</p>
+      </Card.Body>
+      <Card.Footer>
+        <Button>Follow</Button>
+      </Card.Footer>
+    </Card>
+  )
+}
+
+// ❌ Bad: Monolithic component
+function UserCard({ user }) {
+  return (
+    <div className="user-card-with-everything">
+      {/* 200 lines of JSX */}
+    </div>
+  )
+}
+```
+
+## Performance
+
+### Lazy Loading
+
+Lazy load components that aren't immediately needed:
+
+```tsx
+import { lazy, Suspense } from 'react'
+import { Spinner } from '@/components/spinner'
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
+
+function App() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <HeavyComponent />
+    </Suspense>
+  )
+}
+```
+
+### Memoization
+
+Memoize expensive computations and components:
+
+```tsx
+import { useMemo, memo } from 'react'
+
+// Memoize expensive calculations
+function DataTable({ data }) {
+  const sortedData = useMemo(() => {
+    return data.sort((a, b) => a.name.localeCompare(b.name))
+  }, [data])
+
+  return <Table data={sortedData} />
+}
+
+// Memoize components
+const ExpensiveComponent = memo(function ExpensiveComponent({ data }) {
+  return <div>{/* Complex rendering */}</div>
+})
+```
+
+### Avoid Inline Functions
+
+Don't create new functions on every render:
+
+```tsx
+// ✅ Good: Stable function reference
+function List({ items }) {
+  const handleClick = useCallback((id) => {
+    console.log(id)
+  }, [])
+
+  return items.map(item => (
+    <Item key={item.id} onClick={() => handleClick(item.id)} />
+  ))
+}
+
+// ❌ Bad: New function every render
+function List({ items }) {
+  return items.map(item => (
+    <Item key={item.id} onClick={() => console.log(item.id)} />
+  ))
+}
+```
+
+## Code Organization
+
+### File Structure
+
+Organize components logically:
+
+```
+src/
+├── components/
+│   ├── button.tsx          # BCT components
+│   ├── input.tsx
+│   └── ...
+├── features/
+│   ├── auth/
+│   │   ├── LoginForm.tsx   # Feature-specific components
+│   │   └── SignupForm.tsx
+│   └── dashboard/
+│       └── DashboardCard.tsx
+├── hooks/
+│   ├── useAuth.ts          # Custom hooks
+│   └── useTheme.ts
+└── utils/
+    └── formatters.ts       # Utility functions
+```
+
+### Component Structure
+
+Structure components consistently:
+
+```tsx
+// 1. Imports
+import { useState } from 'react'
+import { Button } from '@/components/button'
+
+// 2. Types
+interface Props {
+  title: string
+  onSubmit: () => void
+}
+
+// 3. Component
+export function MyComponent({ title, onSubmit }: Props) {
+  // 3a. State
+  const [isLoading, setIsLoading] = useState(false)
+
+  // 3b. Effects
+  useEffect(() => {
+    // ...
+  }, [])
+
+  // 3c. Handlers
+  const handleSubmit = async () => {
+    setIsLoading(true)
+    await onSubmit()
+    setIsLoading(false)
+  }
+
+  // 3d. Render
+  return (
+    <div>
+      <h1>{title}</h1>
+      <Button onClick={handleSubmit} disabled={isLoading}>
+        Submit
+      </Button>
+    </div>
+  )
+}
+```
+
+## TypeScript
+
+### Type Safety
+
+Use TypeScript for type safety:
+
+```tsx
+// ✅ Good: Proper typing
+interface User {
+  id: string
+  name: string
+  email: string
+}
+
+function UserProfile({ user }: { user: User }) {
+  return <div>{user.name}</div>
+}
+
+// ❌ Bad: Any types
+function UserProfile({ user }: { user: any }) {
+  return <div>{user.name}</div>
+}
+```
+
+### Component Props
+
+Export prop types for reusability:
+
+```tsx
+import { ComponentPropsWithoutRef } from 'react'
+
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  variant?: 'primary' | 'secondary' | 'tertiary'
+  size?: 'sm' | 'md' | 'lg'
+}
+
+export function Button({ variant = 'primary', size = 'md', ...props }: ButtonProps) {
+  return <button {...props} />
+}
+```
+
+## State Management
+
+### Local State First
+
+Use local state when possible:
+
+```tsx
+// ✅ Good: Local state for local concerns
+function SearchInput() {
+  const [query, setQuery] = useState('')
+
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
+  )
+}
+```
+
+### Lift State When Needed
+
+Lift state only when multiple components need it:
+
+```tsx
+// ✅ Good: Shared state lifted to parent
+function Parent() {
+  const [selectedId, setSelectedId] = useState(null)
+
+  return (
+    <>
+      <List selectedId={selectedId} onSelect={setSelectedId} />
+      <Details id={selectedId} />
+    </>
+  )
+}
+```
+
+## Error Handling
+
+### Error Boundaries
+
+Catch and handle errors gracefully:
+
+```tsx
+import { Component, ReactNode } from 'react'
+import { Alert } from '@/components/alert'
+
+interface Props {
+  children: ReactNode
+}
+
+interface State {
+  hasError: boolean
+  error?: Error
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  state: State = { hasError: false }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Alert variant="error">
+          <h2>Something went wrong</h2>
+          <p>{this.state.error?.message}</p>
+        </Alert>
+      )
+    }
+
+    return this.props.children
+  }
+}
+```
+
+### Form Validation
+
+Validate forms and show clear errors:
+
+```tsx
+function LoginForm() {
+  const [errors, setErrors] = useState({})
+
+  const validate = (values) => {
+    const errors = {}
+    
+    if (!values.email) {
+      errors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = 'Email is invalid'
+    }
+    
+    if (!values.password) {
+      errors.password = 'Password is required'
+    } else if (values.password.length < 8) {
+      errors.password = 'Password must be at least 8 characters'
+    }
+    
+    return errors
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errors = validate(values)
+    
+    if (Object.keys(errors).length === 0) {
+      // Submit form
+    } else {
+      setErrors(errors)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextInput error={errors.email} />
+      <TextInput error={errors.password} />
+      <Button type="submit">Login</Button>
+    </form>
+  )
+}
+```
+
+## Testing
+
+### Unit Tests
+
+Test components in isolation:
+
+```tsx
+import { render, screen, fireEvent } from '@testing-library/react'
+import { Button } from '@/components/button'
+
+describe('Button', () => {
+  it('calls onClick when clicked', () => {
+    const handleClick = jest.fn()
+    render(<Button onClick={handleClick}>Click me</Button>)
+    
+    fireEvent.click(screen.getByText('Click me'))
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('is disabled when disabled prop is true', () => {
+    render(<Button disabled>Click me</Button>)
+    expect(screen.getByText('Click me')).toBeDisabled()
+  })
+})
+```
+
+### Integration Tests
+
+Test component interactions:
+
+```tsx
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { LoginForm } from './LoginForm'
+
+describe('LoginForm', () => {
+  it('shows error for invalid email', async () => {
+    render(<LoginForm />)
+    
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'invalid-email' }
+    })
+    fireEvent.click(screen.getByText('Login'))
+    
+    await waitFor(() => {
+      expect(screen.getByText('Email is invalid')).toBeInTheDocument()
+    })
+  })
+})
+```
+
+## Documentation
+
+### Component Documentation
+
+Document your components:
+
+```tsx
+/**
+ * A customizable button component with multiple variants and sizes.
+ * 
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="lg" onClick={handleClick}>
+ *   Click me
+ * </Button>
+ * ```
+ */
+export function Button({ variant = 'primary', size = 'md', ...props }: ButtonProps) {
+  return <button {...props} />
+}
+```
+
+### README Files
+
+Include README files for complex features:
+
+```markdown
+# Authentication Feature
+
+## Overview
+Handles user authentication including login, signup, and password reset.
+
+## Components
+- `LoginForm`: User login form
+- `SignupForm`: New user registration
+- `PasswordReset`: Password reset flow
+
+## Usage
+\`\`\`tsx
+import { LoginForm } from '@/features/auth'
+
+function LoginPage() {
+  return <LoginForm onSuccess={handleSuccess} />
+}
+\`\`\`
+```
+
+## Security
+
+### Input Sanitization
+
+Sanitize user input:
+
+```tsx
+import DOMPurify from 'dompurify'
+
+function UserContent({ html }) {
+  const sanitized = DOMPurify.sanitize(html)
+  return <div dangerouslySetInnerHTML={{ __html: sanitized }} />
+}
+```
+
+### Environment Variables
+
+Never expose secrets in client code:
+
+```tsx
+// ✅ Good: Server-side only
+// .env.local
+API_SECRET=secret123
+
+// ❌ Bad: Exposed to client
+// .env
+NEXT_PUBLIC_API_SECRET=secret123
+```
+
+## Accessibility
+
+### Semantic HTML
+
+Use semantic HTML elements:
+
+```tsx
+// ✅ Good: Semantic elements
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+  </ul>
+</nav>
+
+// ❌ Bad: Divs for everything
+<div className="nav">
+  <div onClick={goHome}>Home</div>
+</div>
+```
+
+### ARIA Labels
+
+Provide labels for screen readers:
+
+```tsx
+// ✅ Good: Labeled button
+<Button aria-label="Close dialog">
+  <CloseIcon />
+</Button>
+
+// ❌ Bad: Unlabeled icon button
+<Button>
+  <CloseIcon />
+</Button>
+```
+
+## Summary
+
+1. **Use design tokens** for all styling
+2. **Compose components** instead of building monoliths
+3. **Optimize performance** with lazy loading and memoization
+4. **Organize code** logically and consistently
+5. **Type everything** with TypeScript
+6. **Handle errors** gracefully
+7. **Test thoroughly** with unit and integration tests
+8. **Document** your code
+9. **Secure** your application
+10. **Make it accessible** for all users
+
+## Next Steps
+
+- Review [component patterns](/docs/guides-component-patterns--docs)
+- Learn about [accessibility](/docs/guides-accessibility--docs)
+- Explore [theming](/docs/guides-theming--docs)

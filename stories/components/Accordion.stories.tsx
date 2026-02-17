@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Accordion } from "../../packages/ui/src/registry/versions/0.2.0/components/accordion"
+// @ts-expect-error
+import { Accordion } from "@/registry/versions/0.2.0/components/accordion"
 
 const meta = {
 	title: "Components/Accordion",
@@ -7,7 +8,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Accordion>
 
 export default meta

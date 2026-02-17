@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Progress } from "../../packages/ui/src/registry/versions/0.2.0/components/progress"
+// @ts-expect-error
+import { Progress } from "@/registry/versions/0.2.0/components/progress"
 
 const meta = {
 	title: "Components/Progress",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Progress>
 
 export default meta
@@ -44,7 +44,7 @@ export const DifferentValues: Story = {
 		value: 0,
 		max: 100,
 	},
-	render: (_args) => (
+	render: (_args: any) => (
 		<div className="flex w-80 flex-col gap-4">
 			<Progress label="25%" value={25} max={100} />
 			<Progress label="50%" value={50} max={100} />

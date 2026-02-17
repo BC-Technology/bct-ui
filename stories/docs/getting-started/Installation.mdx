@@ -1,0 +1,293 @@
+
+<Meta title="Getting Started/Installation" />
+
+# Installation
+
+Get started with BCT UI by installing the CLI and initializing your project. This guide walks you through the complete setup process.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-success-muted)',
+  borderLeft: '4px solid var(--color-success)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-success)' }}>✅ Quick Setup</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    BCT UI can be set up in an existing project in just a few minutes.
+  </p>
+</div>
+
+## Prerequisites
+
+Before installing BCT UI, ensure you have:
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Node.js 20+</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Required for running the CLI and build tools
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Package Manager</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      npm, pnpm, or yarn (auto-detected)
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Existing Project</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Vite or Next.js project (or create a new one)
+    </p>
+  </div>
+</div>
+
+## Step 1: Create or Use Existing Project
+
+### Option A: Create New Vite Project
+
+```bash
+pnpm create vite@latest my-app --template react-ts
+cd my-app
+pnpm install
+```
+
+### Option B: Create New Next.js Project
+
+```bash
+npx create-next-app@latest my-app
+cd my-app
+```
+
+### Option C: Use Existing Project
+
+Navigate to your existing Vite or Next.js project:
+
+```bash
+cd your-existing-project
+```
+
+## Step 2: Install BCT UI CLI
+
+You can install the CLI globally or use it directly with npx:
+
+### Global Installation (Recommended)
+
+```bash
+npm install -g @bctechnology/ui
+```
+
+### Using npx (No Installation)
+
+```bash
+npx @bctechnology/ui init
+```
+
+## Step 3: Initialize BCT UI
+
+Run the initialization command in your project directory:
+
+```bash
+npx bct init
+```
+
+### Interactive Setup
+
+The CLI will prompt you for configuration options:
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>1. Source Directory Detection</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Automatically detects if you use <code>src/</code> directory structure
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>2. i18n Setup (Optional)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Choose whether to set up internationalization with Paraglide
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem' }}>
+    <strong>3. Locale Store (If i18n enabled)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Optional Zustand store for locale management
+    </p>
+  </div>
+  
+  <div>
+    <strong>4. Theme Store (Optional)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Zustand store for theme switching (light/dark mode)
+    </p>
+  </div>
+</div>
+
+### What Gets Installed
+
+The initialization process will:
+
+- ✅ Copy design tokens to `bct/index.css` or `src/bct/index.css`
+- ✅ Install base dependencies (`clsx`, `date-fns`, `@base-ui/react`)
+- ✅ Configure Tailwind CSS v4 with BCT tokens
+- ✅ Set up Biome for linting and formatting
+- ✅ Configure TypeScript path aliases (`@/*`)
+- ✅ Create `bct.config.json` with your project settings
+- ✅ Install optional features (i18n, theme stores) if selected
+
+## Step 4: Import Design Tokens
+
+Add the BCT design tokens to your main entry file:
+
+### Vite Projects
+
+In `src/main.tsx` or `main.tsx`:
+
+```tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './bct/index.css' // Add this line
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+### Next.js Projects
+
+In `app/layout.tsx`:
+
+```tsx
+import './bct/index.css' // Add this line
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+## Step 5: Verify Installation
+
+Create a test component to verify everything is working:
+
+```tsx
+export default function TestComponent() {
+  return (
+    <div className="p-4 bg-surface-1 rounded-md">
+      <h1 className="text-2xl font-bold text-typography-primary mb-2">
+        BCT UI is installed!
+      </h1>
+      <p className="text-typography-secondary">
+        Design tokens are working correctly.
+      </p>
+    </div>
+  )
+}
+```
+
+## Troubleshooting
+
+### CLI Not Found
+
+If `bct` command is not found after global installation:
+
+```bash
+# Reinstall globally
+npm install -g @bctechnology/ui
+
+# Or use npx
+npx @bctechnology/ui init
+```
+
+### Import Errors
+
+If you see import errors for design tokens:
+
+1. Verify the token file exists at `src/bct/index.css` or `bct/index.css`
+2. Check that the import path in your entry file is correct
+3. Restart your development server
+
+### TypeScript Errors
+
+If you see TypeScript path alias errors:
+
+1. Verify `tsconfig.json` has the `@/*` path alias configured
+2. Restart your TypeScript server in your IDE
+
+### Tailwind Not Working
+
+If Tailwind classes aren't applying:
+
+1. Verify Tailwind CSS v4 is installed
+2. Check that `@import "tailwindcss"` is in your token file
+3. Restart your development server
+
+## Next Steps
+
+Now that BCT UI is installed, you can:
+
+- [Add components](/docs/getting-started-quick-start--docs) to your project
+- [Explore the design system](/docs/design-system-overview--docs)
+- [Customize design tokens](/docs/design-system-customize-tokens--docs)
+- [Learn CLI commands](/docs/getting-started-cli-usage--docs)
+
+## Configuration File
+
+After initialization, you'll have a `bct.config.json` file:
+
+```json
+{
+  "version": "0.2.0",
+  "srcDir": true,
+  "features": {
+    "i18n": false,
+    "themeStore": true
+  }
+}
+```
+
+This file tracks your BCT UI version and configuration. Don't delete it!

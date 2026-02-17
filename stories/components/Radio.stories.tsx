@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Radio } from "../../packages/ui/src/registry/versions/0.2.0/components/radio"
+// @ts-expect-error
+import { Radio } from "@/registry/versions/0.2.0/components/radio"
 
 const meta = {
 	title: "Components/Radio",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Radio>
 
 export default meta

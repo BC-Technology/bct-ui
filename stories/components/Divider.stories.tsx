@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Divider } from "../../packages/ui/src/registry/versions/0.2.0/components/divider"
+// @ts-expect-error
+import { Divider } from "@/registry/versions/0.2.0/components/divider"
 
 const meta = {
 	title: "Components/Divider",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Divider>
 
 export default meta

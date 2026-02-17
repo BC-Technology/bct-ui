@@ -1,0 +1,242 @@
+
+<Meta title="Design System/Spacing" />
+
+# Spacing
+
+The BCT UI spacing system uses a base unit of 4px (0.25rem) to ensure consistent and proportional spacing across all components and layouts.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-primary-muted)',
+  borderLeft: '4px solid var(--color-primary)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-primary)' }}>📏 Base Unit System</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    All spacing values are multiples of the 4px base unit, ensuring consistent and proportional layouts.
+  </p>
+</div>
+
+## Base Unit
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginBottom: '2rem'
+}}>
+  <code style={{
+    fontSize: 'var(--text-lg)',
+    fontWeight: 'var(--font-weight-bold)',
+    color: 'var(--color-primary)'
+  }}>
+    --spacing: 0.25rem (4px)
+  </code>
+  <p style={{ marginTop: '0.5rem', fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)' }}>
+    All spacing values are multiples of this base unit
+  </p>
+</div>
+
+## Spacing Scale
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginBottom: '2rem'
+}}>
+  {[0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24].map(value => (
+    <div key={value} style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+      marginBottom: '1rem',
+      paddingBottom: '1rem',
+      borderBottom: '1px solid var(--color-border)'
+    }}>
+      <div style={{
+        width: `${value * 4}px`,
+        height: '40px',
+        backgroundColor: 'var(--color-primary)',
+        borderRadius: 'var(--radius-sm)'
+      }} />
+      <div>
+        <strong style={{ fontSize: 'var(--text-sm)' }}>{value === 0 ? '0' : `${value}`}</strong>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-typography-muted)', marginLeft: '0.5rem' }}>
+          {value * 4}px ({value * 0.25}rem)
+        </span>
+      </div>
+    </div>
+  ))}
+</div>
+
+## Tailwind Spacing Classes
+
+Use standard Tailwind spacing classes with the BCT spacing scale:
+
+```tsx
+// Padding
+<div className="p-4">16px padding on all sides</div>
+<div className="px-6 py-3">24px horizontal, 12px vertical</div>
+
+// Margin
+<div className="m-2">8px margin on all sides</div>
+<div className="mt-4 mb-8">16px top, 32px bottom</div>
+
+// Gap (for flex/grid)
+<div className="flex gap-4">16px gap between children</div>
+<div className="grid gap-x-6 gap-y-4">24px horizontal, 16px vertical</div>
+
+// Space (for flex children)
+<div className="flex space-x-3">12px between children</div>
+```
+
+## Visual Examples
+
+### Gap Spacing
+
+<div style={{ marginBottom: '2rem' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '1rem', padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <span style={{ marginLeft: '1rem', fontSize: 'var(--text-sm)' }}>gap-1 (4px)</span>
+  </div>
+
+  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem', padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <span style={{ marginLeft: '1rem', fontSize: 'var(--text-sm)' }}>gap-2 (8px)</span>
+  </div>
+
+  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '1rem', padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <span style={{ marginLeft: '1rem', fontSize: 'var(--text-sm)' }}>gap-4 (16px)</span>
+  </div>
+
+  <div style={{ display: 'flex', alignItems: 'center', gap: '24px', padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <div style={{ width: '40px', height: '40px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }}></div>
+    <span style={{ marginLeft: '1rem', fontSize: 'var(--text-sm)' }}>gap-6 (24px)</span>
+  </div>
+</div>
+
+### Padding Examples
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ padding: '0.5rem', backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-on)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
+      p-2 (8px)
+    </div>
+  </div>
+  
+  <div style={{ backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ padding: '1rem', backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-on)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
+      p-4 (16px)
+    </div>
+  </div>
+  
+  <div style={{ backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ padding: '1.5rem', backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-on)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
+      p-6 (24px)
+    </div>
+  </div>
+  
+  <div style={{ backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <div style={{ padding: '2rem', backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-on)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
+      p-8 (32px)
+    </div>
+  </div>
+</div>
+
+## Responsive Spacing
+
+Combine spacing utilities with responsive prefixes:
+
+```tsx
+<div className="p-4 md:p-6 lg:p-8">
+  Responsive padding: 16px on mobile, 24px on tablet, 32px on desktop
+</div>
+
+<div className="gap-2 sm:gap-4 md:gap-6">
+  Responsive gap: 8px, 16px, 24px
+</div>
+```
+
+## Guidelines
+
+1. **Use consistent multiples**: Stick to the spacing scale for visual harmony
+2. **Prefer even numbers**: Use 2, 4, 6, 8 for most layouts
+3. **Use gap utilities**: For flex/grid containers instead of margins on children
+4. **Responsive spacing**: Adjust spacing for different screen sizes
+5. **Avoid arbitrary values**: Use the predefined scale instead of custom values
+
+## Common Patterns
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1rem',
+  marginTop: '1.5rem'
+}}>
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Card Padding</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      p-4 or p-6 for card interiors
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Section Spacing</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      mb-8 or mb-12 between sections
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Element Gap</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      gap-2 or gap-4 for related elements
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Button Padding</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      px-4 py-2 for standard buttons
+    </p>
+  </div>
+</div>

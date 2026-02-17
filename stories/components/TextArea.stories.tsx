@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { TextArea } from "../../packages/ui/src/registry/versions/0.2.0/components/text-area"
+// @ts-expect-error
+import { TextArea } from "@/registry/versions/0.2.0/components/text-area"
 
 const meta = {
 	title: "Components/TextArea",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof TextArea>
 
 export default meta

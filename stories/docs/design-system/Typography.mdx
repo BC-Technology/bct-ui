@@ -1,0 +1,264 @@
+
+<Meta title="Design System/Typography" />
+
+# Typography
+
+Typography in BCT UI uses Lato as the primary sans-serif font and Georgia for serif. Text sizes range from 10px to 36px, with font weights from 100 to 900. Responsive typography classes ensure readability across devices.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-primary-muted)',
+  borderLeft: '4px solid var(--color-primary)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-primary)' }}>📝 Responsive Typography</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    All typography tokens automatically scale based on screen size for optimal readability.
+  </p>
+</div>
+
+## Font Families
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>
+      Sans-serif (Lato)
+    </h3>
+    <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Used for UI elements, body text, and most interface components
+    </p>
+    <code style={{
+      display: 'block',
+      marginTop: '0.5rem',
+      padding: '0.5rem',
+      backgroundColor: 'var(--color-surface-2)',
+      borderRadius: 'var(--radius-sm)',
+      fontSize: 'var(--text-xs)'
+    }}>
+      font-family: var(--font-sans)
+    </code>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>
+      Serif (Georgia)
+    </h3>
+    <p style={{ fontFamily: 'var(--font-serif)', fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Used for headings or special content when a more traditional look is needed
+    </p>
+    <code style={{
+      display: 'block',
+      marginTop: '0.5rem',
+      padding: '0.5rem',
+      backgroundColor: 'var(--color-surface-2)',
+      borderRadius: 'var(--radius-sm)',
+      fontSize: 'var(--text-xs)'
+    }}>
+      font-family: var(--font-serif)
+    </code>
+  </div>
+</div>
+
+## Text Size Scale
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginBottom: '2rem'
+}}>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-2xs)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>2xs</strong> - 10px - Caption text
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xs)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>xs</strong> - 12px - Small labels
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>sm</strong> - 14px - Body text on mobile
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>base</strong> - 16px - Standard body text
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-lg)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>lg</strong> - 18px - Large body text
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xl)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>xl</strong> - 20px - Small headings
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-2xl)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>2xl</strong> - 24px - Headings
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-3xl)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>3xl</strong> - 28px - Large headings
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-4xl)', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--color-border)' }}>
+    <strong>4xl</strong> - 32px - Hero text
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-5xl)', marginBottom: '0' }}>
+    <strong>5xl</strong> - 36px - Display text
+  </div>
+</div>
+
+**Usage:**
+```tsx
+<h1 className="text-3xl">Large Heading</h1>
+<p className="text-base">Body text</p>
+<span className="text-xs">Small label</span>
+```
+
+## Font Weight Scale
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginBottom: '2rem'
+}}>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-thin)', marginBottom: '0.75rem' }}>
+    Thin (100) - Delicate emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-extralight)', marginBottom: '0.75rem' }}>
+    Extra Light (200) - Very light emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-light)', marginBottom: '0.75rem' }}>
+    Light (300) - Light emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-normal)', marginBottom: '0.75rem' }}>
+    Normal (400) - Default body text
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-medium)', marginBottom: '0.75rem' }}>
+    Medium (500) - Subtle emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-semibold)', marginBottom: '0.75rem' }}>
+    Semi Bold (600) - Moderate emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.75rem' }}>
+    Bold (700) - Strong emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-extrabold)', marginBottom: '0.75rem' }}>
+    Extra Bold (800) - Very strong emphasis
+  </div>
+  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-black)', marginBottom: '0' }}>
+    Black (900) - Maximum emphasis
+  </div>
+</div>
+
+**Usage:**
+```tsx
+<p className="font-normal">Normal text</p>
+<p className="font-medium">Medium text</p>
+<p className="font-bold">Bold text</p>
+```
+
+## Predefined Typography Classes
+
+BCT UI provides semantic typography classes that combine size, weight, and responsive behavior:
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginBottom: '2rem'
+}}>
+  <h1 className="heading1" style={{ marginBottom: '1rem' }}>Heading 1</h1>
+  <h2 className="heading2" style={{ marginBottom: '1rem' }}>Heading 2</h2>
+  <h3 className="heading3" style={{ marginBottom: '1rem' }}>Heading 3</h3>
+  <h4 className="heading4" style={{ marginBottom: '1rem' }}>Heading 4</h4>
+  <p className="body" style={{ marginBottom: '1rem' }}>Body text - Responsive body text (sm on mobile, base on larger screens)</p>
+  <p className="body2" style={{ marginBottom: '1rem' }}>Body 2 - Secondary body text (xs on mobile, sm on larger screens)</p>
+  <button className="button" style={{ marginBottom: '1rem', padding: '0.5rem 1rem', backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-on)', border: 'none', borderRadius: 'var(--radius-md)' }}>Button Text</button>
+  <p className="caption" style={{ marginBottom: '0' }}>Caption - Small caption text (2xs on mobile, xs on larger screens)</p>
+</div>
+
+**Usage:**
+```tsx
+<h1 className="heading1">Main Heading</h1>
+<h2 className="heading2">Section Heading</h2>
+<p className="body">This is body text that scales with screen size.</p>
+<span className="caption">Caption text</span>
+<button className="button">Button</button>
+```
+
+## Responsive Behavior
+
+Typography automatically scales based on breakpoints:
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Mobile (< 640px)</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Smaller text sizes for compact screens
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Tablet (≥ 768px)</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Increased text sizes for better readability
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <strong>Desktop (≥ 1024px)</strong>
+    <p style={{ fontSize: 'var(--text-xs)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Optimal text sizes for large screens
+    </p>
+  </div>
+</div>
+
+## Best Practices
+
+1. **Use semantic classes**: Prefer `.heading1`, `.body`, etc. over manual size/weight combinations
+2. **Maintain hierarchy**: Use heading levels in order (h1 → h2 → h3)
+3. **Limit font weights**: Stick to normal (400), medium (500), and bold (700) for most use cases
+4. **Consider line length**: Keep body text between 50-75 characters per line for readability
+5. **Test responsiveness**: Verify typography scales appropriately across all screen sizes
+
+## Accessibility
+
+- Minimum font size of 14px (text-sm) for body text
+- Sufficient contrast ratios (4.5:1 for normal text, 3:1 for large text)
+- Clear visual hierarchy through size and weight
+- Responsive scaling ensures readability on all devices

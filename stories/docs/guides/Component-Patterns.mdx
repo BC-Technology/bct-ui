@@ -1,0 +1,460 @@
+
+<Meta title="Guides/Component Patterns" />
+
+# Component Patterns
+
+Learn common patterns and best practices for using BCT UI components effectively.
+
+## Form Patterns
+
+### Controlled Inputs
+
+Always use controlled inputs for form fields:
+
+```tsx
+import { useState } from 'react'
+import { TextInput } from '@/components/input'
+
+function ControlledForm() {
+  const [value, setValue] = useState('')
+
+  return (
+    <TextInput
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      placeholder="Enter text..."
+    />
+  )
+}
+```
+
+### Form Validation
+
+Implement validation with error states:
+
+```tsx
+import { TextInput } from '@/components/input'
+import { Alert } from '@/components/alert'
+
+function ValidatedInput({ value, onChange, error }) {
+  return (
+    <div>
+      <TextInput
+        value={value}
+        onChange={onChange}
+        className={error ? 'border-error' : ''}
+      />
+      {error && (
+        <Alert variant="error" className="mt-2">
+          {error}
+        </Alert>
+      )}
+    </div>
+  )
+}
+```
+
+### Form Submission
+
+Handle form submission with loading states:
+
+```tsx
+import { useState } from 'react'
+import { Button } from '@/components/button'
+import { Spinner } from '@/components/spinner'
+
+function SubmitButton({ isLoading, children, ...props }) {
+  return (
+    <Button {...props} disabled={isLoading}>
+      {isLoading ? (
+        <div className="flex items-center gap-2">
+          <Spinner size="sm" />
+          <span>Submitting...</span>
+        </div>
+      ) : (
+        children
+      )}
+    </Button>
+  )
+}
+```
+
+## Dialog Patterns
+
+### Confirmation Dialog
+
+Create reusable confirmation dialogs:
+
+```tsx
+import { AlertDialog } from '@/components/alert-dialog'
+import { Button } from '@/components/button'
+
+function ConfirmDialog({ title, message, onConfirm, onCancel }) {
+  return (
+    <AlertDialog
+      title={title}
+      description={message}
+      actions={
+        <>
+          <Button variant="tertiary" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={onConfirm}>
+            Confirm
+          </Button>
+        </>
+      }
+    />
+  )
+}
+```
+
+### Form Dialog
+
+Combine dialogs with forms:
+
+```tsx
+import { Dialog } from '@/components/dialog'
+import { TextInput } from '@/components/input'
+import { Button } from '@/components/button'
+
+function EditDialog({ item, onSave, onClose }) {
+  const [name, setName] = useState(item.name)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    onSave({ ...item, name })
+    onClose()
+  }
+
+  return (
+    <Dialog open onClose={onClose}>
+      <form onSubmit={handleSubmit} className="p-6">
+        <h2 className="text-xl font-bold mb-4">Edit Item</h2>
+        <TextInput
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          label="Name"
+          className="mb-4"
+        />
+        <div className="flex gap-2 justify-end">
+          <Button variant="tertiary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
+        </div>
+      </form>
+    </Dialog>
+  )
+}
+```
+
+## List Patterns
+
+### Data Table
+
+Build data tables with BCT components:
+
+```tsx
+import { Badge } from '@/components/badge'
+import { Button } from '@/components/button'
+
+function DataTable({ data }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead className="bg-surface-1">
+          <tr>
+            <th className="px-4 py-2 text-left">Name</th>
+            <th className="px-4 py-2 text-left">Status</th>
+            <th className="px-4 py-2 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item) => (
+            <tr key={item.id} className="border-b border-border">
+              <td className="px-4 py-2">{item.name}</td>
+              <td className="px-4 py-2">
+                <Badge variant={item.status === 'active' ? 'success' : 'secondary'}>
+                  {item.status}
+                </Badge>
+              </td>
+              <td className="px-4 py-2 text-right">
+                <Button variant="text" size="sm">
+                  Edit
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+```
+
+### Card Grid
+
+Display items in a responsive grid:
+
+```tsx
+import { Card } from '@/components/card'
+import { Badge } from '@/components/badge'
+
+function CardGrid({ items }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {items.map((item) => (
+        <Card key={item.id} className="p-4">
+          <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+          <p className="text-typography-secondary mb-4">{item.description}</p>
+          <Badge variant="primary">{item.category}</Badge>
+        </Card>
+      ))}
+    </div>
+  )
+}
+```
+
+## Loading Patterns
+
+### Skeleton Loading
+
+Show skeleton loaders while data loads:
+
+```tsx
+import { Skeleton } from '@/components/skeleton'
+
+function LoadingCard() {
+  return (
+    <div className="p-4 bg-surface-1 rounded-md">
+      <Skeleton className="h-6 w-3/4 mb-2" />
+      <Skeleton className="h-4 w-full mb-1" />
+      <Skeleton className="h-4 w-5/6" />
+    </div>
+  )
+}
+
+function DataList({ data, isLoading }) {
+  if (isLoading) {
+    return (
+      <>
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+      </>
+    )
+  }
+
+  return data.map((item) => <ItemCard key={item.id} item={item} />)
+}
+```
+
+### Progress Indicator
+
+Show progress for long operations:
+
+```tsx
+import { Progress } from '@/components/progress'
+
+function UploadProgress({ progress }) {
+  return (
+    <div className="p-4">
+      <div className="flex justify-between mb-2">
+        <span>Uploading...</span>
+        <span>{progress}%</span>
+      </div>
+      <Progress value={progress} max={100} />
+    </div>
+  )
+}
+```
+
+## Navigation Patterns
+
+### Tabs Navigation
+
+Use tabs for section navigation:
+
+```tsx
+import { Tabs } from '@/components/tabs'
+
+function ProfileTabs() {
+  return (
+    <Tabs defaultValue="profile">
+      <Tabs.List>
+        <Tabs.Trigger value="profile">Profile</Tabs.Trigger>
+        <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+        <Tabs.Trigger value="security">Security</Tabs.Trigger>
+      </Tabs.List>
+      
+      <Tabs.Content value="profile">
+        <ProfileSection />
+      </Tabs.Content>
+      
+      <Tabs.Content value="settings">
+        <SettingsSection />
+      </Tabs.Content>
+      
+      <Tabs.Content value="security">
+        <SecuritySection />
+      </Tabs.Content>
+    </Tabs>
+  )
+}
+```
+
+### Breadcrumb Navigation
+
+Show navigation hierarchy:
+
+```tsx
+import { Breadcrumbs } from '@/components/breadcrumbs'
+
+function PageHeader() {
+  return (
+    <Breadcrumbs>
+      <Breadcrumbs.Item href="/">Home</Breadcrumbs.Item>
+      <Breadcrumbs.Item href="/products">Products</Breadcrumbs.Item>
+      <Breadcrumbs.Item>Product Details</Breadcrumbs.Item>
+    </Breadcrumbs>
+  )
+}
+```
+
+## Feedback Patterns
+
+### Toast Notifications
+
+Create a toast notification system:
+
+```tsx
+import { Alert } from '@/components/alert'
+import { createContext, useContext, useState } from 'react'
+
+const ToastContext = createContext()
+
+export function ToastProvider({ children }) {
+  const [toasts, setToasts] = useState([])
+
+  const addToast = (message, variant = 'info') => {
+    const id = Date.now()
+    setToasts((prev) => [...prev, { id, message, variant }])
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id))
+    }, 3000)
+  }
+
+  return (
+    <ToastContext.Provider value={{ addToast }}>
+      {children}
+      <div className="fixed bottom-4 right-4 space-y-2">
+        {toasts.map((toast) => (
+          <Alert key={toast.id} variant={toast.variant}>
+            {toast.message}
+          </Alert>
+        ))}
+      </div>
+    </ToastContext.Provider>
+  )
+}
+
+export const useToast = () => useContext(ToastContext)
+```
+
+### Empty States
+
+Handle empty data gracefully:
+
+```tsx
+function EmptyState({ title, message, action }) {
+  return (
+    <div className="text-center py-12">
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-typography-secondary mb-4">{message}</p>
+      {action}
+    </div>
+  )
+}
+
+function ItemList({ items }) {
+  if (items.length === 0) {
+    return (
+      <EmptyState
+        title="No items found"
+        message="Get started by creating your first item"
+        action={
+          <Button variant="primary" onClick={handleCreate}>
+            Create Item
+          </Button>
+        }
+      />
+    )
+  }
+
+  return items.map((item) => <Item key={item.id} {...item} />)
+}
+```
+
+## Composition Patterns
+
+### Compound Components
+
+Build flexible compound components:
+
+```tsx
+function Card({ children, className }) {
+  return (
+    <div className={`bg-surface-1 rounded-md ${className}`}>
+      {children}
+    </div>
+  )
+}
+
+Card.Header = function CardHeader({ children }) {
+  return <div className="p-4 border-b border-border">{children}</div>
+}
+
+Card.Body = function CardBody({ children }) {
+  return <div className="p-4">{children}</div>
+}
+
+Card.Footer = function CardFooter({ children }) {
+  return <div className="p-4 border-t border-border">{children}</div>
+}
+
+// Usage
+function Example() {
+  return (
+    <Card>
+      <Card.Header>
+        <h3 className="font-bold">Title</h3>
+      </Card.Header>
+      <Card.Body>
+        <p>Content goes here</p>
+      </Card.Body>
+      <Card.Footer>
+        <Button>Action</Button>
+      </Card.Footer>
+    </Card>
+  )
+}
+```
+
+## Best Practices
+
+1. **Keep components focused**: Each component should have a single responsibility
+2. **Use composition**: Combine simple components to build complex UIs
+3. **Handle loading states**: Always show feedback during async operations
+4. **Validate inputs**: Provide clear error messages for invalid data
+5. **Make it accessible**: Maintain ARIA attributes and keyboard navigation
+6. **Use design tokens**: Always use BCT design tokens for styling
+7. **Test edge cases**: Handle empty states, errors, and loading states
+
+## Next Steps
+
+- Explore [theming patterns](/docs/guides-theming--docs)
+- Learn about [accessibility](/docs/guides-accessibility--docs)
+- Review [best practices](/docs/guides-best-practices--docs)

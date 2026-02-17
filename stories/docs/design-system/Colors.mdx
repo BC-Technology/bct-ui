@@ -1,0 +1,298 @@
+
+<Meta title="Design System/Colors" />
+
+export const ColorSwatch = ({ name, variable, description }) => {
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+  
+  return (
+    <div style={{
+      padding: '1rem',
+      backgroundColor: 'var(--color-surface-1)',
+      borderRadius: 'var(--radius-md)',
+      border: '1px solid var(--color-border)'
+    }}>
+      <div style={{
+        width: '100%',
+        height: '80px',
+        backgroundColor: `var(${variable})`,
+        borderRadius: 'var(--radius-sm)',
+        marginBottom: '0.75rem',
+        border: '1px solid var(--color-border)'
+      }} />
+      <div style={{
+        fontSize: 'var(--text-sm)',
+        fontWeight: 'var(--font-weight-semibold)',
+        marginBottom: '0.25rem',
+        color: 'var(--color-typography-primary)'
+      }}>
+        {name}
+      </div>
+      <div style={{
+        fontSize: 'var(--text-xs)',
+        color: 'var(--color-typography-muted)',
+        marginBottom: '0.5rem'
+      }}>
+        {description}
+      </div>
+      <div style={{
+        display: 'flex',
+        gap: '0.5rem',
+        flexWrap: 'wrap'
+      }}>
+        <button
+          onClick={() => copyToClipboard(variable)}
+          style={{
+            padding: '0.25rem 0.5rem',
+            fontSize: 'var(--text-xs)',
+            backgroundColor: 'var(--color-surface-2)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-sm)',
+            cursor: 'pointer',
+            color: 'var(--color-typography-primary)'
+          }}
+        >
+          📋 {variable}
+        </button>
+        <button
+          onClick={() => copyToClipboard(`bg-${name.toLowerCase().replace(/\s+/g, '-')}`)}
+          style={{
+            padding: '0.25rem 0.5rem',
+            fontSize: 'var(--text-xs)',
+            backgroundColor: 'var(--color-surface-2)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-sm)',
+            cursor: 'pointer',
+            color: 'var(--color-typography-primary)'
+          }}
+        >
+          Tailwind class
+        </button>
+      </div>
+    </div>
+  );
+};
+
+# Colors
+
+The BCT UI color system provides a comprehensive palette for primary actions, secondary elements, surfaces, typography, and status indicators. All colors support light and dark themes, automatically switching based on the selected theme.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-info-muted)',
+  borderLeft: '4px solid var(--color-info)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-info)' }}>💡 Interactive Swatches</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    Click on any color swatch below to copy the CSS variable or Tailwind class to your clipboard.
+  </p>
+</div>
+
+## Primary Colors
+
+Used for main actions and key UI elements like primary buttons and links.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Primary" variable="--color-primary" description="Main brand color" />
+  <ColorSwatch name="Primary Hover" variable="--color-primary-hover" description="Hover state" />
+  <ColorSwatch name="Primary Focus" variable="--color-primary-focus" description="Focus state" />
+  <ColorSwatch name="Primary On" variable="--color-primary-on" description="Text on primary" />
+  <ColorSwatch name="Primary Muted" variable="--color-primary-muted" description="Subtle background" />
+  <ColorSwatch name="Primary Muted Hover" variable="--color-primary-muted-hover" description="Muted hover" />
+</div>
+
+**Usage Examples:**
+```tsx
+<button className="bg-primary text-primary-on hover:bg-primary-hover">
+  Primary Button
+</button>
+
+<div className="bg-primary-muted text-primary">
+  Subtle primary background
+</div>
+```
+
+## Secondary Colors
+
+For secondary actions and less prominent elements.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Secondary" variable="--color-secondary" description="Secondary actions" />
+  <ColorSwatch name="Secondary Hover" variable="--color-secondary-hover" description="Hover state" />
+  <ColorSwatch name="Secondary Focus" variable="--color-secondary-focus" description="Focus state" />
+  <ColorSwatch name="Secondary On" variable="--color-secondary-on" description="Text on secondary" />
+  <ColorSwatch name="Secondary Muted" variable="--color-secondary-muted" description="Subtle background" />
+  <ColorSwatch name="Secondary Muted Hover" variable="--color-secondary-muted-hover" description="Muted hover" />
+</div>
+
+## Tertiary Colors
+
+For neutral or background elements.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Tertiary" variable="--color-tertiary" description="Neutral elements" />
+  <ColorSwatch name="Tertiary Hover" variable="--color-tertiary-hover" description="Hover state" />
+  <ColorSwatch name="Tertiary Focus" variable="--color-tertiary-focus" description="Focus state" />
+  <ColorSwatch name="Tertiary On" variable="--color-tertiary-on" description="Text on tertiary" />
+</div>
+
+## Background & Surface Colors
+
+For backgrounds and layered surfaces to create depth and hierarchy.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Background" variable="--color-background" description="Page background" />
+  <ColorSwatch name="Surface 1" variable="--color-surface-1" description="First layer" />
+  <ColorSwatch name="Surface 2" variable="--color-surface-2" description="Second layer" />
+  <ColorSwatch name="Surface 3" variable="--color-surface-3" description="Third layer" />
+</div>
+
+**Usage Examples:**
+```tsx
+<div className="bg-background">
+  <div className="bg-surface-1 p-4">
+    <div className="bg-surface-2 p-4">
+      Layered surfaces
+    </div>
+  </div>
+</div>
+```
+
+## Typography Colors
+
+For text content with different levels of emphasis.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Typography Primary" variable="--color-typography-primary" description="Main text" />
+  <ColorSwatch name="Typography Secondary" variable="--color-typography-secondary" description="Secondary text" />
+  <ColorSwatch name="Typography Muted" variable="--color-typography-muted" description="Muted text" />
+  <ColorSwatch name="Typography Inverse" variable="--color-typography-inverse" description="Inverse text" />
+</div>
+
+## Status Colors
+
+For success, warning, error, and info states.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Success" variable="--color-success" description="Success states" />
+  <ColorSwatch name="Success On" variable="--color-success-on" description="Text on success" />
+  <ColorSwatch name="Warning" variable="--color-warning" description="Warning states" />
+  <ColorSwatch name="Warning On" variable="--color-warning-on" description="Text on warning" />
+  <ColorSwatch name="Error" variable="--color-error" description="Error states" />
+  <ColorSwatch name="Error On" variable="--color-error-on" description="Text on error" />
+  <ColorSwatch name="Info" variable="--color-info" description="Info states" />
+  <ColorSwatch name="Info On" variable="--color-info-on" description="Text on info" />
+</div>
+
+**Usage Examples:**
+```tsx
+<div className="bg-success text-success-on p-4">Success message</div>
+<div className="bg-error text-error-on p-4">Error message</div>
+<div className="bg-warning text-warning-on p-4">Warning message</div>
+<div className="bg-info text-info-on p-4">Info message</div>
+```
+
+## Border & Divider Colors
+
+For borders, dividers, and separators.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <ColorSwatch name="Border" variable="--color-border" description="Default borders" />
+  <ColorSwatch name="Border Hover" variable="--color-border-hover" description="Hover state" />
+  <ColorSwatch name="Border Focus" variable="--color-border-focus" description="Focus state" />
+  <ColorSwatch name="Divider" variable="--color-divider" description="Divider lines" />
+</div>
+
+## Theme Support
+
+All colors automatically adapt to light and dark themes. The theme is controlled by the `data-theme` attribute or `.dark` class on the root element.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '1rem',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>☀️ Light Theme</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Optimized for bright environments with high contrast and clear readability
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>🌙 Dark Theme</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Reduced eye strain in low-light conditions with carefully balanced colors
+    </p>
+  </div>
+</div>
+
+## Accessibility
+
+All color combinations meet WCAG 2.1 Level AA contrast requirements for normal text (4.5:1) and large text (3:1). The `-on` suffix indicates the appropriate text color for a given background.
+
+**Example:**
+- `bg-primary` with `text-primary-on` ensures proper contrast
+- `bg-error` with `text-error-on` ensures readable error messages
+
+## Customization
+
+Want to customize these colors? Use the [Token Customizer](/docs/design-system-customize-tokens--docs) to adjust colors in real-time and see changes across all components.

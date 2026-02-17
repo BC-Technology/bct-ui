@@ -1,0 +1,384 @@
+
+<Meta title="Resources/Architecture" />
+
+# Architecture
+
+Understanding the BCT UI architecture helps you make informed decisions when building applications.
+
+## System Overview
+
+BCT UI is a comprehensive platform combining:
+
+- **Design System**: Canonical design tokens
+- **Component Library**: shadcn/ui-inspired copy-paste workflow
+- **CLI Tool**: Project initialization and component management
+- **Version Pinning**: Compatibility guarantees
+
+## Design Token System
+
+### Token Structure
+
+```
+packages/ui/src/assets/tokens/index.css
+├── @theme directive (Tailwind CSS v4)
+│   ├── Color tokens (100+)
+│   ├── Spacing tokens
+│   ├── Typography tokens
+│   ├── Radius tokens
+│   └── Shadow tokens
+└── @layer base
+    ├── Light theme values
+    └── Dark theme values
+```
+
+### Token Flow
+
+1. Tokens defined in `index.css`
+2. Copied to project during `bct init`
+3. Imported in application entry point
+4. Available as CSS variables
+5. Mapped to Tailwind utilities via `@theme`
+
+## Component Architecture
+
+### Component Registry
+
+```
+packages/ui/src/registry/
+└── versions/
+    └── 0.2.0/
+        ├── registry.json      # Component manifests
+        └── components/        # Component source files
+            ├── button.tsx
+            ├── input.tsx
+            └── ...
+```
+
+### Component Lifecycle
+
+1. **Development**: Components built in registry
+2. **Versioning**: Tagged with version number
+3. **Distribution**: Published to GitHub tags
+4. **Installation**: CLI fetches from GitHub
+5. **Local Ownership**: Copied to project, fully customizable
+
+### Component Structure
+
+```tsx
+// Typical BCT component structure
+import { ComponentPropsWithoutRef } from 'react'
+import { clsx } from 'clsx'
+
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  variant?: 'primary' | 'secondary' | 'tertiary'
+  size?: 'sm' | 'md' | 'lg'
+}
+
+export function Button({ 
+  variant = 'primary', 
+  size = 'md',
+  className,
+  ...props 
+}: ButtonProps) {
+  return (
+    <button
+      className={clsx(
+        'button-base',
+        `button-${variant}`,
+        `button-${size}`,
+        className
+      )}
+      {...props}
+    />
+  )
+}
+```
+
+## CLI Architecture
+
+### Command Flow
+
+```
+User runs: npx bct add button
+    ↓
+CLI reads bct.config.json (version: 0.2.0)
+    ↓
+Fetches from GitHub tag v0.2.0
+    ↓
+Downloads registry.json
+    ↓
+Reads button component manifest
+    ↓
+Downloads component files
+    ↓
+Installs dependencies
+    ↓
+Writes to src/components/button.tsx
+```
+
+### Configuration
+
+```json
+// bct.config.json
+{
+  "version": "0.2.0",        // Pinned version
+  "srcDir": true,            // Project structure
+  "features": {
+    "i18n": false,           // Optional features
+    "themeStore": true
+  }
+}
+```
+
+## Build System
+
+### Monorepo Structure
+
+```
+bct-ui/
+├── packages/
+│   └── ui/                 # CLI package
+│       ├── src/
+│       │   ├── commands/   # CLI commands
+│       │   ├── registry/   # Component registry
+│       │   └── assets/     # Design tokens
+│       └── dist/           # Built CLI
+├── apps/
+│   └── docs/              # Documentation site
+└── stories/               # Storybook stories
+```
+
+### Build Process
+
+1. **TypeScript Compilation**: Source → JavaScript
+2. **Bundle Creation**: CLI bundled for distribution
+3. **Asset Copying**: Tokens included in package
+4. **npm Publishing**: Package published to registry
+5. **Git Tagging**: Version tagged for component fetching
+
+## Framework Integration
+
+### Vite Projects
+
+```
+your-vite-project/
+├── src/
+│   ├── main.tsx           # Import tokens here
+│   ├── bct/
+│   │   └── index.css      # Design tokens
+│   └── components/        # BCT components
+│       ├── button.tsx
+│       └── ...
+├── tailwind.config.js     # Tailwind configuration
+└── bct.config.json        # BCT configuration
+```
+
+### Next.js Projects
+
+```
+your-nextjs-project/
+├── app/
+│   ├── layout.tsx         # Import tokens here
+│   └── ...
+├── src/
+│   ├── bct/
+│   │   └── index.css      # Design tokens
+│   └── components/        # BCT components
+│       ├── button.tsx
+│       └── ...
+├── tailwind.config.js     # Tailwind configuration
+└── bct.config.json        # BCT configuration
+```
+
+## Dependency Management
+
+### Core Dependencies
+
+- **Tailwind CSS v4**: Styling engine
+- **Base UI**: Accessibility primitives
+- **clsx**: Class name utilities
+- **date-fns**: Date formatting
+
+### Optional Dependencies
+
+- **Paraglide**: i18n (if enabled)
+- **Zustand**: State management (if enabled)
+
+## Version Management
+
+### Semantic Versioning
+
+```
+v0.2.0
+ │ │ │
+ │ │ └─ Patch: Bug fixes
+ │ └─── Minor: New features, backward compatible
+ └───── Major: Breaking changes
+```
+
+### Version Pinning
+
+Projects pin to specific versions:
+
+1. `bct init` sets version in `bct.config.json`
+2. `bct add` uses pinned version
+3. Components fetched from matching GitHub tag
+4. Ensures compatibility
+
+### Upgrading
+
+To upgrade BCT UI version:
+
+1. Update CLI: `npm install -g @bctechnology/ui@latest`
+2. Manually update `bct.config.json` version
+3. Re-add components: `npx bct add button`
+4. Test thoroughly
+
+## Theme System
+
+### Theme Architecture
+
+```css
+/* Token definitions */
+@theme {
+  --color-primary: var(--color-primary);
+}
+
+/* Light theme values */
+[data-theme="light"] {
+  --color-primary: #007bff;
+}
+
+/* Dark theme values */
+[data-theme="dark"] {
+  --color-primary: #4dabf7;
+}
+```
+
+### Theme Switching
+
+```
+User toggles theme
+    ↓
+Update data-theme attribute
+    ↓
+CSS variables update automatically
+    ↓
+All components re-render with new colors
+```
+
+## Performance Considerations
+
+### Bundle Size
+
+- **Design tokens**: ~20KB (CSS)
+- **Per component**: 2-5KB (average)
+- **Dependencies**: Varies by component
+
+### Optimization Strategies
+
+1. **Tree shaking**: Only import used components
+2. **Code splitting**: Lazy load heavy components
+3. **CSS purging**: Tailwind removes unused styles
+4. **Component memoization**: Prevent unnecessary re-renders
+
+## Security
+
+### Supply Chain
+
+1. Components fetched from GitHub (verified source)
+2. Version pinning prevents unexpected updates
+3. Local ownership allows security audits
+4. No runtime dependencies on external CDNs
+
+### Best Practices
+
+- Review component code before use
+- Keep CLI and dependencies updated
+- Use environment variables for secrets
+- Sanitize user input
+
+## Extensibility
+
+### Custom Components
+
+Build custom components following BCT patterns:
+
+```tsx
+// Custom component using BCT tokens
+export function CustomCard({ children }) {
+  return (
+    <div className="p-4 bg-surface-1 rounded-md shadow-md">
+      {children}
+    </div>
+  )
+}
+```
+
+### Token Customization
+
+Override tokens in your project:
+
+```css
+/* Override in your CSS */
+[data-theme="light"] {
+  --color-primary: #0066cc;
+}
+```
+
+## Future Architecture
+
+### Planned Features
+
+- Multi-framework support (Vue, Angular)
+- Component composition via Storybook
+- Visual theme editor
+- Component analytics
+- Automated updates
+
+### Storybook Integration
+
+Current Storybook setup:
+
+```
+stories/
+├── Introduction.mdx
+├── docs/
+│   ├── getting-started/
+│   ├── design-system/
+│   ├── guides/
+│   └── resources/
+└── components/
+    └── [33 component stories]
+```
+
+## Troubleshooting Architecture
+
+### Common Issues
+
+**Token not found**
+- Verify `index.css` is imported
+- Check import path is correct
+- Restart dev server
+
+**Component not working**
+- Verify dependencies installed
+- Check TypeScript path aliases
+- Run `bct doctor`
+
+**Version mismatch**
+- Check `bct.config.json` version
+- Verify CLI version matches
+- Re-run `bct init` if needed
+
+## Resources
+
+- [GitHub Repository](https://github.com/BC-Technology/bct-ui)
+- [npm Package](https://www.npmjs.com/package/@bctechnology/ui)
+- [Contributing Guide](/docs/resources-contributing--docs)
+
+## Next Steps
+
+- Learn about [contributing](/docs/resources-contributing--docs)
+- Review [changelog](/docs/resources-changelog--docs)
+- Explore [component patterns](/docs/guides-component-patterns--docs)

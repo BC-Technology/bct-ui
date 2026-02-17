@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Download, Heart, Trash2 } from "lucide-react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Button } from "../../packages/ui/src/registry/versions/0.2.0/components/button"
+// @ts-expect-error
+import { Button } from "@/registry/versions/0.2.0/components/button"
 
 const meta = {
 	title: "Components/Button",
@@ -10,7 +11,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 	argTypes: {
 		variant: {
 			control: "select",

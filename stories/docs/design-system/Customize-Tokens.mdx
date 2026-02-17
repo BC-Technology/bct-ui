@@ -1,0 +1,478 @@
+import { useEffect, useState } from 'react';
+
+<Meta title="Design System/Customize Tokens" />
+
+export const TokenCustomizer = () => {
+  const [theme, setTheme] = useState('light');
+  const [tokens, setTokens] = useState({});
+  const [hasChanges, setHasChanges] = useState(false);
+  
+  const defaultTokens = {
+    light: {
+      '--color-primary': '#007bff',
+      '--color-primary-hover': '#0056cc',
+      '--color-primary-focus': '#3399ff',
+      '--color-secondary': '#6c757d',
+      '--color-secondary-hover': '#5a6268',
+      '--color-tertiary': '#ffffff',
+      '--color-tertiary-hover': '#f8f9fa',
+      '--color-background': '#ffffff',
+      '--color-surface-1': '#f8f9fa',
+      '--color-surface-2': '#e9ecef',
+      '--color-surface-3': '#dee2e6',
+      '--color-typography-primary': '#000000',
+      '--color-typography-secondary': '#333333',
+      '--color-typography-muted': '#666666',
+      '--color-success': '#28a745',
+      '--color-warning': '#ffc107',
+      '--color-error': '#dc3545',
+      '--color-info': '#17a2b8',
+      '--color-border': '#dee2e6',
+      '--spacing': '0.25rem',
+      '--radius-sm': '2px',
+      '--radius-md': '4px',
+      '--radius-lg': '8px',
+      '--shadow-sm': '0 1px 2px 0 rgba(12, 12, 13, 0.2)',
+      '--shadow-md': '0 1px 4px 1px rgba(12, 12, 13, 0.2)',
+      '--shadow-lg': '0 2px 8px 2px rgba(12, 12, 13, 0.2)',
+    },
+    dark: {
+      '--color-primary': '#4dabf7',
+      '--color-primary-hover': '#339af0',
+      '--color-primary-focus': '#74c0fc',
+      '--color-secondary': '#a0aec0',
+      '--color-secondary-hover': '#9ca3af',
+      '--color-tertiary': '#1a202c',
+      '--color-tertiary-hover': '#2d3748',
+      '--color-background': '#121212',
+      '--color-surface-1': '#1a202c',
+      '--color-surface-2': '#2d3748',
+      '--color-surface-3': '#4a5568',
+      '--color-typography-primary': '#ffffff',
+      '--color-typography-secondary': '#cccccc',
+      '--color-typography-muted': '#888888',
+      '--color-success': '#51cf66',
+      '--color-warning': '#ffd43b',
+      '--color-error': '#ff6b6b',
+      '--color-info': '#74c0fc',
+      '--color-border': '#4a5568',
+      '--spacing': '0.25rem',
+      '--radius-sm': '2px',
+      '--radius-md': '4px',
+      '--radius-lg': '8px',
+      '--shadow-sm': '0 1px 2px 0 rgba(12, 12, 13, 0.2)',
+      '--shadow-md': '0 1px 4px 1px rgba(12, 12, 13, 0.2)',
+      '--shadow-lg': '0 2px 8px 2px rgba(12, 12, 13, 0.2)',
+    }
+  };
+  
+  useEffect(() => {
+    const savedTokens = localStorage.getItem('bct-custom-tokens');
+    if (savedTokens) {
+      try {
+        const parsed = JSON.parse(savedTokens);
+        setTokens(parsed);
+        setHasChanges(true);
+        applyTokens(parsed[theme]);
+      } catch (e) {
+        setTokens(defaultTokens);
+        applyTokens(defaultTokens[theme]);
+      }
+    } else {
+      setTokens(defaultTokens);
+      applyTokens(defaultTokens[theme]);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (tokens[theme]) {
+      applyTokens(tokens[theme]);
+    }
+  }, [theme, tokens]);
+  
+  const applyTokens = (themeTokens) => {
+    const root = document.documentElement;
+    Object.entries(themeTokens).forEach(([key, value]) => {
+      root.style.setProperty(key, value);
+    });
+  };
+  
+  const handleTokenChange = (tokenName, value) => {
+    const newTokens = {
+      ...tokens,
+      [theme]: {
+        ...tokens[theme],
+        [tokenName]: value
+      }
+    };
+    setTokens(newTokens);
+    setHasChanges(true);
+    localStorage.setItem('bct-custom-tokens', JSON.stringify(newTokens));
+    applyTokens(newTokens[theme]);
+  };
+  
+  const resetTokens = () => {
+    setTokens(defaultTokens);
+    setHasChanges(false);
+    localStorage.removeItem('bct-custom-tokens');
+    applyTokens(defaultTokens[theme]);
+  };
+  
+  const exportTokens = () => {
+    const css = Object.entries(tokens[theme])
+      .map(([key, value]) => `  ${key}: ${value};`)
+      .join('\n');
+    const fullCss = `[data-theme="${theme}"] {\n${css}\n}`;
+    navigator.clipboard.writeText(fullCss);
+    alert('CSS copied to clipboard!');
+  };
+  
+  const currentTokens = tokens[theme] || defaultTokens[theme];
+  
+  const colorTokens = Object.entries(currentTokens).filter(([key]) => key.startsWith('--color-'));
+  const spacingTokens = Object.entries(currentTokens).filter(([key]) => key.startsWith('--spacing'));
+  const radiusTokens = Object.entries(currentTokens).filter(([key]) => key.startsWith('--radius-'));
+  const shadowTokens = Object.entries(currentTokens).filter(([key]) => key.startsWith('--shadow-'));
+  
+  return (
+    <div style={{ fontFamily: 'var(--font-sans)' }}>
+      <div style={{
+        display: 'flex',
+        gap: '1rem',
+        marginBottom: '2rem',
+        alignItems: 'center',
+        flexWrap: 'wrap'
+      }}>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={() => setTheme('light')}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: theme === 'light' ? 'var(--color-primary)' : 'var(--color-surface-1)',
+              color: theme === 'light' ? 'var(--color-primary-on)' : 'var(--color-typography-primary)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              cursor: 'pointer',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 'var(--font-weight-medium)'
+            }}
+          >
+            ☀️ Light
+          </button>
+          <button
+            onClick={() => setTheme('dark')}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: theme === 'dark' ? 'var(--color-primary)' : 'var(--color-surface-1)',
+              color: theme === 'dark' ? 'var(--color-primary-on)' : 'var(--color-typography-primary)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              cursor: 'pointer',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 'var(--font-weight-medium)'
+            }}
+          >
+            🌙 Dark
+          </button>
+        </div>
+        
+        <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={exportTokens}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'var(--color-secondary)',
+              color: 'var(--color-secondary-on)',
+              border: 'none',
+              borderRadius: 'var(--radius-md)',
+              cursor: 'pointer',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 'var(--font-weight-medium)'
+            }}
+          >
+            📋 Copy CSS
+          </button>
+          {hasChanges && (
+            <button
+              onClick={resetTokens}
+              style={{
+                padding: '0.5rem 1rem',
+                backgroundColor: 'var(--color-error)',
+                color: 'var(--color-error-on)',
+                border: 'none',
+                borderRadius: 'var(--radius-md)',
+                cursor: 'pointer',
+                fontSize: 'var(--text-sm)',
+                fontWeight: 'var(--font-weight-medium)'
+              }}
+            >
+              🔄 Reset to Defaults
+            </button>
+          )}
+        </div>
+      </div>
+      
+      <div style={{
+        display: 'grid',
+        gap: '2rem'
+      }}>
+        <section>
+          <h3 style={{ marginBottom: '1rem' }}>Colors</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            {colorTokens.map(([key, value]) => (
+              <div key={key} style={{
+                padding: '1rem',
+                backgroundColor: 'var(--color-surface-1)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)'
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: 'var(--font-weight-medium)',
+                  marginBottom: '0.5rem',
+                  color: 'var(--color-typography-secondary)'
+                }}>
+                  {key}
+                </label>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <input
+                    type="color"
+                    value={value}
+                    onChange={(e) => handleTokenChange(key, e.target.value)}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-sm)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => handleTokenChange(key, e.target.value)}
+                    style={{
+                      flex: 1,
+                      padding: '0.5rem',
+                      backgroundColor: 'var(--color-background)',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-sm)',
+                      fontSize: 'var(--text-sm)',
+                      color: 'var(--color-typography-primary)'
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        
+        <section>
+          <h3 style={{ marginBottom: '1rem' }}>Spacing</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            {spacingTokens.map(([key, value]) => (
+              <div key={key} style={{
+                padding: '1rem',
+                backgroundColor: 'var(--color-surface-1)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)'
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: 'var(--font-weight-medium)',
+                  marginBottom: '0.5rem',
+                  color: 'var(--color-typography-secondary)'
+                }}>
+                  {key}
+                </label>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={(e) => handleTokenChange(key, e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.5rem',
+                    backgroundColor: 'var(--color-background)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: 'var(--text-sm)',
+                    color: 'var(--color-typography-primary)'
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+        
+        <section>
+          <h3 style={{ marginBottom: '1rem' }}>Border Radius</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            {radiusTokens.map(([key, value]) => (
+              <div key={key} style={{
+                padding: '1rem',
+                backgroundColor: 'var(--color-surface-1)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)'
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: 'var(--font-weight-medium)',
+                  marginBottom: '0.5rem',
+                  color: 'var(--color-typography-secondary)'
+                }}>
+                  {key}
+                </label>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={(e) => handleTokenChange(key, e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.5rem',
+                    backgroundColor: 'var(--color-background)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: 'var(--text-sm)',
+                    color: 'var(--color-typography-primary)'
+                  }}
+                />
+                <div style={{
+                  marginTop: '0.5rem',
+                  width: '60px',
+                  height: '60px',
+                  backgroundColor: 'var(--color-primary)',
+                  borderRadius: value
+                }} />
+              </div>
+            ))}
+          </div>
+        </section>
+        
+        <section>
+          <h3 style={{ marginBottom: '1rem' }}>Shadows</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            {shadowTokens.map(([key, value]) => (
+              <div key={key} style={{
+                padding: '1rem',
+                backgroundColor: 'var(--color-surface-1)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)'
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: 'var(--font-weight-medium)',
+                  marginBottom: '0.5rem',
+                  color: 'var(--color-typography-secondary)'
+                }}>
+                  {key}
+                </label>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={(e) => handleTokenChange(key, e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.5rem',
+                    backgroundColor: 'var(--color-background)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: 'var(--text-sm)',
+                    color: 'var(--color-typography-primary)'
+                  }}
+                />
+                <div style={{
+                  marginTop: '0.5rem',
+                  width: '80px',
+                  height: '80px',
+                  backgroundColor: 'var(--color-background)',
+                  border: '1px solid var(--color-border)',
+                  boxShadow: value
+                }} />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+# Customize Design Tokens
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-info-muted)',
+  borderLeft: '4px solid var(--color-info)',
+  borderRadius: 'var(--radius-md)',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-info)' }}>💡 Live Token Editor</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    Adjust design tokens below and see real-time changes across all components in this Storybook. 
+    Your customizations are automatically saved to localStorage and will persist across sessions.
+  </p>
+</div>
+
+## How It Works
+
+This interactive token customizer allows you to:
+
+- **Adjust Colors**: Modify primary, secondary, surface, typography, and status colors
+- **Change Spacing**: Customize the base spacing unit
+- **Update Border Radius**: Adjust corner rounding for all components
+- **Modify Shadows**: Change elevation and depth effects
+- **Theme-Specific**: Customize light and dark themes separately
+- **Live Preview**: See changes immediately across all components
+- **Persistent**: Your changes are saved to localStorage
+- **Reset**: Restore default values at any time
+- **Export**: Copy your custom CSS variables
+
+## Token Customizer
+
+<TokenCustomizer />
+
+## Usage in Your Project
+
+After customizing tokens here, you can copy the generated CSS and apply it to your project:
+
+1. Click the **"Copy CSS"** button above
+2. Paste the CSS into your project's stylesheet
+3. The tokens will override the default BCT UI values
+
+Example:
+
+```css
+[data-theme="light"] {
+  --color-primary: #your-custom-color;
+  --color-secondary: #your-custom-color;
+  /* ... other customized tokens */
+}
+```
+
+## Best Practices
+
+- **Maintain Contrast**: Ensure sufficient contrast between text and background colors for accessibility
+- **Consistent Spacing**: Use multiples of the base spacing unit for visual harmony
+- **Test Both Themes**: Customize and test both light and dark themes
+- **Document Changes**: Keep track of customizations for your team
+- **Reset When Needed**: Use the reset button to start fresh if needed

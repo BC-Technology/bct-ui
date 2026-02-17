@@ -1,0 +1,221 @@
+
+<Meta title="Resources/Changelog" />
+
+# Changelog
+
+All notable changes to BCT UI are documented here. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.2.0] - 2024-02-17
+
+### Added
+- **Storybook Documentation**: Comprehensive documentation with interactive examples
+  - Top-level Introduction page
+  - Getting Started guides (Installation, Quick Start, CLI Usage)
+  - Enhanced Design System documentation with interactive swatches
+  - Interactive Token Customizer with localStorage persistence
+  - Component Patterns guide
+  - Theming guide
+  - Accessibility guide
+  - Best Practices guide
+  - Architecture documentation
+  - Contributing guide
+- **Token Customizer**: Real-time design token editor
+  - Adjust colors, spacing, radius, and shadows
+  - Separate light/dark theme customization
+  - localStorage persistence
+  - Export custom CSS
+  - Reset to defaults
+- **Enhanced Documentation**: All design token pages now include:
+  - Interactive visual examples
+  - Copy-to-clipboard functionality
+  - Better organization and styling
+  - Usage examples with code snippets
+
+### Changed
+- Reorganized Storybook documentation structure
+- Moved design system docs to dedicated folder
+- Improved visual design of all documentation pages
+- Enhanced color documentation with interactive swatches
+- Updated typography documentation with live examples
+- Improved spacing documentation with visual scale
+- Enhanced shadows and border-radius documentation
+
+### Fixed
+- Documentation navigation and organization
+- Theme switching in Storybook
+- Design token consistency across components
+
+## [0.1.12] - 2024-02-10
+
+### Added
+- DateRangePicker component
+- FileUpload component with drag-and-drop support
+- RichTextInput component
+
+### Changed
+- Improved DatePicker accessibility
+- Updated Button component hover states
+
+### Fixed
+- Select component dropdown positioning
+- Checkbox alignment in forms
+
+## [0.1.11] - 2024-02-03
+
+### Added
+- Skeleton component for loading states
+- Divider component
+- Pagination component
+
+### Changed
+- Enhanced Progress component with variants
+- Improved Spinner animation performance
+
+### Fixed
+- Dialog focus trap edge cases
+- Tooltip positioning on scroll
+
+## [0.1.8] - 2024-01-27
+
+### Added
+- Breadcrumbs component
+- Card component
+- Avatar component with fallback support
+
+### Changed
+- Updated design tokens for better dark mode support
+- Improved Button component variants
+
+### Fixed
+- Input component border colors in dark mode
+- Badge component text contrast
+
+## [0.1.0] - 2024-01-20
+
+### Added
+- Initial release of BCT UI
+- CLI tool for project initialization
+- 33 components across 5 categories:
+  - Form Inputs (15): Button, TextInput, TextArea, Checkbox, Radio, RadioGroup, Select, Switch, NumberInput, Slider, ColorPicker, DatePicker, DateRangePicker, FileUpload, RichTextInput
+  - Feedback (7): Dialog, AlertDialog, Alert, Tooltip, Spinner, Progress, Skeleton
+  - Display (6): Badge, Avatar, Card, Breadcrumbs, Pagination, Divider
+  - Navigation (4): Accordion, Tabs, DropdownMenu, Popover
+  - Utilities (1): Portal
+- Design token system with 100+ tokens
+- Light and dark theme support
+- Tailwind CSS v4 integration
+- Base UI primitives for accessibility
+- TypeScript support
+- Biome for linting and formatting
+
+### Features
+- `bct init`: Initialize BCT UI in existing projects
+- `bct add`: Add components on-demand
+- `bct doctor`: Validate project setup
+- Version pinning for compatibility
+- Framework support for Vite and Next.js
+- Optional i18n with Paraglide
+- Optional theme store with Zustand
+
+## Version History
+
+### Versioning Strategy
+
+BCT UI follows [Semantic Versioning](https://semver.org/):
+
+- **Major (X.0.0)**: Breaking changes
+- **Minor (0.X.0)**: New features, backward compatible
+- **Patch (0.0.X)**: Bug fixes only
+
+### Upgrade Guide
+
+#### From 0.1.x to 0.2.0
+
+No breaking changes. To upgrade:
+
+1. Update CLI: `npm install -g @bctechnology/ui@latest`
+2. Update config: Change version in `bct.config.json` to `"0.2.0"`
+3. Re-add components: `npx bct add <component-name>`
+
+#### From 0.0.x to 0.1.0
+
+Breaking changes:
+- Renamed `Input` to `TextInput`
+- Removed deprecated `color` prop from Badge
+- Updated design token names for consistency
+
+Migration steps:
+1. Update all `Input` imports to `TextInput`
+2. Replace `color` prop with `variant` in Badge
+3. Update custom token references
+
+## Roadmap
+
+### Planned for 0.3.0
+
+- [ ] Additional components (DataTable, TreeView, Calendar)
+- [ ] Component composition utilities
+- [ ] Enhanced CLI features
+- [ ] Visual theme editor
+- [ ] Component analytics
+
+### Future Releases
+
+- Multi-framework support (Vue, Angular)
+- Advanced animation system
+- Component testing utilities
+- Figma plugin integration
+- Automated component updates
+
+## Breaking Changes
+
+### 0.2.0
+- None
+
+### 0.1.0
+- Initial release
+
+## Deprecations
+
+### Current Deprecations
+- None
+
+### Removed in 0.1.0
+- Legacy `color` prop from Badge (use `variant` instead)
+- Old `Input` component (renamed to `TextInput`)
+
+## Migration Guides
+
+### Migrating to 0.2.0
+
+No code changes required. The 0.2.0 release focuses on documentation improvements and the new Token Customizer feature.
+
+### Migrating to 0.1.0
+
+See the [0.1.0 Migration Guide](https://github.com/BC-Technology/bct-ui/blob/main/MIGRATION_0.1.0.md) for detailed instructions.
+
+## Support
+
+### Version Support
+
+- **0.2.x**: Active development
+- **0.1.x**: Security fixes only
+- **0.0.x**: No longer supported
+
+### Getting Help
+
+- [GitHub Issues](https://github.com/BC-Technology/bct-ui/issues): Bug reports
+- [GitHub Discussions](https://github.com/BC-Technology/bct-ui/discussions): Questions
+- [Documentation](/docs/getting-started-installation--docs): Guides and references
+
+## Contributing
+
+See the [Contributing Guide](/docs/resources-contributing--docs) to learn how to contribute to BCT UI.
+
+## License
+
+BCT UI is proprietary software for internal BCT use.
+
+---
+
+**Note**: This changelog is automatically updated with each release. For the most up-to-date information, check the [GitHub repository](https://github.com/BC-Technology/bct-ui).

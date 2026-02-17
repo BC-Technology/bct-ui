@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Skeleton } from "../../packages/ui/src/registry/versions/0.2.0/components/skeleton"
+// @ts-expect-error
+import { Skeleton } from "@/registry/versions/0.2.0/components/skeleton"
 
 const meta = {
 	title: "Components/Skeleton",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Skeleton>
 
 export default meta

@@ -1,0 +1,361 @@
+
+<Meta title="Getting Started/Quick Start" />
+
+# Quick Start
+
+Start building with BCT UI components in minutes. This guide shows you how to add and use components in your project.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-info-muted)',
+  borderLeft: '4px solid var(--color-info)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-info)' }}>💡 Prerequisites</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    Make sure you've completed the <a href="?path=/docs/getting-started-installation--docs">Installation</a> guide before proceeding.
+  </p>
+</div>
+
+## Adding Your First Component
+
+Use the `bct add` command to add components to your project:
+
+```bash
+npx bct add button
+```
+
+This command will:
+1. Download the button component from the BCT registry
+2. Place it in `src/components/` (or `components/` if no src directory)
+3. Install any required dependencies
+4. Make the component ready to use
+
+## Using Components
+
+After adding a component, import and use it in your application:
+
+```tsx
+import { Button } from '@/components/button'
+
+export default function MyPage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-4">Welcome</h1>
+      <Button variant="primary" onClick={() => alert('Clicked!')}>
+        Click Me
+      </Button>
+    </div>
+  )
+}
+```
+
+## Building a Simple Form
+
+Let's build a complete form using multiple BCT UI components:
+
+### Step 1: Add Required Components
+
+```bash
+npx bct add button
+npx bct add input
+npx bct add checkbox
+```
+
+### Step 2: Create the Form Component
+
+```tsx
+import { useState } from 'react'
+import { Button } from '@/components/button'
+import { TextInput } from '@/components/input'
+import { Checkbox } from '@/components/checkbox'
+
+export default function SignupForm() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [agreed, setAgreed] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log({ email, password, agreed })
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-surface-1 rounded-lg">
+      <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
+      
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-2">Email</label>
+        <TextInput
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          required
+        />
+      </div>
+      
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-2">Password</label>
+        <TextInput
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+          required
+        />
+      </div>
+      
+      <div className="mb-6">
+        <Checkbox
+          checked={agreed}
+          onChange={(e) => setAgreed(e.target.checked)}
+          label="I agree to the terms and conditions"
+        />
+      </div>
+      
+      <Button type="submit" variant="primary" className="w-full">
+        Create Account
+      </Button>
+    </form>
+  )
+}
+```
+
+## Component Categories
+
+BCT UI provides 33 components across different categories:
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1rem',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>Form Inputs (15)</h3>
+    <ul style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0, paddingLeft: '1.5rem' }}>
+      <li>Button</li>
+      <li>TextInput</li>
+      <li>TextArea</li>
+      <li>Checkbox</li>
+      <li>Radio</li>
+      <li>Select</li>
+      <li>Switch</li>
+      <li>Slider</li>
+      <li>And more...</li>
+    </ul>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>Feedback (7)</h3>
+    <ul style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0, paddingLeft: '1.5rem' }}>
+      <li>Alert</li>
+      <li>Dialog</li>
+      <li>AlertDialog</li>
+      <li>Spinner</li>
+      <li>Progress</li>
+      <li>Tooltip</li>
+      <li>Skeleton</li>
+    </ul>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>Display (6)</h3>
+    <ul style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0, paddingLeft: '1.5rem' }}>
+      <li>Badge</li>
+      <li>Avatar</li>
+      <li>Card</li>
+      <li>Breadcrumbs</li>
+      <li>Pagination</li>
+      <li>Divider</li>
+    </ul>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>Navigation (4)</h3>
+    <ul style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0, paddingLeft: '1.5rem' }}>
+      <li>Tabs</li>
+      <li>Accordion</li>
+      <li>DropdownMenu</li>
+      <li>Popover</li>
+    </ul>
+  </div>
+</div>
+
+## Common Patterns
+
+### Loading States
+
+```tsx
+import { Button } from '@/components/button'
+import { Spinner } from '@/components/spinner'
+
+function LoadingButton({ isLoading, children, ...props }) {
+  return (
+    <Button {...props} disabled={isLoading}>
+      {isLoading ? <Spinner size="sm" /> : children}
+    </Button>
+  )
+}
+```
+
+### Form Validation
+
+```tsx
+import { TextInput } from '@/components/input'
+import { Alert } from '@/components/alert'
+
+function ValidatedInput({ error, ...props }) {
+  return (
+    <div>
+      <TextInput {...props} className={error ? 'border-error' : ''} />
+      {error && (
+        <Alert variant="error" className="mt-2">
+          {error}
+        </Alert>
+      )}
+    </div>
+  )
+}
+```
+
+### Confirmation Dialog
+
+```tsx
+import { AlertDialog } from '@/components/alert-dialog'
+import { Button } from '@/components/button'
+
+function DeleteConfirmation({ onConfirm, onCancel }) {
+  return (
+    <AlertDialog
+      title="Delete Item"
+      description="Are you sure? This action cannot be undone."
+      actions={
+        <>
+          <Button variant="tertiary" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={onConfirm}>
+            Delete
+          </Button>
+        </>
+      }
+    />
+  )
+}
+```
+
+## Styling Components
+
+BCT UI components use Tailwind CSS classes and design tokens:
+
+```tsx
+// Using design tokens
+<Button className="bg-primary text-primary-on">
+  Primary Button
+</Button>
+
+// Combining with Tailwind utilities
+<Card className="p-6 shadow-md hover:shadow-lg transition-shadow">
+  Card content
+</Card>
+
+// Responsive styling
+<div className="p-4 md:p-6 lg:p-8">
+  Responsive padding
+</div>
+```
+
+## Best Practices
+
+<div style={{
+  display: 'grid',
+  gap: '1rem',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-success-muted)',
+    borderLeft: '4px solid var(--color-success)',
+    borderRadius: 'var(--radius-md)'
+  }}>
+    <strong style={{ color: 'var(--color-success)' }}>✅ Do: Use Design Tokens</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0' }}>
+      Always use BCT design tokens (colors, spacing, etc.) instead of hardcoded values
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-success-muted)',
+    borderLeft: '4px solid var(--color-success)',
+    borderRadius: 'var(--radius-md)'
+  }}>
+    <strong style={{ color: 'var(--color-success)' }}>✅ Do: Customize Locally</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0' }}>
+      Components are copied to your project, so feel free to modify them for your needs
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-error-muted)',
+    borderLeft: '4px solid var(--color-error)',
+    borderRadius: 'var(--radius-md)'
+  }}>
+    <strong style={{ color: 'var(--color-error)' }}>❌ Don't: Hardcode Colors</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0' }}>
+      Avoid using hex colors or arbitrary values - use design tokens instead
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1rem',
+    backgroundColor: 'var(--color-error-muted)',
+    borderLeft: '4px solid var(--color-error)',
+    borderRadius: 'var(--radius-md)'
+  }}>
+    <strong style={{ color: 'var(--color-error)' }}>❌ Don't: Skip Accessibility</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0' }}>
+      BCT components are built with accessibility in mind - maintain these features when customizing
+    </p>
+  </div>
+</div>
+
+## Next Steps
+
+- Explore all [components in Storybook](/docs/components-button--docs)
+- Learn about [component patterns](/docs/guides-component-patterns--docs)
+- Understand [theming](/docs/guides-theming--docs)
+- Review [accessibility guidelines](/docs/guides-accessibility--docs)
+
+## Need Help?
+
+- Browse component examples in the sidebar
+- Check the [CLI Usage guide](/docs/getting-started-cli-usage--docs)
+- Review [best practices](/docs/guides-best-practices--docs)

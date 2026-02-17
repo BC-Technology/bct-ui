@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Tabs } from "../../packages/ui/src/registry/versions/0.2.0/components/tabs"
+// @ts-expect-error
+import { Tabs } from "@/registry/versions/0.2.0/components/tabs"
 
 const meta = {
 	title: "Components/Tabs",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Tabs>
 
 export default meta

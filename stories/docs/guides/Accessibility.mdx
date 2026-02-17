@@ -1,0 +1,474 @@
+
+<Meta title="Guides/Accessibility" />
+
+# Accessibility
+
+BCT UI components are built with accessibility in mind, following WCAG 2.1 Level AA guidelines. Learn how to maintain and enhance accessibility in your applications.
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-info-muted)',
+  borderLeft: '4px solid var(--color-info)',
+  borderRadius: 'var(--radius-md)',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <strong style={{ color: 'var(--color-info)' }}>♿ Accessibility First</strong>
+  <p style={{ margin: '0.5rem 0 0 0', fontSize: 'var(--text-sm)' }}>
+    All BCT UI components are built on Base UI primitives, ensuring robust accessibility features out of the box.
+  </p>
+</div>
+
+## Core Principles
+
+### 1. Keyboard Navigation
+
+All interactive components must be keyboard accessible:
+
+- **Tab**: Navigate between focusable elements
+- **Enter/Space**: Activate buttons and controls
+- **Arrow keys**: Navigate within components (menus, tabs, etc.)
+- **Escape**: Close dialogs and dropdowns
+
+### 2. Screen Reader Support
+
+Components include proper ARIA attributes:
+
+- **Labels**: All inputs have associated labels
+- **Roles**: Semantic roles for custom components
+- **States**: Dynamic state changes announced
+- **Descriptions**: Additional context where needed
+
+### 3. Visual Accessibility
+
+Design tokens ensure sufficient contrast:
+
+- **Text contrast**: 4.5:1 for normal text, 3:1 for large text
+- **Focus indicators**: Visible focus states on all interactive elements
+- **Color independence**: Information not conveyed by color alone
+
+## Component Accessibility
+
+### Buttons
+
+```tsx
+import { Button } from '@/components/button'
+
+// Good: Descriptive text
+<Button>Save Changes</Button>
+
+// Good: Icon with label
+<Button aria-label="Close dialog">
+  <CloseIcon />
+</Button>
+
+// Bad: Icon without label
+<Button>
+  <CloseIcon />
+</Button>
+```
+
+### Forms
+
+```tsx
+import { TextInput } from '@/components/input'
+import { Checkbox } from '@/components/checkbox'
+
+// Good: Explicit label
+<div>
+  <label htmlFor="email">Email Address</label>
+  <TextInput id="email" type="email" required />
+</div>
+
+// Good: Error message linked
+<div>
+  <TextInput
+    id="password"
+    type="password"
+    aria-invalid={hasError}
+    aria-describedby={hasError ? 'password-error' : undefined}
+  />
+  {hasError && (
+    <span id="password-error" role="alert">
+      Password must be at least 8 characters
+    </span>
+  )}
+</div>
+
+// Good: Checkbox with label
+<Checkbox
+  id="terms"
+  checked={agreed}
+  onChange={(e) => setAgreed(e.target.checked)}
+>
+  I agree to the terms and conditions
+</Checkbox>
+```
+
+### Dialogs
+
+```tsx
+import { Dialog } from '@/components/dialog'
+
+// Good: Proper dialog structure
+<Dialog
+  open={isOpen}
+  onClose={handleClose}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-description"
+>
+  <h2 id="dialog-title">Confirm Action</h2>
+  <p id="dialog-description">
+    Are you sure you want to proceed?
+  </p>
+  <div>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleConfirm}>Confirm</Button>
+  </div>
+</Dialog>
+```
+
+### Navigation
+
+```tsx
+import { Tabs } from '@/components/tabs'
+
+// Good: Semantic navigation
+<nav aria-label="Main navigation">
+  <Tabs>
+    <Tabs.List>
+      <Tabs.Trigger value="home">Home</Tabs.Trigger>
+      <Tabs.Trigger value="about">About</Tabs.Trigger>
+      <Tabs.Trigger value="contact">Contact</Tabs.Trigger>
+    </Tabs.List>
+  </Tabs>
+</nav>
+```
+
+## ARIA Attributes
+
+### Common ARIA Attributes
+
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: 'var(--color-surface-1)',
+  borderRadius: 'var(--radius-md)',
+  border: '1px solid var(--color-border)',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-label</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Provides a label for elements without visible text
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-labelledby</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      References an element that labels the current element
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-describedby</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      References an element that describes the current element
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-invalid</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Indicates whether input value is invalid
+    </p>
+  </div>
+  
+  <div style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-expanded</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Indicates whether element is expanded or collapsed
+    </p>
+  </div>
+  
+  <div>
+    <code style={{ fontWeight: 'var(--font-weight-bold)' }}>aria-hidden</code>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.25rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Hides element from screen readers
+    </p>
+  </div>
+</div>
+
+### Live Regions
+
+Announce dynamic content changes:
+
+```tsx
+// Status messages
+<div role="status" aria-live="polite">
+  {message}
+</div>
+
+// Urgent alerts
+<div role="alert" aria-live="assertive">
+  {errorMessage}
+</div>
+
+// Loading states
+<div role="status" aria-live="polite" aria-busy={isLoading}>
+  {isLoading ? 'Loading...' : 'Content loaded'}
+</div>
+```
+
+## Focus Management
+
+### Focus Trapping
+
+Trap focus within modals:
+
+```tsx
+import { useEffect, useRef } from 'react'
+
+function Modal({ isOpen, onClose, children }) {
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const focusableElements = modalRef.current.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    firstElement?.focus()
+
+    const handleTab = (e) => {
+      if (e.key !== 'Tab') return
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault()
+          lastElement.focus()
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault()
+          firstElement.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleTab)
+    return () => document.removeEventListener('keydown', handleTab)
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  return (
+    <div ref={modalRef} role="dialog" aria-modal="true">
+      {children}
+    </div>
+  )
+}
+```
+
+### Focus Restoration
+
+Return focus after closing dialogs:
+
+```tsx
+function useDialogFocus(isOpen) {
+  const previousFocus = useRef(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      previousFocus.current = document.activeElement
+    } else if (previousFocus.current) {
+      previousFocus.current.focus()
+    }
+  }, [isOpen])
+}
+```
+
+## Color Contrast
+
+### Checking Contrast
+
+All text must meet WCAG contrast requirements:
+
+- **Normal text (< 18px)**: 4.5:1 contrast ratio
+- **Large text (≥ 18px or ≥ 14px bold)**: 3:1 contrast ratio
+- **UI components**: 3:1 contrast ratio
+
+BCT UI design tokens are pre-validated for contrast:
+
+```tsx
+// Good: Using design tokens (pre-validated)
+<div className="bg-primary text-primary-on">
+  High contrast text
+</div>
+
+// Good: Status colors with proper contrast
+<div className="bg-error text-error-on">
+  Error message
+</div>
+```
+
+### Testing Contrast
+
+Use browser DevTools or online tools:
+
+- Chrome DevTools: Inspect element → Accessibility pane
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- [Contrast Ratio Tool](https://contrast-ratio.com/)
+
+## Screen Reader Testing
+
+### Testing Tools
+
+- **NVDA** (Windows): Free, open-source
+- **JAWS** (Windows): Industry standard
+- **VoiceOver** (macOS/iOS): Built-in
+- **TalkBack** (Android): Built-in
+
+### Testing Checklist
+
+1. Navigate using only keyboard
+2. Verify all interactive elements are reachable
+3. Check that labels and descriptions are announced
+4. Confirm state changes are announced
+5. Test form validation messages
+6. Verify modal focus trapping
+7. Check skip links and landmarks
+
+## Common Patterns
+
+### Skip Links
+
+Allow keyboard users to skip navigation:
+
+```tsx
+function Layout({ children }) {
+  return (
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-on"
+      >
+        Skip to main content
+      </a>
+      <nav>Navigation</nav>
+      <main id="main-content">{children}</main>
+    </>
+  )
+}
+```
+
+### Semantic HTML
+
+Use appropriate HTML elements:
+
+```tsx
+// Good: Semantic elements
+<nav aria-label="Main navigation">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<main>
+  <article>
+    <h1>Article Title</h1>
+    <p>Content...</p>
+  </article>
+</main>
+
+<footer>
+  <p>© 2024 Company</p>
+</footer>
+
+// Bad: Divs for everything
+<div className="nav">
+  <div className="link">Home</div>
+  <div className="link">About</div>
+</div>
+```
+
+### Loading States
+
+Announce loading states to screen readers:
+
+```tsx
+function LoadingButton({ isLoading, children, ...props }) {
+  return (
+    <Button {...props} disabled={isLoading}>
+      {isLoading && (
+        <span className="sr-only">Loading...</span>
+      )}
+      {children}
+    </Button>
+  )
+}
+```
+
+## Best Practices
+
+1. **Test with keyboard only**: Ensure all functionality is accessible without a mouse
+2. **Use semantic HTML**: Choose appropriate HTML elements for their purpose
+3. **Provide text alternatives**: All images and icons need alt text or labels
+4. **Maintain focus indicators**: Never remove focus outlines without providing alternatives
+5. **Test with screen readers**: Regularly test with actual assistive technologies
+6. **Use ARIA sparingly**: Prefer semantic HTML over ARIA when possible
+7. **Announce changes**: Use live regions for dynamic content updates
+8. **Respect user preferences**: Honor reduced motion and high contrast preferences
+
+## Reduced Motion
+
+Respect user's motion preferences:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+In React:
+
+```tsx
+function useReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mediaQuery.matches)
+
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches)
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  return prefersReducedMotion
+}
+```
+
+## Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [MDN Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+- [WebAIM](https://webaim.org/)
+- [A11y Project](https://www.a11yproject.com/)
+- [Base UI Documentation](https://base-ui.com/)
+
+## Next Steps
+
+- Review [component patterns](/docs/guides-component-patterns--docs)
+- Learn about [best practices](/docs/guides-best-practices--docs)
+- Explore [theming](/docs/guides-theming--docs)

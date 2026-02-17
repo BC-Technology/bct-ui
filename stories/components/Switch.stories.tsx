@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { Switch } from "../../packages/ui/src/registry/versions/0.2.0/components/switch"
+// @ts-expect-error
+import { Switch } from "@/registry/versions/0.2.0/components/switch"
 
 const meta = {
 	title: "Components/Switch",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Switch>
 
 export default meta

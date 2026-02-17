@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React, { useState } from "react"
-import { Pagination } from "../../packages/ui/src/registry/versions/0.2.0/components/pagination"
+// @ts-expect-error
+import { Pagination } from "@/registry/versions/0.2.0/components/pagination"
 
 const meta = {
 	title: "Components/Pagination",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof Pagination>
 
 export default meta
@@ -20,9 +20,9 @@ export const Default: Story = {
 		currentPage: 1,
 		totalPages: 10,
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onPageChange: (page) => console.log("Page changed to:", page),
+		onPageChange: (page: number) => console.log("Page changed to:", page),
 	},
-	render: (args) => {
+	render: (args: any) => {
 		const [page, setPage] = useState(args.currentPage)
 		return <Pagination {...args} currentPage={page} onPageChange={setPage} />
 	},
@@ -33,9 +33,9 @@ export const ManyPages: Story = {
 		currentPage: 5,
 		totalPages: 20,
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onPageChange: (page) => console.log("Page changed to:", page),
+		onPageChange: (page: number) => console.log("Page changed to:", page),
 	},
-	render: (args) => {
+	render: (args: any) => {
 		const [page, setPage] = useState(args.currentPage)
 		return <Pagination {...args} currentPage={page} onPageChange={setPage} />
 	},
@@ -46,9 +46,9 @@ export const FewPages: Story = {
 		currentPage: 2,
 		totalPages: 3,
 		// biome-ignore lint/suspicious/noConsole: allowed for stories
-		onPageChange: (page) => console.log("Page changed to:", page),
+		onPageChange: (page: number) => console.log("Page changed to:", page),
 	},
-	render: (args) => {
+	render: (args: any) => {
 		const [page, setPage] = useState(args.currentPage)
 		return <Pagination {...args} currentPage={page} onPageChange={setPage} />
 	},

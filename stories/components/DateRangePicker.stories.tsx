@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 // biome-ignore lint/correctness/noUnusedImports: false positive
 import React from "react"
-import { DateRangePicker } from "../../packages/ui/src/registry/versions/0.2.0/components/date-range-picker"
+// @ts-expect-error
+import { DateRangePicker } from "@/registry/versions/0.2.0/components/date-range-picker"
 
 const meta = {
 	title: "Components/DateRangePicker",
@@ -9,7 +10,6 @@ const meta = {
 	parameters: {
 		layout: "centered",
 	},
-	tags: ["autodocs"],
 } satisfies Meta<typeof DateRangePicker>
 
 export default meta

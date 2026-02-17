@@ -1,0 +1,272 @@
+
+<Meta title="Introduction" />
+
+<div style={{
+  background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-focus) 100%)',
+  padding: '3rem 2rem',
+  borderRadius: 'var(--radius-lg)',
+  marginBottom: '2rem',
+  color: 'var(--color-primary-on)'
+}}>
+  <h1 style={{ 
+    fontSize: 'var(--text-4xl)', 
+    fontWeight: 'var(--font-weight-bold)',
+    marginBottom: '1rem',
+    color: 'var(--color-primary-on)'
+  }}>
+    Welcome to BCT UI
+  </h1>
+  <p style={{ 
+    fontSize: 'var(--text-lg)', 
+    marginBottom: '0',
+    color: 'var(--color-primary-on)',
+    opacity: 0.95
+  }}>
+    A comprehensive UI platform ensuring consistency, speed, and maintainability across all BCT frontend projects.
+  </p>
+</div>
+
+## What is BCT UI?
+
+BCT UI is a complete design system and component library platform that combines:
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1rem',
+  marginTop: '1.5rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>🎨 Design System</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Canonical design tokens for colors, typography, spacing, shadows, and more
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>📦 Component Library</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      shadcn/ui-inspired workflow where components are copied locally into projects
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>🔧 CLI Tool</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Single command to scaffold projects with all necessary tooling
+    </p>
+  </div>
+  
+  <div style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid var(--color-border)'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.5rem' }}>📌 Version Pinning</h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Projects pin to specific BCT versions, ensuring compatibility
+    </p>
+  </div>
+</div>
+
+## Key Features
+
+- **Consistency**: Mandatory design tokens ensure identical appearance across applications
+- **Developer Experience**: Easy component addition with `npx bct add <component>`
+- **Framework Support**: Works with Vite + React Router and Next.js + App Router
+- **Type Safety**: Full TypeScript support with proper prop interfaces
+- **Local Ownership**: Teams customize components while maintaining design system alignment
+- **Accessibility**: Built on Base UI primitives for robust accessibility
+
+## Using This Storybook
+
+This interactive environment helps you explore, test, and understand the BCT UI component library.
+
+### Navigation
+
+- **Sidebar**: Lists all available components organized by category
+- **Docs Tab**: Contains documentation, usage examples, and API details
+- **Canvas Tab**: Shows the live, interactive component
+- **Controls Panel**: Modify component props and see instant updates
+
+### Component Categories
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '1rem',
+  marginTop: '1rem',
+  marginBottom: '2rem'
+}}>
+  <div style={{ padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <strong>Form Inputs (15)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Button, Input, Checkbox, Select, etc.
+    </p>
+  </div>
+  <div style={{ padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <strong>Feedback (7)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Alert, Dialog, Progress, Spinner, etc.
+    </p>
+  </div>
+  <div style={{ padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <strong>Display (6)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Badge, Card, Avatar, etc.
+    </p>
+  </div>
+  <div style={{ padding: '1rem', backgroundColor: 'var(--color-surface-1)', borderRadius: 'var(--radius-md)' }}>
+    <strong>Navigation (4)</strong>
+    <p style={{ fontSize: 'var(--text-sm)', margin: '0.5rem 0 0 0', color: 'var(--color-typography-secondary)' }}>
+      Tabs, Accordion, Dropdown, etc.
+    </p>
+  </div>
+</div>
+
+### Custom Addons
+
+BCT UI Storybook includes specialized addons for enhanced development:
+
+**Theme Toggle (🌙/☀️)**
+- Switch between light and dark themes
+- Click the icon in the toolbar
+- Remembers your choice across sessions
+
+**Version Switcher**
+- Test components from different BCT UI versions
+- Select version from the dropdown in the toolbar
+- Useful for compatibility testing
+
+## Quick Start
+
+### 1. Install CLI
+
+```bash
+npm install -g @bctechnology/ui
+```
+
+### 2. Initialize Project
+
+```bash
+cd your-project
+npx bct init
+```
+
+### 3. Add Components
+
+```bash
+npx bct add button
+npx bct add input
+```
+
+### 4. Develop
+
+```bash
+npm run dev
+```
+
+## Explore the Documentation
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '1.5rem',
+  marginTop: '2rem'
+}}>
+  <a href="?path=/docs/getting-started-installation--docs" style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '2px solid var(--color-border)',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'all 0.2s',
+    cursor: 'pointer'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-xl)', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
+      📚 Getting Started
+    </h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Learn how to install and set up BCT UI in your project
+    </p>
+  </a>
+
+  <a href="?path=/docs/design-system-overview--docs" style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '2px solid var(--color-border)',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'all 0.2s',
+    cursor: 'pointer'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-xl)', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
+      🎨 Design System
+    </h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Explore design tokens, colors, typography, and more
+    </p>
+  </a>
+
+  <a href="?path=/docs/design-system-customize-tokens--docs" style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '2px solid var(--color-border)',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'all 0.2s',
+    cursor: 'pointer'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-xl)', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
+      ⚙️ Customize Tokens
+    </h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Adjust design tokens and see live updates across all components
+    </p>
+  </a>
+
+  <a href="?path=/docs/guides-component-patterns--docs" style={{
+    padding: '1.5rem',
+    backgroundColor: 'var(--color-surface-1)',
+    borderRadius: 'var(--radius-md)',
+    border: '2px solid var(--color-border)',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'all 0.2s',
+    cursor: 'pointer'
+  }}>
+    <h3 style={{ fontSize: 'var(--text-xl)', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
+      📖 Guides
+    </h3>
+    <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-typography-secondary)', margin: 0 }}>
+      Best practices, patterns, and theming guides
+    </p>
+  </a>
+</div>
+
+## Tips
+
+- Use the search bar to quickly find components
+- The theme toggle works across all components simultaneously
+- Customize design tokens in real-time with the token customizer
+- For production use, see the installation guide for setup instructions
