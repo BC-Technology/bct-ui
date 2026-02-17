@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-// biome-ignore lint/correctness/noUnusedImports: false positive
-import React from "react"
+import type React from "react"
 // @ts-expect-error
 import { Button } from "@/registry/versions/0.2.0/components/button"
 // @ts-expect-error
@@ -22,9 +21,13 @@ export const Default: Story = {
 		content: "This is a tooltip",
 		children: <Button>Hover me</Button>,
 	},
-	render: ({ content, children }) => (
-		<Tooltip content={content}>{children}</Tooltip>
-	),
+	render: ({
+		content,
+		children,
+	}: {
+		content: React.ReactNode
+		children: React.ReactNode
+	}) => <Tooltip content={content}>{children}</Tooltip>,
 }
 
 export const LongContent: Story = {
@@ -33,9 +36,13 @@ export const LongContent: Story = {
 			"This is a longer tooltip with more detailed information about the element",
 		children: <Button>Hover for more info</Button>,
 	},
-	render: ({ content, children }) => (
-		<Tooltip content={content}>{children}</Tooltip>
-	),
+	render: ({
+		content,
+		children,
+	}: {
+		content: React.ReactNode
+		children: React.ReactNode
+	}) => <Tooltip content={content}>{children}</Tooltip>,
 }
 
 export const OnIcon: Story = {
