@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge"
 
 export interface BadgeProps extends React.ComponentPropsWithoutRef<"span"> {
 	variant?: "primary" | "secondary" | "success" | "warning" | "error" | "info"
-	size?: "sm" | "md"
+	size?: "sm" | "md" | "lg"
 	className?: string
 }
 
@@ -27,6 +27,7 @@ export function Badge({
 	const sizeStyles = {
 		sm: "px-2 py-0.5 text-text-xs",
 		md: "px-2.5 py-1 text-text-sm",
+		lg: "px-3 py-1.5 text-text-base",
 	}
 
 	return (

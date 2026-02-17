@@ -1,0 +1,200 @@
+	/* //? Colors */
+	/* Primary Colors */
+	--color-primary: var(--color-primary);
+	--color-primary-on: var(--color-primary-on);
+	--color-primary-hover: var(--color-primary-hover);
+	--color-primary-focus: var(--color-primary-focus);
+	--color-primary-muted: var(--color-primary-muted);
+	--color-primary-muted-hover: var(--color-primary-muted-hover);
+	--color-primary-disabled: var(--color-primary-disabled);
+
+	/* Secondary Colors */
+	--color-secondary: var(--color-secondary);
+	--color-secondary-on: var(--color-secondary-on);
+	--color-secondary-hover: var(--color-secondary-hover);
+	--color-secondary-focus: var(--color-secondary-focus);
+	--color-secondary-muted: var(--color-secondary-muted);
+	--color-secondary-muted-hover: var(--color-secondary-muted-hover);
+	--color-secondary-disabled: var(--color-secondary-disabled);
+
+	/* Tertiary Colors */
+	--color-tertiary: var(--color-tertiary);
+	--color-tertiary-on: var(--color-tertiary-on);
+	--color-tertiary-hover: var(--color-tertiary-hover);
+	--color-tertiary-focus: var(--color-tertiary-focus);
+	--color-tertiary-muted: var(--color-tertiary-muted);
+	--color-tertiary-muted-hover: var(--color-tertiary-muted-hover);
+	--color-tertiary-disabled: var(--color-tertiary-disabled);
+
+	/* Background & Surface */
+	--color-background: var(--color-background);
+	--color-surface-1: var(--color-surface-1);
+	--color-surface-1-on: var(--color-surface-1-on);
+	--color-surface-1-hover: var(--color-surface-1-hover);
+	--color-surface-1-focus: var(--color-surface-1-focus);
+	--color-surface-1-disabled: var(--color-surface-1-disabled);
+	--color-surface-2: var(--color-surface-2);
+	--color-surface-2-on: var(--color-surface-2-on);
+	--color-surface-2-hover: var(--color-surface-2-hover);
+	--color-surface-2-focus: var(--color-surface-2-focus);
+	--color-surface-2-disabled: var(--color-surface-2-disabled);
+	--color-surface-3: var(--color-surface-3);
+	--color-surface-3-on: var(--color-surface-3-on);
+	--color-surface-3-hover: var(--color-surface-3-hover);
+	--color-surface-3-focus: var(--color-surface-3-focus);
+	--color-surface-3-disabled: var(--color-surface-3-disabled);
+	--color-overlay: var(--color-overlay);
+
+	/* Typography */
+	--color-typography-primary: var(--color-typography-primary);
+	--color-typography-secondary: var(--color-typography-secondary);
+	--color-typography-muted: var(--color-typography-muted);
+	--color-typography-inverse: var(--color-typography-inverse);
+
+	/* Light & Dark */
+	--color-light: var(--color-light);
+	--color-light-on: var(--color-light-on);
+	--color-dark: var(--color-dark);
+	--color-dark-on: var(--color-dark-on);
+
+	/* Status Colors */
+	--color-info: var(--color-info);
+	--color-info-on: var(--color-info-on);
+	--color-info-hover: var(--color-info-hover);
+	--color-info-muted: var(--color-info-muted);
+	--color-info-muted-hover: var(--color-info-muted-hover);
+
+	--color-success: var(--color-success);
+	--color-success-on: var(--color-success-on);
+	--color-success-hover: var(--color-success-hover);
+	--color-success-muted: var(--color-success-muted);
+	--color-success-muted-hover: var(--color-success-muted-hover);
+
+	--color-warning: var(--color-warning);
+	--color-warning-on: var(--color-warning-on);
+	--color-warning-hover: var(--color-warning-hover);
+	--color-warning-muted: var(--color-warning-muted);
+	--color-warning-muted-hover: var(--color-warning-muted-hover);
+
+	--color-error: var(--color-error);
+	--color-error-on: var(--color-error-on);
+	--color-error-hover: var(--color-error-hover);
+	--color-error-muted: var(--color-error-muted);
+	--color-error-muted-hover: var(--color-error-muted-hover);
+
+	/* Accents */
+	--color-accent-1: var(--color-accent-1);
+	--color-accent-1-on: var(--color-accent-1-on);
+	--color-accent-1-hover: var(--color-accent-1-hover);
+	--color-accent-1-focus: var(--color-accent-1-focus);
+	--color-accent-1-muted: var(--color-accent-1-muted);
+	--color-accent-1-muted-hover: var(--color-accent-1-muted-hover);
+	--color-accent-1-disabled: var(--color-accent-1-disabled);
+
+	--color-accent-2: var(--color-accent-2);
+	--color-accent-2-on: var(--color-accent-2-on);
+	--color-accent-2-hover: var(--color-accent-2-hover);
+	--color-accent-2-focus: var(--color-accent-2-focus);
+	--color-accent-2-muted: var(--color-accent-2-muted);
+	--color-accent-2-muted-hover: var(--color-accent-2-muted-hover);
+	--color-accent-2-disabled: var(--color-accent-2-disabled);
+
+	--color-accent-3: var(--color-accent-3);
+	--color-accent-3-on: var(--color-accent-3-on);
+	--color-accent-3-hover: var(--color-accent-3-hover);
+	--color-accent-3-focus: var(--color-accent-3-focus);
+	--color-accent-3-muted: var(--color-accent-3-muted);
+	--color-accent-3-muted-hover: var(--color-accent-3-muted-hover);
+	--color-accent-3-disabled: var(--color-accent-3-disabled);
+
+	--color-accent-4: var(--color-accent-4);
+	--color-accent-4-on: var(--color-accent-4-on);
+	--color-accent-4-hover: var(--color-accent-4-hover);
+	--color-accent-4-focus: var(--color-accent-4-focus);
+	--color-accent-4-muted: var(--color-accent-4-muted);
+	--color-accent-4-muted-hover: var(--color-accent-4-muted-hover);
+	--color-accent-4-disabled: var(--color-accent-4-disabled);
+
+	--color-neutral: var(--color-neutral);
+	--color-neutral-on: var(--color-neutral-on);
+	--color-neutral-hover: var(--color-neutral-hover);
+	--color-neutral-focus: var(--color-neutral-focus);
+	--color-neutral-muted: var(--color-neutral-muted);
+	--color-neutral-muted-hover: var(--color-neutral-muted-hover);
+	--color-neutral-disabled: var(--color-neutral-disabled);
+
+	/* Border & Divider */
+	--color-border: var(--color-border);
+	--color-border-hover: var(--color-border-hover);
+	--color-border-focus: var(--color-border-focus);
+	--color-border-muted: var(--color-border-muted);
+	--color-border-muted-hover: var(--color-border-muted-hover);
+	--color-border-disabled: var(--color-border-disabled);
+	--color-divider: var(--color-divider);
+
+	/* //? Spacing Tokens (Base unit: 2px) */
+	--spacing: 0.25rem;
+
+	/* //? Text Tokens */
+	--text-2xs: 10px;
+	--text-xs: 12px;
+	--text-sm: 14px;
+	--text-base: 16px;
+	--text-lg: 18px;
+	--text-xl: 20px;
+	--text-2xl: 24px;
+	--text-3xl: 28px;
+	--text-4xl: 32px;
+	--text-5xl: 36px;
+
+	/* //? Font Weight Tokens */
+	--font-weight-thin: 100;
+	--font-weight-extralight: 200;
+	--font-weight-light: 300;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	--font-weight-extrabold: 800;
+	--font-weight-black: 900;
+
+	/* //? Radius Tokens */
+	--radius-none: 0px;
+	--radius-sm: 2px;
+	--radius-md: 4px;
+	--radius-lg: 8px;
+
+	/* //? Shadow Tokens */
+	/* Box Shadow */
+	--shadow-sm: 0 1px 2px 0 rgba(12, 12, 13, 0.2);
+	--shadow-md: 0 1px 4px 1px rgba(12, 12, 13, 0.2);
+	--shadow-lg: 0 2px 8px 2px rgba(12, 12, 13, 0.2);
+
+	/* Inset Shadow Tokens */
+	--inset-shadow-sm: inset 0 1px rgb(0 0 0 / 0.05);
+	--inset-shadow-md: inset 0 1px 1px rgb(0 0 0 / 0.05);
+	--inset-shadow-lg: inset 0 2px 4px rgb(0 0 0 / 0.05);
+
+	/* //? Blur Tokens */
+	--blur-xs: 4px;
+	--blur-sm: 8px;
+	--blur-md: 12px;
+	--blur-lg: 16px;
+	--blur-xl: 24px;
+	--blur-2xl: 40px;
+	--blur-3xl: 64px;
+
+	/* //? Aspect Tokens */
+	--aspect-video: 16 / 9;
+	--aspect-square: 1 / 1;
+
+	/* //? Timing Function Tokens */
+	--ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* //? Animation Tokens */
+	--animate-spin: spin 1s linear infinite;
+	--animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+	--animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	--animate-bounce: bounce 1s infinite;

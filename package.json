@@ -14,11 +14,23 @@
 		"lint": "biome lint .",
 		"typecheck": "pnpm -r typecheck",
 		"format": "biome format --write .",
-		"check": "biome check ."
+		"check": "biome check .",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
 	},
 	"devDependencies": {
-		"@types/node": "^22.10.10",
 		"@biomejs/biome": "^2.3.12",
+		"@mdx-js/react": "^3.1.1",
+		"@storybook/react": "^10.2.8",
+		"@storybook/react-vite": "^10.2.8",
+		"@tailwindcss/vite": "^4.1.0",
+		"@types/node": "^22.10.10",
+		"@types/react": "18.3.27",
+		"@types/react-dom": "18.3.7",
+		"lucide-react": "0.460.0",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"storybook": "^10.2.8",
 		"typescript": "^5.7.3"
 	},
 	"engines": {
