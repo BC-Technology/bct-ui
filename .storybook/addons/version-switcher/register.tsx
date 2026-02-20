@@ -1,99 +1,44 @@
-import { useCallback, useState } from "react"
-import { IconButton } from "storybook/internal/components"
-import { addons, types } from "storybook/internal/manager-api"
+import { addons } from "storybook/manager-api"
 
 const ADDON_ID = "bct-version-switcher"
-const TOOL_ID = `${ADDON_ID}/tool`
-const _PARAM_KEY = "componentVersion"
+const GLOBAL_KEY = "componentVersion"
+const DEFAULT_VERSION = "0.3.0"
+const STORAGE_KEY = "bct-component-version"
 
-const VERSIONS = ["0.2.0", "0.1.12", "0.1.11", "0.1.8", "0.1.0"]
+const getStoredVersion = () => {
+	try {
+		return localStorage.getItem(STORAGE_KEY) || DEFAULT_VERSION
+	} catch {
+		return DEFAULT_VERSION
+	}
+}
 
-const VersionSwitcher = () => {
-	const [currentVersion, setCurrentVersion] = useState(() => {
-		if (typeof window !== "undefined") {
-			return localStorage.getItem("bct-component-version") || "0.2.0"
-		}
-		return "0.2.0"
-	})
-	const [isOpen, setIsOpen] = useState(false)
-
-	const handleVersionChange = useCallback((version: string) => {
-		setCurrentVersion(version)
-		localStorage.setItem("bct-component-version", version)
-		setIsOpen(false)
-
-		// Trigger a global event that stories can listen to
-		if (typeof window !== "undefined") {
-			window.dispatchEvent(
-				new CustomEvent("bct-version-change", { detail: { version } }),
-			)
-		}
-	}, [])
-
-	return (
-		<div style={{ position: "relative", display: "inline-block" }}>
-			<IconButton
-				key={TOOL_ID}
-				title={`Component Version: ${currentVersion}`}
-				onClick={() => setIsOpen(!isOpen)}
-			>
-				v{currentVersion}
-			</IconButton>
-			{isOpen && (
-				<div
-					style={{
-						position: "absolute",
-						top: "100%",
-						right: 0,
-						marginTop: "4px",
-						backgroundColor: "white",
-						border: "1px solid #ccc",
-						borderRadius: "4px",
-						boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-						zIndex: 1000,
-						minWidth: "120px",
-					}}
-				>
-					{VERSIONS.map((version) => (
-						<button
-							key={version}
-							onClick={() => handleVersionChange(version)}
-							style={{
-								display: "block",
-								width: "100%",
-								padding: "8px 16px",
-								border: "none",
-								background:
-									version === currentVersion ? "#f0f0f0" : "transparent",
-								textAlign: "left",
-								cursor: "pointer",
-								fontSize: "14px",
-							}}
-							onMouseEnter={(e) => {
-								if (version !== currentVersion) {
-									e.currentTarget.style.backgroundColor = "#f5f5f5"
-								}
-							}}
-							onMouseLeave={(e) => {
-								if (version !== currentVersion) {
-									e.currentTarget.style.backgroundColor = "transparent"
-								}
-							}}
-						>
-							v{version}
-						</button>
-					))}
-				</div>
-			)}
-		</div>
-	)
+const setStoredVersion = (version: string) => {
+	try {
+		localStorage.setItem(STORAGE_KEY, version)
+	} catch {
+		// ignore
+	}
 }
 
 addons.register(ADDON_ID, () => {
-	addons.add(TOOL_ID, {
-		type: types.TOOL,
-		title: "Version Switcher",
-		match: ({ viewMode, tabId }) => !tabId && viewMode === "story",
-		render: () => <VersionSwitcher />,
+	const channel = addons.getChannel()
+
+	channel.once("setGlobals", () => {
+		const storedVersion = getStoredVersion()
+		channel.emit("updateGlobals", { globals: { [GLOBAL_KEY]: storedVersion } })
 	})
+
+	channel.on(
+		"globalsUpdated",
+		({ globals }: { globals: Record<string, string> }) => {
+			const newVersion = globals[GLOBAL_KEY] || DEFAULT_VERSION
+			const prevVersion = getStoredVersion()
+
+			if (newVersion !== prevVersion) {
+				setStoredVersion(newVersion)
+				window.location.reload()
+			}
+		},
+	)
 })

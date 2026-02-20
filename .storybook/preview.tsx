@@ -53,17 +53,15 @@ const preview: Preview = {
 		},
 		componentVersion: {
 			name: "Version",
-			description: "Component version to display",
-			defaultValue: "0.2.0",
+			description: "Component library version",
+			defaultValue: "0.3.0",
 			toolbar: {
-				icon: "structure",
+				icon: "bookmark",
 				items: [
+					{ value: "0.3.0", title: "v0.3.0" },
 					{ value: "0.2.0", title: "v0.2.0" },
-					{ value: "0.1.12", title: "v0.1.12" },
-					{ value: "0.1.11", title: "v0.1.11" },
-					{ value: "0.1.8", title: "v0.1.8" },
-					{ value: "0.1.0", title: "v0.1.0" },
 				],
+				dynamicTitle: true,
 			},
 		},
 	},
