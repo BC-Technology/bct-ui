@@ -62,7 +62,7 @@ export const ThemeConfigPanel: React.FC<ThemeConfigPanelProps> = ({ active }) =>
     }
   };
 
-  const currentTheme = isDark ? DARK_THEME_TOKENS : DEFAULT_THEME_TOKENS;
+  const currentTheme = (isDark ? DARK_THEME_TOKENS : DEFAULT_THEME_TOKENS) as any;
 
   if (!active) return null;
 

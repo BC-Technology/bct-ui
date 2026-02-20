@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addons, types } from 'storybook/internal/manager-api';
+import { addons, types } from 'storybook/manager-api';
 
 const ADDON_ID = 'bct-theme-config';
 const PANEL_ID = `${ADDON_ID}/panel`;

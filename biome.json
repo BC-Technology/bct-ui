@@ -16,7 +16,8 @@
 			"!!**/dist",
 			"!!**/.next",
 			"!!**/.vite",
-			"!!**/coverage"
+			"!!**/coverage",
+			"!!**/.storybook"
 		]
 	},
 	"formatter": {
