@@ -1,5 +1,3 @@
-"use client"
-
 import { Popover } from "@base-ui/react/popover"
 import clsx from "clsx"
 import { LogOut, Settings } from "lucide-react"

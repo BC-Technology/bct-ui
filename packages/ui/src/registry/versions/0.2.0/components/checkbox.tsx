@@ -1,5 +1,3 @@
-"use client"
-
 import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox"
 import clsx from "clsx"
 import type * as React from "react"

@@ -1,5 +1,3 @@
-"use client"
-
 import clsx from "clsx"
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from "lucide-react"
 import type * as React from "react"

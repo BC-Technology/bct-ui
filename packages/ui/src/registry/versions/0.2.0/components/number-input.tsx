@@ -1,5 +1,3 @@
-"use client"
-
 import { NumberField as BaseNumberField } from "@base-ui/react/number-field"
 import clsx from "clsx"
 import { Minus, Plus } from "lucide-react"

@@ -1,5 +1,3 @@
-"use client"
-
 import { Tabs as BaseTabs } from "@base-ui/react/tabs"
 import clsx from "clsx"
 import type * as React from "react"

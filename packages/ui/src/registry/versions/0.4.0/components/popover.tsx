@@ -1,5 +1,3 @@
-"use client"
-
 import { Popover as BasePopover } from "@base-ui/react/popover"
 import clsx from "clsx"
 import { X } from "lucide-react"

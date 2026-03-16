@@ -1,5 +1,3 @@
-"use client"
-
 import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog"
 import clsx from "clsx"
 import type * as React from "react"

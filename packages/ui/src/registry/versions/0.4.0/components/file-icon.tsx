@@ -1,5 +1,3 @@
-"use client"
-
 import { File, FileSpreadsheet, FileText, Image } from "lucide-react"
 
 export interface FileIconProps {

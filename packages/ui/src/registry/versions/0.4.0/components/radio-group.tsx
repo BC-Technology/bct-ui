@@ -1,5 +1,3 @@
-"use client"
-
 import { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group"
 import clsx from "clsx"
 import type * as React from "react"
