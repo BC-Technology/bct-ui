@@ -1,3 +1,5 @@
+"use client"
+
 import { Menu } from "@base-ui/react/menu"
 import clsx from "clsx"
 import type * as React from "react"

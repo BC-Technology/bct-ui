@@ -1,3 +1,5 @@
+"use client"
+
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion"
 import clsx from "clsx"
 import { ChevronDown } from "lucide-react"

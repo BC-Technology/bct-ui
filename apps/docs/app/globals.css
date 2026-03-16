@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import "@bctechnology/ui/assets/tokens/index.css";
+
+@source "../../../packages/ui/src";
+@source "../components";
+@source "./";
+
+/* Modern gradient utilities */
+@layer utilities {
+	.bg-linear-to-br {
+		background: linear-gradient(to bottom right, var(--tw-gradient-stops));
+	}
+	
+	.bg-linear-to-r {
+		background: linear-gradient(to right, var(--tw-gradient-stops));
+	}
+	
+	.bg-linear-to-b {
+		background: linear-gradient(to bottom, var(--tw-gradient-stops));
+	}
+	
+	.bg-linear-to-tr {
+		background: linear-gradient(to top right, var(--tw-gradient-stops));
+	}
+}
+
+/* Smooth transitions */
+@layer base {
+	* {
+		@apply transition-colors duration-200 ease-in-out;
+	}
+	
+	button, a {
+		@apply transition-all duration-200 ease-in-out;
+	}
+}

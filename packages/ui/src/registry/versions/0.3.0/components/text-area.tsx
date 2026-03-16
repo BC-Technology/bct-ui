@@ -1,3 +1,5 @@
+"use client"
+
 import { Field } from "@base-ui/react/field"
 import clsx from "clsx"
 import type * as React from "react"

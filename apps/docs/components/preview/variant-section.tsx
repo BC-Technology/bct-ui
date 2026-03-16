@@ -1,0 +1,70 @@
+"use client"
+
+import { Code2, Eye } from "lucide-react"
+import type { ComponentType } from "react"
+import { useState } from "react"
+import { CodeBlock } from "../docs/code-block"
+import { ComponentRenderer } from "./component-renderer"
+
+interface VariantSectionProps {
+	name: string
+	description: string
+	code: string
+	Component: ComponentType<any>
+	props: Record<string, any>
+}
+
+export function VariantSection({
+	name,
+	description,
+	code,
+	Component,
+	props,
+}: VariantSectionProps) {
+	const [showCode, setShowCode] = useState(false)
+
+	return (
+		<div className="group relative overflow-hidden rounded-xl border border-border bg-surface-1 shadow-sm transition-shadow hover:shadow-md">
+			{/* Gradient accent */}
+			<div className="absolute top-0 left-0 h-1 w-full bg-linear-to-r from-primary via-secondary to-accent opacity-60" />
+
+			<div className="p-6">
+				{/* Header */}
+				<div className="mb-4 flex items-start justify-between">
+					<div>
+						<h3 className="font-semibold text-lg text-typography-primary">
+							{name}
+						</h3>
+						<p className="mt-1 text-sm text-typography-secondary">
+							{description}
+						</p>
+					</div>
+					<button
+						type="button"
+						onClick={() => setShowCode(!showCode)}
+						className="flex items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-sm transition-colors hover:bg-accent"
+					>
+						{showCode ? (
+							<>
+								<Eye className="h-4 w-4" />
+								Preview
+							</>
+						) : (
+							<>
+								<Code2 className="h-4 w-4" />
+								Code
+							</>
+						)}
+					</button>
+				</div>
+
+				{/* Content */}
+				{showCode ? (
+					<CodeBlock code={code} language="tsx" />
+				) : (
+					<ComponentRenderer Component={Component} props={props} />
+				)}
+			</div>
+		</div>
+	)
+}

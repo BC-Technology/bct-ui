@@ -1,3 +1,5 @@
+"use client"
+
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip"
 import clsx from "clsx"
 import type * as React from "react"

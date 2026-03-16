@@ -1,0 +1,341 @@
+{
+	"button": {
+		"title": "Button",
+		"description": "Modern button component with multiple variants, sizes, and smooth interactions. Built on Base UI with Tailwind CSS v4.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/button.tsx", "dst": "button.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"text-input": {
+		"title": "Text Input",
+		"description": "Single-line text input with label, error states, helper text, and icon slots.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/text-input.tsx", "dst": "text-input.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"text-area": {
+		"title": "Text Area",
+		"description": "Multi-line text input with auto-resize and character counter support.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/text-area.tsx", "dst": "text-area.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"checkbox": {
+		"title": "Checkbox",
+		"description": "Checkbox with inline and card variants, indeterminate state support.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/checkbox.tsx", "dst": "checkbox.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"radio": {
+		"title": "Radio",
+		"description": "Radio button with inline and card variants for single selection.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/radio.tsx", "dst": "radio.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"radio-group": {
+		"title": "Radio Group",
+		"description": "Radio button group with horizontal/vertical orientation.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/radio-group.tsx", "dst": "radio-group.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": ["radio"]
+	},
+	"select": {
+		"title": "Select",
+		"description": "Dropdown select with search, descriptions, and custom option rendering.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/select.tsx", "dst": "select.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"switch": {
+		"title": "Switch",
+		"description": "Toggle switch with smooth sliding animation and label support.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/switch.tsx", "dst": "switch.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"number-input": {
+		"title": "Number Input",
+		"description": "Number input with increment/decrement buttons and step control.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/number-input.tsx", "dst": "number-input.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"slider": {
+		"title": "Slider",
+		"description": "Range slider with single/dual handles and value display.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/slider.tsx", "dst": "slider.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"color-picker": {
+		"title": "Color Picker",
+		"description": "Color picker with hex input and native color selector.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/color-picker.tsx", "dst": "color-picker.tsx" }
+		],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"date-picker": {
+		"title": "Date Picker",
+		"description": "Calendar-based date picker with formatting and min/max dates.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/date-picker.tsx", "dst": "date-picker.tsx" }
+		],
+		"deps": [
+			"@rehookify/datepicker",
+			"clsx",
+			"date-fns",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"date-range-picker": {
+		"title": "Date Range Picker",
+		"description": "Date range picker with start/end date selection and range highlighting.",
+		"category": "form-inputs",
+		"files": [
+			{
+				"src": "components/date-range-picker.tsx",
+				"dst": "date-range-picker.tsx"
+			}
+		],
+		"deps": [
+			"@rehookify/datepicker",
+			"clsx",
+			"date-fns",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"file-upload": {
+		"title": "File Upload",
+		"description": "Drag-and-drop file upload with file list and type filtering.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/file-upload.tsx", "dst": "file-upload.tsx" }
+		],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"rich-text-input": {
+		"title": "Rich Text Input",
+		"description": "Tiptap-based rich text editor with formatting toolbar.",
+		"category": "form-inputs",
+		"files": [
+			{ "src": "components/rich-text-input.tsx", "dst": "rich-text-input.tsx" }
+		],
+		"deps": [
+			"@tiptap/react",
+			"@tiptap/starter-kit",
+			"@tiptap/pm",
+			"clsx",
+			"lucide-react",
+			"tailwind-merge"
+		]
+	},
+	"dialog": {
+		"title": "Dialog",
+		"description": "Modal dialog with slide-in and centered variants, smooth animations.",
+		"category": "feedback",
+		"files": [{ "src": "components/dialog.tsx", "dst": "dialog.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"alert-dialog": {
+		"title": "Alert Dialog",
+		"description": "Confirmation dialog with cancel/confirm actions.",
+		"category": "feedback",
+		"files": [
+			{ "src": "components/alert-dialog.tsx", "dst": "alert-dialog.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"alert": {
+		"title": "Alert",
+		"description": "Alert component with info, success, warning, and error variants.",
+		"category": "feedback",
+		"files": [{ "src": "components/alert.tsx", "dst": "alert.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"tooltip": {
+		"title": "Tooltip",
+		"description": "Hover tooltip with positioning and delay control.",
+		"category": "feedback",
+		"files": [{ "src": "components/tooltip.tsx", "dst": "tooltip.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"spinner": {
+		"title": "Spinner",
+		"description": "Loading spinner with multiple sizes and smooth rotation.",
+		"category": "feedback",
+		"files": [{ "src": "components/spinner.tsx", "dst": "spinner.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"progress": {
+		"title": "Progress",
+		"description": "Progress bar with label, percentage, and indeterminate state.",
+		"category": "feedback",
+		"files": [{ "src": "components/progress.tsx", "dst": "progress.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"skeleton": {
+		"title": "Skeleton",
+		"description": "Loading skeleton with text, circular, and rectangular variants.",
+		"category": "feedback",
+		"files": [{ "src": "components/skeleton.tsx", "dst": "skeleton.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"badge": {
+		"title": "Badge",
+		"description": "Badge component with semantic color variants and sizes.",
+		"category": "display",
+		"files": [{ "src": "components/badge.tsx", "dst": "badge.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"avatar": {
+		"title": "Avatar",
+		"description": "Avatar with image, initials fallback, and status indicator.",
+		"category": "display",
+		"files": [{ "src": "components/avatar.tsx", "dst": "avatar.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"card": {
+		"title": "Card",
+		"description": "Card component with header, content, and footer sections.",
+		"category": "display",
+		"files": [{ "src": "components/card.tsx", "dst": "card.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"breadcrumbs": {
+		"title": "Breadcrumbs",
+		"description": "Breadcrumb navigation with separator and current page indicator.",
+		"category": "display",
+		"files": [
+			{ "src": "components/breadcrumbs.tsx", "dst": "breadcrumbs.tsx" }
+		],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"pagination": {
+		"title": "Pagination",
+		"description": "Pagination with page numbers, prev/next, and sibling count control.",
+		"category": "display",
+		"files": [{ "src": "components/pagination.tsx", "dst": "pagination.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"divider": {
+		"title": "Divider",
+		"description": "Horizontal and vertical divider for content separation.",
+		"category": "display",
+		"files": [{ "src": "components/divider.tsx", "dst": "divider.tsx" }],
+		"deps": ["clsx", "tailwind-merge"]
+	},
+	"accordion": {
+		"title": "Accordion",
+		"description": "Accordion with single/multiple expansion and smooth animations.",
+		"category": "navigation",
+		"files": [{ "src": "components/accordion.tsx", "dst": "accordion.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"tabs": {
+		"title": "Tabs",
+		"description": "Tabs with horizontal/vertical layout and animated indicator.",
+		"category": "navigation",
+		"files": [{ "src": "components/tabs.tsx", "dst": "tabs.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"dropdown-menu": {
+		"title": "Dropdown Menu",
+		"description": "Dropdown menu with nested menus, separators, and icons.",
+		"category": "navigation",
+		"files": [
+			{ "src": "components/dropdown-menu.tsx", "dst": "dropdown-menu.tsx" }
+		],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"popover": {
+		"title": "Popover",
+		"description": "Popover with positioning, arrow, and trigger control.",
+		"category": "navigation",
+		"files": [{ "src": "components/popover.tsx", "dst": "popover.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"]
+	},
+	"sidebar": {
+		"title": "Sidebar",
+		"description": "Sidebar navigation with logo, nav items, and user account section.",
+		"category": "layout",
+		"files": [{ "src": "components/sidebar.tsx", "dst": "sidebar.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"header": {
+		"title": "Header",
+		"description": "Header navigation with mobile menu and user account.",
+		"category": "layout",
+		"files": [{ "src": "components/header.tsx", "dst": "header.tsx" }],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"]
+	},
+	"portal": {
+		"title": "Portal",
+		"description": "Portal component for rendering outside DOM hierarchy.",
+		"category": "layout",
+		"files": [{ "src": "components/portal.tsx", "dst": "portal.tsx" }],
+		"deps": []
+	},
+	"file-icon": {
+		"title": "File Icon",
+		"description": "File type icon based on filename or MIME type.",
+		"category": "advanced",
+		"files": [{ "src": "components/file-icon.tsx", "dst": "file-icon.tsx" }],
+		"deps": ["lucide-react"]
+	},
+	"image-preview-dialog": {
+		"title": "Image Preview Dialog",
+		"description": "Inline image with expandable full-screen preview dialog.",
+		"category": "advanced",
+		"files": [
+			{
+				"src": "components/image-preview-dialog.tsx",
+				"dst": "image-preview-dialog.tsx"
+			}
+		],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"]
+	},
+	"file-details-dialog": {
+		"title": "File Details Dialog",
+		"description": "File metadata display dialog with details and actions.",
+		"category": "advanced",
+		"files": [
+			{
+				"src": "components/file-details-dialog.tsx",
+				"dst": "file-details-dialog.tsx"
+			}
+		],
+		"deps": [
+			"@base-ui/react",
+			"clsx",
+			"date-fns",
+			"lucide-react",
+			"tailwind-merge"
+		],
+		"registryDeps": ["file-icon"]
+	},
+	"file-upload-input": {
+		"title": "File Upload Input",
+		"description": "Advanced file upload with image grid previews and expand dialog.",
+		"category": "advanced",
+		"files": [
+			{
+				"src": "components/file-upload-input.tsx",
+				"dst": "file-upload-input.tsx"
+			}
+		],
+		"deps": ["clsx", "lucide-react", "tailwind-merge"],
+		"registryDeps": ["file-icon", "image-preview-dialog"]
+	}
+}

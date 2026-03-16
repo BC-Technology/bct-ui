@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx"
 import {
 	File as FileGenericIcon,
@@ -403,7 +405,7 @@ export function FileUploadInput({
 												<X className="h-4 w-4" />
 											)}
 										</button>
-										<div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-overlay to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
+										<div className="absolute right-0 bottom-0 left-0 bg-linear-to-t from-overlay to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
 											<p className="truncate text-light text-text-xs">
 												{item.name ?? "Existing"}
 											</p>
@@ -459,7 +461,7 @@ export function FileUploadInput({
 										>
 											<X className="h-4 w-4" />
 										</button>
-										<div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-overlay to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
+										<div className="absolute right-0 bottom-0 left-0 bg-linear-to-t from-overlay to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100">
 											<p className="truncate text-light text-text-xs">
 												{file.name}
 											</p>

@@ -1,3 +1,5 @@
+"use client"
+
 import { Radio as BaseRadio } from "@base-ui/react/radio"
 import clsx from "clsx"
 import { Circle, CircleCheck } from "lucide-react"

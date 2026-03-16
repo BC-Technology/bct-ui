@@ -1,3 +1,5 @@
+"use client"
+
 import { Progress as BaseProgress } from "@base-ui/react/progress"
 import type * as React from "react"
 import { twMerge } from "tailwind-merge"

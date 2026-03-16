@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx"
 import { Upload, X } from "lucide-react"
 import { type DragEvent, useId, useRef, useState } from "react"

@@ -1,3 +1,5 @@
+"use client"
+
 import { Select as BaseSelect } from "@base-ui/react/select"
 import clsx from "clsx"
 import { Check, ChevronDown } from "lucide-react"

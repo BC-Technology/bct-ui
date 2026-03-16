@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx"
 import type * as React from "react"
 import { twMerge } from "tailwind-merge"

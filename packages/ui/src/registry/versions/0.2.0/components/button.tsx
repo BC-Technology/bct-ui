@@ -1,3 +1,5 @@
+"use client"
+
 import { Button as BaseButton } from "@base-ui/react/button"
 import clsx from "clsx"
 import type * as React from "react"

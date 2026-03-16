@@ -1,3 +1,5 @@
+"use client"
+
 import clsx from "clsx"
 import { Maximize2 } from "lucide-react"
 import { useState } from "react"

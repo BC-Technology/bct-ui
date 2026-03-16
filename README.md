@@ -285,10 +285,78 @@ pnpm dev
 3. **Publish packages** to npm:
    ```bash
    cd packages/ui && npm publish --access public
-   cd ../tokens && npm publish --access public
-   cd ../env && npm publish --access public
    ```
-4. **Tag release** in git with version number
+4. **Tag release** in git with version number:
+   ```bash
+   git tag v0.4.0
+   git push origin v0.4.0
+   ```
+
+### Deployment
+
+#### Deploying the UI Package
+
+The `@bctechnology/ui` package is published to npm and consumed via the CLI:
+
+```bash
+# Build the package
+cd packages/ui
+pnpm build
+
+# Publish to npm (requires npm login)
+npm publish --access public
+
+# Verify publication
+npm view @bctechnology/ui
+```
+
+**Important:** After publishing a new version, create a corresponding git tag so the CLI can fetch component sources:
+
+```bash
+git tag v0.4.0
+git push origin v0.4.0
+```
+
+#### Deploying the Documentation Site
+
+The documentation site can be deployed to any static hosting platform:
+
+**Vercel (Recommended):**
+```bash
+cd apps/docs
+
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to production
+vercel --prod
+```
+
+**Netlify:**
+```bash
+cd apps/docs
+
+# Install Netlify CLI
+npm i -g netlify-cli
+
+# Build the site
+pnpm build
+
+# Deploy
+netlify deploy --prod --dir=.next
+```
+
+**Manual Deployment:**
+```bash
+cd apps/docs
+pnpm build
+
+# The static site is in .next/
+# Upload to your hosting provider
+```
+
+**Environment Variables:**
+No environment variables are required for the documentation site. All component data is loaded from the local registry files.
 
 ## 🏗️ Architecture
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { Input as BaseInput } from "@base-ui/react/input"
 import clsx from "clsx"
 import type * as React from "react"

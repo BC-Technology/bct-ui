@@ -1,3 +1,5 @@
+"use client"
+
 import { Slider as BaseSlider } from "@base-ui/react/slider"
 import clsx from "clsx"
 import type * as React from "react"
