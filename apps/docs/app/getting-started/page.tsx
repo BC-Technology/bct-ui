@@ -1,12 +1,15 @@
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { getPreferredVersion } from "@/lib/version-cookie"
 
-export default function GettingStartedPage() {
+export default async function GettingStartedPage() {
+	const version = await getPreferredVersion()
+
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Header />
+			<Header currentVersion={version} />
 			<div className="container flex-1 items-start md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-10">
-				<Sidebar />
+				<Sidebar version={version} />
 				<main className="relative py-6 lg:gap-10 lg:py-8">
 					<div className="mx-auto w-full min-w-0">
 						<div className="space-y-2">

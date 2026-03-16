@@ -101,7 +101,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 						)}
 
 						{/* Variants */}
-						{Component && (
+						{Component && variants.length > 0 && (
 							<div className="mt-12">
 								<h2 className="mb-6 font-bold text-2xl">Variants & Examples</h2>
 								<div className="space-y-6">
@@ -112,8 +112,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 												name={variant.name}
 												description={variant.description}
 												code={variant.code}
-												Component={Component}
-												props={variant.props}
+												preview={<Component {...variant.props} />}
 											/>
 										))}
 									</Suspense>

@@ -3,6 +3,7 @@
 import { ChevronDown } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
+import { setPreferredVersion } from "@/lib/actions/set-version"
 
 const VERSIONS = ["0.4.0", "0.3.0", "0.2.0"] as const
 
@@ -19,7 +20,10 @@ export function VersionSwitcherClient({
 	const router = useRouter()
 	const [isOpen, setIsOpen] = useState(false)
 
-	const handleVersionChange = (newVersion: string) => {
+	const handleVersionChange = async (newVersion: string) => {
+		// Persist version preference
+		await setPreferredVersion(newVersion)
+
 		// Extract component name from current path
 		const componentMatch = pathname.match(/\/components\/[\d.]+\/([^/]+)/)
 

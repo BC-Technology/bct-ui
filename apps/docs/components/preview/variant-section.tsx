@@ -1,25 +1,22 @@
 "use client"
 
 import { Code2, Eye } from "lucide-react"
-import type { ComponentType } from "react"
+import type { ReactNode } from "react"
 import { useState } from "react"
 import { CodeBlock } from "../docs/code-block"
-import { ComponentRenderer } from "./component-renderer"
 
 interface VariantSectionProps {
 	name: string
 	description: string
 	code: string
-	Component: ComponentType<any>
-	props: Record<string, any>
+	preview: ReactNode
 }
 
 export function VariantSection({
 	name,
 	description,
 	code,
-	Component,
-	props,
+	preview,
 }: VariantSectionProps) {
 	const [showCode, setShowCode] = useState(false)
 
@@ -62,7 +59,9 @@ export function VariantSection({
 				{showCode ? (
 					<CodeBlock code={code} language="tsx" />
 				) : (
-					<ComponentRenderer Component={Component} props={props} />
+					<div className="flex min-h-32 items-center justify-center rounded-lg border border-border bg-linear-to-br from-surface-1 to-surface-2 p-8">
+						{preview}
+					</div>
 				)}
 			</div>
 		</div>

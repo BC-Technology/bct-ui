@@ -1,11 +1,14 @@
 import { ArrowRight, Package, Palette, Sparkles, Zap } from "lucide-react"
 import Link from "next/link"
 import { Header } from "@/components/layout/header"
+import { getPreferredVersion } from "@/lib/version-cookie"
 
-export default function Home() {
+export default async function Home() {
+	const version = await getPreferredVersion()
+
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Header />
+			<Header currentVersion={version} />
 			<main className="flex-1">
 				{/* Hero Section */}
 				<section className="relative overflow-hidden">
@@ -29,17 +32,17 @@ export default function Home() {
 							</p>
 							<div className="mt-10 flex flex-wrap items-center justify-center gap-4">
 								<Link
-									href="/getting-started"
+									href={`/components/${version}`}
 									className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-white px-8 font-medium text-primary text-sm shadow-lg transition-all hover:scale-105 hover:shadow-xl"
 								>
 									Get Started
 									<ArrowRight className="h-4 w-4" />
 								</Link>
 								<Link
-									href="/components/0.4.0"
+									href="/getting-started"
 									className="inline-flex h-12 items-center justify-center rounded-md border border-white/30 bg-white/10 px-8 font-medium text-sm text-white backdrop-blur-sm transition-all hover:bg-white/20"
 								>
-									Browse Components
+									Documentation
 								</Link>
 							</div>
 						</div>

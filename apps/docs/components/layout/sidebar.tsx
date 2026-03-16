@@ -8,7 +8,7 @@ interface NavItem {
 }
 
 interface SidebarProps {
-	version: string
+	version?: string
 }
 
 const categoryTitles: Record<string, string> = {
@@ -20,7 +20,7 @@ const categoryTitles: Record<string, string> = {
 	advanced: "Advanced",
 }
 
-export function Sidebar({ version }: SidebarProps) {
+export function Sidebar({ version = "0.4.0" }: SidebarProps) {
 	const componentNames = getAllComponentNames(version)
 	const components = componentNames.map((name) => ({
 		name,
@@ -54,7 +54,7 @@ export function Sidebar({ version }: SidebarProps) {
 			href: `/components/${version}`,
 			items: Object.entries(categories).map(([category, items]) => ({
 				title: categoryTitles[category] || category,
-				href: "#",
+				href: `/components/${version}#${category}`,
 				items,
 			})),
 		},
