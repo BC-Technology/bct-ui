@@ -73,7 +73,7 @@ export function FileUpload({
 	}
 
 	const dropzoneStyles = clsx(
-		"flex w-full flex-col items-center justify-center gap-3 rounded-radius-md border-2 border-dashed bg-surface-1 p-8",
+		"flex w-full flex-col items-center justify-center gap-3 rounded-rounded-md border-2 border-dashed bg-surface-1 p-8",
 		"cursor-pointer transition-all duration-200",
 		"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 		{
@@ -144,7 +144,7 @@ export function FileUpload({
 					{value.map((file, index) => (
 						<div
 							key={`${file.name}-${index}`}
-							className="flex items-center justify-between gap-2 rounded-radius-md border border-border bg-surface-1 px-3 py-2"
+							className="flex items-center justify-between gap-2 rounded-rounded-md border border-border bg-surface-1 px-3 py-2"
 						>
 							<div className="min-w-0 flex-1">
 								<p className="truncate font-medium text-text-sm text-typography-primary">

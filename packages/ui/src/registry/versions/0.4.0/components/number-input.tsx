@@ -80,7 +80,7 @@ export function NumberInput({
 					{showButtons && (
 						<div
 							className={twMerge(
-								"absolute right-0 flex h-full divide-x divide-border overflow-hidden rounded-r-radius-md border-border border-l",
+								"absolute right-0 flex h-full divide-x divide-border overflow-hidden rounded-r-rounded-md border-border border-l",
 								classNames?.buttons,
 							)}
 						>

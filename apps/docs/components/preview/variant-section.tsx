@@ -21,10 +21,7 @@ export function VariantSection({
 	const [showCode, setShowCode] = useState(false)
 
 	return (
-		<div className="group relative overflow-hidden rounded-xl border border-border bg-surface-1 shadow-sm transition-shadow hover:shadow-md">
-			{/* Gradient accent */}
-			<div className="absolute top-0 left-0 h-1 w-full bg-linear-to-r from-primary via-secondary to-accent opacity-60" />
-
+		<div className="group relative overflow-hidden rounded-lg border border-border bg-surface-1 shadow-sm">
 			<div className="p-6">
 				{/* Header */}
 				<div className="mb-4 flex items-start justify-between">

@@ -31,7 +31,7 @@ export function TextArea({
 	const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`
 
 	const textareaStyles = clsx(
-		"w-full rounded-radius-md border bg-surface-1 px-3 py-2",
+		"w-full rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary placeholder:text-typography-muted",
 		"resize-vertical outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus",

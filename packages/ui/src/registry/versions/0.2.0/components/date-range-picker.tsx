@@ -84,7 +84,7 @@ export function DateRangePicker({
 	}
 
 	const triggerStyles = clsx(
-		"flex w-full items-center justify-between gap-2 rounded-radius-md border bg-surface-1 px-3 py-2",
+		"flex w-full items-center justify-between gap-2 rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus",
@@ -128,7 +128,7 @@ export function DateRangePicker({
 					<Popover.Positioner sideOffset={4}>
 						<Popover.Popup
 							className={twMerge(
-								"z-50 w-80 rounded-radius-md border border-border bg-surface-1 p-4 shadow-shadow-lg",
+								"z-50 w-80 rounded-rounded-md border border-border bg-surface-1 p-4 shadow-shadow-lg",
 								classNames?.popup,
 							)}
 						>

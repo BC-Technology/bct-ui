@@ -287,7 +287,7 @@ export function FileUploadInput({
 				onDrop={handleDrop}
 				className={twMerge(
 					clsx(
-						"w-full rounded-radius-md border-2 border-dashed bg-surface-1 p-6 transition-colors duration-200",
+						"w-full rounded-rounded-md border-2 border-dashed bg-surface-1 p-6 transition-colors duration-200",
 						"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 						{
 							"border-primary bg-primary-muted": dragActive,
@@ -353,7 +353,7 @@ export function FileUploadInput({
 									<div
 										key={`existing-${item.id}`}
 										className={clsx(
-											"group relative aspect-square overflow-hidden rounded-radius-md border border-border bg-surface-2",
+											"group relative aspect-square overflow-hidden rounded-rounded-md border border-border bg-surface-2",
 											{ "opacity-30": removed },
 										)}
 									>
@@ -424,7 +424,7 @@ export function FileUploadInput({
 								return (
 									<div
 										key={`${file.name}-${file.lastModified}`}
-										className="group relative aspect-square overflow-hidden rounded-radius-md border border-border bg-surface-2"
+										className="group relative aspect-square overflow-hidden rounded-rounded-md border border-border bg-surface-2"
 									>
 										<img
 											src={imageUrl}
@@ -481,7 +481,7 @@ export function FileUploadInput({
 									<div
 										key={`existing-${item.id}`}
 										className={clsx(
-											"flex items-center justify-between rounded-radius-md bg-surface-1 p-2",
+											"flex items-center justify-between rounded-rounded-md bg-surface-1 p-2",
 											{ "opacity-30": removed },
 										)}
 									>
@@ -519,7 +519,7 @@ export function FileUploadInput({
 							{selectedFiles.map((file) => (
 								<div
 									key={`${file.name}-${file.lastModified}`}
-									className="flex items-center justify-between rounded-radius-md bg-surface-1 p-2"
+									className="flex items-center justify-between rounded-rounded-md bg-surface-1 p-2"
 								>
 									<div className="flex items-center gap-3">
 										<FileGenericIcon

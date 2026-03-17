@@ -18,6 +18,16 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
 			codeToHtml(code, {
 				lang: language,
 				theme: "github-dark",
+				decorations: [
+					{
+						properties: {
+							class: "p-4",
+						},
+						alwaysWrap: true,
+						start: 0,
+						end: code.length,
+					},
+				],
 			}).then((html) => {
 				if (containerRef.current) {
 					containerRef.current.innerHTML = html
@@ -48,7 +58,7 @@ export function CodeBlock({ code, language = "tsx" }: CodeBlockProps) {
 			</button>
 			<div
 				ref={containerRef}
-				className="overflow-x-auto rounded-md border border-border bg-muted"
+				className="rounded-md border border-border bg-surface-1"
 			/>
 		</div>
 	)

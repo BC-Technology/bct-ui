@@ -44,7 +44,7 @@ export function Select({
 	...props
 }: SelectProps) {
 	const triggerStyles = clsx(
-		"flex h-10 w-full items-center justify-between gap-2 rounded-radius-md border bg-surface-1 px-3 py-2",
+		"flex h-10 w-full items-center justify-between gap-2 rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus focus:ring-inset",
@@ -56,7 +56,7 @@ export function Select({
 	)
 
 	const popupStyles = clsx(
-		"z-50 max-h-64 overflow-auto rounded-radius-md border border-border bg-surface-1 p-1 shadow-shadow-lg",
+		"z-50 max-h-64 overflow-auto rounded-rounded-md border border-border bg-surface-1 p-1 shadow-shadow-lg",
 	)
 
 	const optionStyles = clsx(

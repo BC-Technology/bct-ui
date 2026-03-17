@@ -38,7 +38,7 @@ export function ColorPicker({
 	const inputId = useId()
 
 	const textInputStyles = clsx(
-		"h-10 flex-1 rounded-radius-md border bg-surface-1 px-3 py-2",
+		"h-10 flex-1 rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary placeholder:text-typography-muted",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus focus:ring-inset",
@@ -76,7 +76,7 @@ export function ColorPicker({
 					disabled={disabled}
 					className={twMerge(
 						clsx(
-							"h-10 w-10 cursor-pointer rounded-radius-md border border-border p-1 transition-colors hover:border-border-hover",
+							"h-10 w-10 cursor-pointer rounded-rounded-md border border-border p-1 transition-colors hover:border-border-hover",
 							{ "cursor-not-allowed opacity-50": disabled },
 						),
 						classNames?.colorInput,

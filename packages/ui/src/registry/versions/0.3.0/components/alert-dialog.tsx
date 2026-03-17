@@ -91,7 +91,7 @@ export function AlertDialog({
 							onClick={onCancel}
 							className={twMerge(
 								clsx(
-									"inline-flex h-10 items-center justify-center rounded-radius-md border border-border px-4 font-medium text-text-base text-typography-primary transition-colors",
+									"inline-flex h-10 items-center justify-center rounded-rounded-md border border-border px-4 font-medium text-text-base text-typography-primary transition-colors",
 									"hover:bg-surface-1-hover",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 								),
@@ -104,7 +104,7 @@ export function AlertDialog({
 							onClick={onConfirm}
 							className={twMerge(
 								clsx(
-									"inline-flex h-10 items-center justify-center rounded-radius-md px-4 font-medium text-text-base transition-colors",
+									"inline-flex h-10 items-center justify-center rounded-rounded-md px-4 font-medium text-text-base transition-colors",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 									confirmButtonStyles[confirmVariant],
 								),

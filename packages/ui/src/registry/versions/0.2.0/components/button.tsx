@@ -60,7 +60,7 @@ export function Button({
 		md:
 			variant === "icon"
 				? "h-10 w-10 p-0"
-				: "h-10 px-4 text-text-base rounded-radius-md",
+				: "h-10 px-4 text-text-base rounded-rounded-md",
 		lg:
 			variant === "icon"
 				? "h-12 w-12 p-0"

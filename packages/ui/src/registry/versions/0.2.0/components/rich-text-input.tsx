@@ -42,7 +42,7 @@ export function RichTextInput({
 		editorProps: {
 			attributes: {
 				class: clsx(
-					"prose prose-sm max-w-none rounded-radius-md border bg-surface-1 px-3 py-2",
+					"prose prose-sm max-w-none rounded-rounded-md border bg-surface-1 px-3 py-2",
 					"text-text-base text-typography-primary",
 					"min-h-32 outline-none transition-all duration-200",
 					"focus:border-primary focus:ring-2 focus:ring-primary-focus",
@@ -85,7 +85,7 @@ export function RichTextInput({
 
 			<div
 				className={twMerge(
-					"flex flex-wrap items-center gap-1 rounded-radius-md border border-border bg-surface-1 p-1",
+					"flex flex-wrap items-center gap-1 rounded-rounded-md border border-border bg-surface-1 p-1",
 					classNames?.toolbar,
 				)}
 			>

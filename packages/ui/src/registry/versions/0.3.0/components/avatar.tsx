@@ -35,7 +35,7 @@ export function Avatar({
 
 	const shapeStyles: Record<string, string> = {
 		circle: "rounded-full",
-		square: "rounded-radius-md",
+		square: "rounded-rounded-md",
 	}
 
 	const getFallbackText = () => {

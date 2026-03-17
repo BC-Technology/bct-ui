@@ -86,7 +86,7 @@ export function AlertDialog({
 							onClick={onCancel}
 							className={twMerge(
 								clsx(
-									"inline-flex h-10 items-center justify-center gap-2 rounded-radius-md px-4",
+									"inline-flex h-10 items-center justify-center gap-2 rounded-rounded-md px-4",
 									"font-medium text-text-base transition-all duration-200",
 									"border border-border bg-tertiary text-tertiary-on",
 									"hover:border-border-hover hover:bg-tertiary-hover",
@@ -102,7 +102,7 @@ export function AlertDialog({
 							onClick={onConfirm}
 							className={twMerge(
 								clsx(
-									"inline-flex h-10 items-center justify-center gap-2 rounded-radius-md px-4",
+									"inline-flex h-10 items-center justify-center gap-2 rounded-rounded-md px-4",
 									"font-medium text-text-base transition-all duration-200",
 									"outline-none ring-offset-2 ring-offset-background",
 									"focus-visible:ring-2 focus-visible:ring-primary-focus",

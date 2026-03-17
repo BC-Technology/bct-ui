@@ -88,7 +88,7 @@ export function Sidebar({
 								}}
 								className={twMerge(
 									clsx(
-										"flex items-center gap-3 rounded-radius-md px-3 py-2.5 text-text-base text-typography-primary transition-all duration-200",
+										"flex items-center gap-3 rounded-rounded-md px-3 py-2.5 text-text-base text-typography-primary transition-all duration-200",
 										"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 										item.isActive
 											? "bg-surface-1 font-medium"
@@ -118,7 +118,7 @@ export function Sidebar({
 					<Popover.Root>
 						<Popover.Trigger
 							className={clsx(
-								"flex w-full cursor-pointer items-center gap-3 rounded-radius-md bg-surface-1/50 px-3 py-2.5 text-typography-primary outline-none transition-all duration-200",
+								"flex w-full cursor-pointer items-center gap-3 rounded-rounded-md bg-surface-1/50 px-3 py-2.5 text-typography-primary outline-none transition-all duration-200",
 								"hover:bg-surface-1",
 								"focus-visible:ring-2 focus-visible:ring-primary-focus",
 							)}

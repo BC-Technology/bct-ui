@@ -60,7 +60,7 @@ export function Pagination({
 	}
 
 	const buttonBase = clsx(
-		"inline-flex size-9 items-center justify-center rounded-radius-md",
+		"inline-flex size-9 items-center justify-center rounded-rounded-md",
 		"font-medium text-text-sm transition-colors",
 		"outline-none ring-offset-2 ring-offset-background",
 		"focus-visible:ring-2 focus-visible:ring-primary-focus",

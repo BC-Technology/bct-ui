@@ -34,7 +34,7 @@ export function NumberInput({
 	...props
 }: NumberInputProps) {
 	const inputStyles = clsx(
-		"w-full rounded-radius-md border bg-surface-1 px-3 py-2",
+		"w-full rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary placeholder:text-typography-muted",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus",

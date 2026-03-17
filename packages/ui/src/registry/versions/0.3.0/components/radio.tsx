@@ -33,7 +33,7 @@ export function Radio({
 				disabled={disabled}
 				className={twMerge(
 					clsx(
-						"relative flex w-full cursor-pointer items-center gap-3 rounded-radius-md border px-3 py-2.5 transition-all duration-200",
+						"relative flex w-full cursor-pointer items-center gap-3 rounded-rounded-md border px-3 py-2.5 transition-all duration-200",
 						"outline-none ring-offset-2 ring-offset-background",
 						"focus-visible:ring-2 focus-visible:ring-primary-focus",
 						"disabled:cursor-not-allowed disabled:opacity-50",

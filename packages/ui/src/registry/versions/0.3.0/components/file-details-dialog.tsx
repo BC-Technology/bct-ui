@@ -91,7 +91,7 @@ export function FileDetailsDialog({
 						)}
 					>
 						<div className="flex min-w-0 items-center gap-3">
-							<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md border border-border bg-surface-2 text-typography-muted">
+							<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-rounded-md border border-border bg-surface-2 text-typography-muted">
 								<FileIcon
 									name={file.name}
 									mimeType={file.mimeType}
@@ -114,7 +114,7 @@ export function FileDetailsDialog({
 								type="button"
 								onClick={onDelete}
 								className={clsx(
-									"shrink-0 rounded-radius-md p-2 text-typography-muted transition-colors",
+									"shrink-0 rounded-rounded-md p-2 text-typography-muted transition-colors",
 									"hover:bg-error-muted hover:text-error",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 								)}
@@ -167,7 +167,7 @@ export function FileDetailsDialog({
 						</h3>
 
 						{/* Info banner */}
-						<div className="mb-4 flex gap-2 rounded-radius-md bg-surface-2 p-3 text-text-sm text-typography-muted">
+						<div className="mb-4 flex gap-2 rounded-rounded-md bg-surface-2 p-3 text-text-sm text-typography-muted">
 							<Info className="mt-0.5 h-4 w-4 shrink-0" />
 							<p>
 								{infoText ||
@@ -177,11 +177,11 @@ export function FileDetailsDialog({
 
 						{/* Status-driven body */}
 						{status === "failed" ? (
-							<div className="rounded-radius-md border border-error bg-error-muted p-3 text-error text-text-sm">
+							<div className="rounded-rounded-md border border-error bg-error-muted p-3 text-error text-text-sm">
 								{file.errorMessage || "Processing failed. Please try again."}
 							</div>
 						) : status === "processing" ? (
-							<div className="flex items-center justify-center rounded-radius-md bg-surface-2 p-6">
+							<div className="flex items-center justify-center rounded-rounded-md bg-surface-2 p-6">
 								<Spinner size="md" />
 							</div>
 						) : status === "done" ? (

@@ -78,7 +78,7 @@ export function FileUpload({
 	}
 
 	const dropzoneStyles = clsx(
-		"flex flex-col items-center justify-center gap-2 rounded-radius-md border-2 border-dashed bg-surface-1 p-6",
+		"flex flex-col items-center justify-center gap-2 rounded-rounded-md border-2 border-dashed bg-surface-1 p-6",
 		"cursor-pointer transition-all duration-200",
 		"hover:border-primary hover:bg-surface-1-hover",
 		{

@@ -34,7 +34,7 @@ export function NumberInput({
 	...props
 }: NumberInputProps) {
 	const inputStyles = clsx(
-		"h-10 w-full rounded-radius-md border bg-surface-1 px-3 py-2",
+		"h-10 w-full rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary placeholder:text-typography-muted",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus focus:ring-inset",
@@ -80,7 +80,7 @@ export function NumberInput({
 					{showButtons && (
 						<div
 							className={twMerge(
-								"absolute right-0 flex h-full divide-x divide-border overflow-hidden rounded-r-radius-md border-border border-l",
+								"absolute right-0 flex h-full divide-x divide-border overflow-hidden rounded-r-rounded-md border-border border-l",
 								classNames?.buttons,
 							)}
 						>

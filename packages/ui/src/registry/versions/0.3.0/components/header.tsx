@@ -52,7 +52,7 @@ export function Header({
 
 	const navLinkClass = (isActive?: boolean) =>
 		clsx(
-			"flex items-center gap-3 rounded-radius-md px-3 py-2.5 text-text-base text-typography-primary transition-all duration-200",
+			"flex items-center gap-3 rounded-rounded-md px-3 py-2.5 text-text-base text-typography-primary transition-all duration-200",
 			"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 			isActive ? "bg-surface-2 font-medium" : "hover:bg-surface-2/50",
 		)
@@ -144,7 +144,7 @@ export function Header({
 									<Popover.Root>
 										<Popover.Trigger
 											className={clsx(
-												"flex cursor-pointer items-center gap-2 rounded-radius-md px-2 py-1.5 text-typography-primary outline-none transition-all duration-200",
+												"flex cursor-pointer items-center gap-2 rounded-rounded-md px-2 py-1.5 text-typography-primary outline-none transition-all duration-200",
 												"hover:bg-surface-2",
 												"focus-visible:ring-2 focus-visible:ring-primary-focus",
 											)}
@@ -245,7 +245,7 @@ export function Header({
 								type="button"
 								onClick={() => setMobileOpen((o) => !o)}
 								className={clsx(
-									"flex items-center justify-center rounded-radius-md p-2 text-typography-primary transition-colors lg:hidden",
+									"flex items-center justify-center rounded-rounded-md p-2 text-typography-primary transition-colors lg:hidden",
 									"hover:bg-surface-2",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 								)}
@@ -300,7 +300,7 @@ export function Header({
 											type="button"
 											onClick={() => setUserExpanded((e) => !e)}
 											className={clsx(
-												"flex w-full items-center justify-between rounded-radius-md px-3 py-2.5 text-typography-primary transition-all duration-200",
+												"flex w-full items-center justify-between rounded-rounded-md px-3 py-2.5 text-typography-primary transition-all duration-200",
 												"hover:bg-surface-2/50",
 												"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 											)}
@@ -334,7 +334,7 @@ export function Header({
 															setMobileOpen(false)
 														}}
 														className={clsx(
-															"flex w-full items-center gap-2 rounded-radius-md px-3 py-2 text-text-sm text-typography-primary transition-colors",
+															"flex w-full items-center gap-2 rounded-rounded-md px-3 py-2 text-text-sm text-typography-primary transition-colors",
 															"hover:bg-surface-2/50",
 															"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 														)}
@@ -351,7 +351,7 @@ export function Header({
 															setMobileOpen(false)
 														}}
 														className={clsx(
-															"flex w-full items-center gap-2 rounded-radius-md px-3 py-2 text-text-sm text-typography-primary transition-colors",
+															"flex w-full items-center gap-2 rounded-rounded-md px-3 py-2 text-text-sm text-typography-primary transition-colors",
 															"hover:bg-error-muted hover:text-error",
 															"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 														)}

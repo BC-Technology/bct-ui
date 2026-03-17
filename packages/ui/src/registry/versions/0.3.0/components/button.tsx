@@ -130,8 +130,8 @@ export function Button({
 				: "h-8 px-3 text-text-sm rounded-radius-sm",
 		md:
 			variant === "icon"
-				? "h-10 w-10 rounded-radius-md p-0"
-				: "h-10 px-4 text-text-base rounded-radius-md",
+				? "h-10 w-10 rounded-rounded-md p-0"
+				: "h-10 px-4 text-text-base rounded-rounded-md",
 		lg:
 			variant === "icon"
 				? "h-12 w-12 rounded-radius-lg p-0"

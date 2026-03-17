@@ -19,7 +19,7 @@ export function Skeleton({
 	const variantStyles: Record<string, string> = {
 		text: "h-4 rounded-radius-sm",
 		circular: "rounded-full",
-		rectangular: "rounded-radius-md",
+		rectangular: "rounded-rounded-md",
 	}
 
 	const style: React.CSSProperties = {}

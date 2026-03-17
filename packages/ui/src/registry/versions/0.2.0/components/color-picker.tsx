@@ -39,7 +39,7 @@ export function ColorPicker({
 	}
 
 	const textInputStyles = clsx(
-		"flex-1 rounded-radius-md border bg-surface-1 px-3 py-2",
+		"flex-1 rounded-rounded-md border bg-surface-1 px-3 py-2",
 		"text-text-base text-typography-primary placeholder:text-typography-muted",
 		"outline-none transition-all duration-200",
 		"focus:border-primary focus:ring-2 focus:ring-primary-focus",
@@ -78,7 +78,7 @@ export function ColorPicker({
 					}
 					disabled={disabled}
 					className={twMerge(
-						clsx("size-10 cursor-pointer rounded-radius-md border-0", {
+						clsx("size-10 cursor-pointer rounded-rounded-md border-0", {
 							"cursor-not-allowed opacity-50": disabled,
 						}),
 						classNames?.colorInput,

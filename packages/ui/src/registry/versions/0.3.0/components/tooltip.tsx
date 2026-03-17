@@ -36,7 +36,7 @@ export function Tooltip({
 					<BaseTooltip.Popup
 						className={twMerge(
 							clsx(
-								"z-50 max-w-xs rounded-radius-md bg-dark px-3 py-1.5 shadow-shadow-md",
+								"z-50 max-w-xs rounded-rounded-md bg-dark px-3 py-1.5 shadow-shadow-md",
 								"text-dark-on text-text-sm",
 								"data-[state=open]:animate-animate-fade-in",
 								"data-[state=closed]:animate-animate-fade-out",

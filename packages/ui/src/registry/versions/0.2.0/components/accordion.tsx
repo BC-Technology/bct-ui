@@ -42,7 +42,7 @@ export function Accordion({
 					key={item.value}
 					value={item.value}
 					className={twMerge(
-						"overflow-hidden rounded-radius-md border border-border bg-surface-1",
+						"overflow-hidden rounded-rounded-md border border-border bg-surface-1",
 						classNames?.item,
 					)}
 				>

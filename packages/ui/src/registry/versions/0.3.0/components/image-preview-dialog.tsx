@@ -89,7 +89,7 @@ export function ImagePreviewDialog({
 							src={src}
 							alt={alt}
 							className={twMerge(
-								clsx("h-auto w-full rounded-radius-md object-cover", {
+								clsx("h-auto w-full rounded-rounded-md object-cover", {
 									"cursor-pointer": clickToOpen,
 								}),
 								classNames?.image,
@@ -109,7 +109,7 @@ export function ImagePreviewDialog({
 							tabIndex={clickToOpen ? 0 : -1}
 						/>
 					) : (
-						<div className="flex h-24 w-full items-center justify-center rounded-radius-md border border-border bg-surface-2 text-text-sm text-typography-muted">
+						<div className="flex h-24 w-full items-center justify-center rounded-rounded-md border border-border bg-surface-2 text-text-sm text-typography-muted">
 							No image
 						</div>
 					)}
@@ -145,7 +145,7 @@ export function ImagePreviewDialog({
 					{!hideMetadata && metadata && (
 						<div
 							className={twMerge(
-								"flex flex-col gap-3 rounded-radius-md border border-border bg-surface-2 p-4",
+								"flex flex-col gap-3 rounded-rounded-md border border-border bg-surface-2 p-4",
 								classNames?.metadata,
 							)}
 						>
@@ -208,7 +208,7 @@ export function ImagePreviewDialog({
 							<img
 								src={src}
 								alt={alt || "Image preview"}
-								className="h-auto w-full rounded-radius-md object-contain"
+								className="h-auto w-full rounded-rounded-md object-contain"
 							/>
 						)}
 					</div>

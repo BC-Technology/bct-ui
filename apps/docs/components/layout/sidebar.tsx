@@ -46,8 +46,26 @@ export function Sidebar({ version = "0.4.0" }: SidebarProps) {
 
 	const navigation: NavItem[] = [
 		{
-			title: "Getting Started",
-			href: "/getting-started",
+			title: "Documentation",
+			href: "#",
+			items: [
+				{
+					title: "Getting Started",
+					href: "/getting-started",
+				},
+				{
+					title: "Design Principles",
+					href: "/design-principles",
+				},
+				{
+					title: "Design Tokens",
+					href: "/tokens",
+				},
+				{
+					title: "Examples",
+					href: "/examples",
+				},
+			],
 		},
 		{
 			title: "Components",

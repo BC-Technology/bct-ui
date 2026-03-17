@@ -43,7 +43,7 @@ export function Button({
 	const variantStyles: Record<string, string> = {
 		primary: clsx(
 			"bg-primary text-primary-on shadow-sm",
-			"hover:bg-primary-hover hover:shadow",
+			"hover:bg-primary-hover",
 			"active:scale-[0.98] active:bg-primary-focus",
 		),
 		"primary-muted": clsx(
@@ -53,7 +53,7 @@ export function Button({
 		),
 		secondary: clsx(
 			"bg-secondary text-secondary-on shadow-sm",
-			"hover:bg-secondary-hover hover:shadow",
+			"hover:bg-secondary-hover",
 			"active:scale-[0.98] active:bg-secondary-focus",
 		),
 		"secondary-muted": clsx(
@@ -73,7 +73,7 @@ export function Button({
 		),
 		error: clsx(
 			"bg-error text-error-on shadow-sm",
-			"hover:bg-error-hover hover:shadow",
+			"hover:bg-error-hover",
 			"active:scale-[0.98] active:bg-error-hover",
 		),
 		"error-muted": clsx(
@@ -83,7 +83,7 @@ export function Button({
 		),
 		success: clsx(
 			"bg-success text-success-on shadow-sm",
-			"hover:bg-success-hover hover:shadow",
+			"hover:bg-success-hover",
 			"active:scale-[0.98] active:bg-success-hover",
 		),
 		"success-muted": clsx(
@@ -93,7 +93,7 @@ export function Button({
 		),
 		warning: clsx(
 			"bg-warning text-warning-on shadow-sm",
-			"hover:bg-warning-hover hover:shadow",
+			"hover:bg-warning-hover",
 			"active:scale-[0.98] active:bg-warning-hover",
 		),
 		"warning-muted": clsx(
@@ -103,7 +103,7 @@ export function Button({
 		),
 		info: clsx(
 			"bg-info text-info-on shadow-sm",
-			"hover:bg-info-hover hover:shadow",
+			"hover:bg-info-hover",
 			"active:scale-[0.98] active:bg-info-hover",
 		),
 		"info-muted": clsx(

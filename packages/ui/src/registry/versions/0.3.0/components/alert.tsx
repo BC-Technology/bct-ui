@@ -55,7 +55,7 @@ export function Alert({
 		<div
 			className={twMerge(
 				clsx(
-					"relative flex gap-3 rounded-radius-md border p-4",
+					"relative flex gap-3 rounded-rounded-md border p-4",
 					variantStyles[variant],
 				),
 				classNames?.root,
