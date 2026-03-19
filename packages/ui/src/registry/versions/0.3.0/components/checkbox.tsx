@@ -1,3 +1,4 @@
+"use client"
 import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox"
 import clsx from "clsx"
 import { Square, SquareCheck } from "lucide-react"

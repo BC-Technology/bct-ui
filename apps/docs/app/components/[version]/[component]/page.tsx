@@ -1,15 +1,10 @@
 import { ArrowLeft, Copy, Package, Terminal } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { CodeBlock } from "@/components/docs/code-block"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { VariantSection } from "@/components/preview/variant-section"
-import {
-	getComponentFromModule,
-	loadComponentModule,
-} from "@/lib/component-loader"
+import { ComponentExamples } from "@/components/preview/component-examples"
 import { generateVariantExamples } from "@/lib/preview-generator"
 import {
 	getAllComponentNames,
@@ -57,14 +52,9 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
 	const source = getComponentSource(version, component)
 
-	// Load component module for live previews
-	const componentModule = await loadComponentModule(version, component)
-	const Component = componentModule
-		? getComponentFromModule(componentModule, component)
-		: null
 
 	// Generate variant examples
-	const variants = generateVariantExamples(component)
+	const variants = await generateVariantExamples(component, version)
 
 	return (
 		<div className="flex min-h-screen flex-col">
@@ -175,40 +165,14 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 						</div>
 
 						{/* Variants & Examples */}
-						{Component && variants.length > 0 && (
-							<div className="mt-12">
-								<div className="mb-8">
-									<h2 className="font-bold text-3xl text-typography-primary">
-										Examples
-									</h2>
-									<p className="mt-2 text-typography-secondary">
-										Explore different variants and use cases for this component
-									</p>
-								</div>
-								<div className="space-y-8">
-									<Suspense
-										fallback={
-											<div className="flex items-center justify-center rounded-md bg-surface-1 p-12">
-												<div className="flex items-center gap-3 text-typography-muted">
-													<div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-													<span>Loading preview...</span>
-												</div>
-											</div>
-										}
-									>
-										{variants.map((variant, index) => (
-											<VariantSection
-												key={`${variant.name}-${index}`}
-												name={variant.name}
-												description={variant.description}
-												code={variant.code}
-												preview={<Component {...variant.props} />}
-											/>
-										))}
-									</Suspense>
-								</div>
-							</div>
-						)}
+						<ComponentExamples
+							version={version}
+							componentName={component}
+							serverVariants={variants.map((v) => ({
+								...v,
+								preview: undefined,
+							}))}
+						/>
 
 						{/* Full Source Code */}
 						{source && (
