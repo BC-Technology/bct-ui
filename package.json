@@ -16,7 +16,8 @@
 		"format": "biome format --write .",
 		"check": "biome check .",
 		"docs:dev": "cd apps/docs && pnpm dev",
-		"docs:build": "cd apps/docs && pnpm build"
+		"docs:build": "cd apps/docs && pnpm build",
+		"docs:add-component": "cd apps/docs && tsx scripts/add-component.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.12",

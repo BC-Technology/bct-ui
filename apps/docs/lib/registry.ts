@@ -1,102 +1,116 @@
-import "server-only"
+import fs from "node:fs"
+import path from "node:path"
+import type { Registry, RegistryEntry } from "@/lib/categories"
+import { CATEGORY_META } from "@/lib/categories"
 
-import { readFileSync } from "node:fs"
-import { join } from "node:path"
+export type { Registry, RegistryEntry } from "@/lib/categories"
+export { CATEGORY_META } from "@/lib/categories"
 
-export interface RegistryFile {
-	src: string
-	dst: string
-}
+const REGISTRY_BASE = path.join(
+	process.cwd(),
+	"../../packages/ui/src/registry/versions",
+)
 
-export interface RegistryExample {
-	name: string
-	description: string
-	code: string
-}
-
-export interface RegistryComponent {
-	title: string
-	description: string
-	category?: string
-	files: RegistryFile[]
-	deps: string[]
-	registryDeps?: string[]
-	examples?: RegistryExample[]
-}
-
-export type Registry = Record<string, RegistryComponent>
-
-const registryCache: Record<string, Registry> = {}
+const registryCache = new Map<string, Registry>()
 
 export function getRegistry(version: string): Registry {
-	if (registryCache[version]) {
-		return registryCache[version]
+	if (registryCache.has(version)) {
+		// biome-ignore lint/style/noNonNullAssertion: This is safe, since we check that it's not null
+		return registryCache.get(version)!
 	}
 
+	const registryPath = path.join(REGISTRY_BASE, version, "registry.json")
+
 	try {
-		const registryPath = join(
-			process.cwd(),
-			"..",
-			"..",
-			"packages",
-			"ui",
-			"src",
-			"registry",
-			"versions",
-			version,
-			"registry.json",
-		)
-		const registryContent = readFileSync(registryPath, "utf-8")
-		const registry = JSON.parse(registryContent) as Registry
-		registryCache[version] = registry
+		const raw = fs.readFileSync(registryPath, "utf-8")
+		const registry = JSON.parse(raw) as Registry
+		registryCache.set(version, registry)
 		return registry
-	} catch (error) {
-		console.error(`Failed to load registry for version ${version}:`, error)
+	} catch {
 		return {}
 	}
 }
 
 export function getComponent(
 	version: string,
-	componentName: string,
-): RegistryComponent | null {
+	name: string,
+): (RegistryEntry & { name: string }) | null {
 	const registry = getRegistry(version)
-	return registry[componentName] || null
+	const entry = registry[name]
+	if (!entry) return null
+	return { ...entry, name }
+}
+
+export function getAllComponents(
+	version: string,
+): Array<RegistryEntry & { name: string }> {
+	const registry = getRegistry(version)
+	return Object.entries(registry)
+		.map(([name, entry]) => ({ ...entry, name }))
+		.sort((a, b) => a.title.localeCompare(b.title))
 }
 
 export function getAllComponentNames(version: string): string[] {
 	const registry = getRegistry(version)
-	return Object.keys(registry)
+	return Object.keys(registry).sort()
+}
+
+export function getComponentsByCategory(
+	version: string,
+): Record<string, Array<RegistryEntry & { name: string }>> {
+	const components = getAllComponents(version)
+	const grouped: Record<string, Array<RegistryEntry & { name: string }>> = {}
+
+	for (const component of components) {
+		const category = component.category ?? "other"
+		if (!grouped[category]) {
+			grouped[category] = []
+		}
+		grouped[category].push(component)
+	}
+
+	return grouped
 }
 
 export function getComponentSource(
 	version: string,
-	componentName: string,
+	name: string,
 ): string | null {
-	const component = getComponent(version, componentName)
-	if (!component || !component.files[0]) {
-		return null
-	}
+	const sourcePath = path.join(
+		REGISTRY_BASE,
+		version,
+		"components",
+		`${name}.tsx`,
+	)
 
 	try {
-		const sourcePath = join(
-			process.cwd(),
-			"..",
-			"..",
-			"packages",
-			"ui",
-			"src",
-			"registry",
-			"versions",
-			version,
-			component.files[0].src,
-		)
-		return readFileSync(sourcePath, "utf-8")
-	} catch (error) {
-		console.error(
-			`Failed to load source for ${componentName} in version ${version}:`,
-			error,
-		)
+		return fs.readFileSync(sourcePath, "utf-8")
+	} catch {
 		return null
 	}
+}
+
+export function componentExistsInVersion(
+	component: string,
+	version: string,
+): boolean {
+	const registry = getRegistry(version)
+	return component in registry
+}
+
+export function getAllVersionsForComponent(
+	component: string,
+	versions: string[],
+): string[] {
+	return versions.filter((v) => componentExistsInVersion(component, v))
+}
+
+export function getSortedCategories(
+	grouped: Record<string, unknown>,
+): string[] {
+	return Object.keys(grouped).sort((a, b) => {
+		const orderA = CATEGORY_META[a]?.order ?? 99
+		const orderB = CATEGORY_META[b]?.order ?? 99
+		return orderA - orderB
+	})
 }

@@ -1,35 +1,31 @@
 {
 	"name": "@bctechnology/docs",
-	"version": "0.4.0",
+	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "biome check .",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@bctechnology/ui": "workspace:*",
 		"clsx": "^2.1.1",
-		"lucide-react": "^0.460.0",
-		"next": "^15.1.6",
+		"lucide-react": "0.460.0",
+		"next": "^15.3.1",
 		"next-themes": "^0.4.6",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"react-error-boundary": "^6.1.1",
-		"server-only": "^0.0.1",
-		"shiki": "^1.24.2",
-		"tailwind-merge": "^2.5.0"
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"shiki": "^3.4.2"
 	},
 	"devDependencies": {
-		"@tailwindcss/postcss": "^4.2.1",
-		"@tailwindcss/vite": "^4.1.0",
+		"@tailwindcss/postcss": "^4.1.0",
 		"@types/node": "^22.10.10",
-		"@types/react": "^18.3.27",
-		"@types/react-dom": "^18.3.7",
-		"postcss": "^8.5.8",
+		"@types/react": "18.3.27",
+		"@types/react-dom": "18.3.7",
 		"tailwindcss": "^4.1.0",
+		"tsx": "^4.19.2",
 		"typescript": "^5.7.3"
 	}
 }

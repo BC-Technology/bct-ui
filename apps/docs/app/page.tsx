@@ -6,347 +6,305 @@ import {
 	Layers,
 	Package,
 	Palette,
+	Shield,
 	Sparkles,
 	Terminal,
 	Zap,
 } from "lucide-react"
 import Link from "next/link"
 import { Header } from "@/components/layout/header"
-import { getPreferredVersion } from "@/lib/version-cookie"
+import { TerminalBlock } from "@/components/docs/code-block"
+import { DEFAULT_VERSION } from "@/lib/versions"
 
-export default async function Home() {
-	const version = await getPreferredVersion()
+const features = [
+	{
+		icon: Palette,
+		title: "Design System First",
+		description:
+			"A centralized CSS token system used by both developers and designers in Figma — 1:1 design-to-code handover.",
+	},
+	{
+		icon: Shield,
+		title: "Accessible by Default",
+		description:
+			"Built on Base UI, all components are ARIA-compliant with full keyboard navigation and screen reader support.",
+	},
+	{
+		icon: Code2,
+		title: "TypeScript Native",
+		description:
+			"Full TypeScript support with exported interfaces, prop types, and IDE autocompletion out of the box.",
+	},
+	{
+		icon: Package,
+		title: "Copy & Own",
+		description:
+			"Inspired by shadcn/ui — components are copied into your project, giving you full control to customize.",
+	},
+	{
+		icon: Zap,
+		title: "Biome Enforced",
+		description:
+			"Code quality, formatting, and Tailwind class ordering are enforced via Biome for a consistent codebase.",
+	},
+	{
+		icon: Layers,
+		title: "Version Pinned",
+		description:
+			"Pin your project to a specific component version and update on your own schedule, never forced migrations.",
+	},
+]
 
+const steps = [
+	{
+		step: "01",
+		title: "Initialize",
+		description: "Set up your project with BCT UI's design system, Tailwind v4, and Biome.",
+		code: "npx @bctechnology/ui@latest init",
+	},
+	{
+		step: "02",
+		title: "Add Components",
+		description: "Copy any component directly into your project with a single command.",
+		code: "npx @bctechnology/ui@latest add button",
+	},
+	{
+		step: "03",
+		title: "Use & Customize",
+		description:
+			"Import from your components folder — it's your code now, customize freely.",
+		code: `import { Button } from "@/components/button"
+
+export function App() {
+  return <Button variant="primary">Hello BCT</Button>
+}`,
+	},
+]
+
+export default function HomePage() {
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Header currentVersion={version} />
+			<Header version={DEFAULT_VERSION} />
+
 			<main className="flex-1">
-				{/* Hero Section */}
-				<section className="relative overflow-hidden bg-background">
-					{/* Animated Gradient Background */}
-					<div className="absolute inset-0 bg-linear-to-br from-primary/10 via-tertiary/10 to-accent-1/10" />
+				{/* Hero */}
+				<section className="relative overflow-hidden">
+					<div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent-1/8" />
 					<div
-						className="absolute inset-0 opacity-30"
+						className="pointer-events-none absolute inset-0 opacity-40"
 						style={{
 							backgroundImage:
-								"radial-gradient(circle at 1px 1px, rgb(var(--color-border) / 0.15) 1px, transparent 0)",
-							backgroundSize: "40px 40px",
+								"radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0)",
+							backgroundSize: "32px 32px",
 						}}
 					/>
-					{/* Gradient orbs */}
-					<div className="absolute top-0 right-1/4 h-96 w-96 animate-pulse rounded-full bg-primary/20 blur-3xl" />
-					<div className="animation-delay-2000 absolute bottom-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-secondary/20 blur-3xl" />
+					<div className="absolute top-0 right-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/4 rounded-full bg-primary/10 blur-3xl" />
+					<div className="absolute bottom-0 left-0 h-[400px] w-[400px] translate-y-1/4 -translate-x-1/4 rounded-full bg-accent-1/10 blur-3xl" />
 
-					<div className="container relative z-10 mx-auto px-4 py-20 sm:px-6 sm:py-24 md:py-32 lg:px-8 lg:py-40">
-						<div className="mx-auto flex max-w-5xl flex-col items-center text-center">
-							<div className="mb-8 inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 font-medium text-primary text-sm backdrop-blur-sm transition-all hover:bg-primary/10">
-								<Sparkles className="h-4 w-4" />
-								<span>Version 0.4.0 • 38 Components</span>
+					<div className="relative mx-auto max-w-screen-xl px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36">
+						<div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+							<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+								<Sparkles className="h-3.5 w-3.5" />
+								v{DEFAULT_VERSION} — 39 Components
 							</div>
 
-							<h1 className="bg-linear-to-br from-typography-primary via-typography-primary to-typography-secondary bg-clip-text font-bold text-5xl text-transparent tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
-								Build faster with
+							<h1 className="bg-gradient-to-br from-typography-primary via-typography-primary to-typography-secondary bg-clip-text font-bold text-5xl text-transparent tracking-tight sm:text-6xl lg:text-7xl">
+								The BCT Design System
 								<br />
-								<span className="bg-linear-to-r from-primary via-secondary to-accent-1 bg-clip-text text-transparent">
-									BCT UI
+								<span className="bg-gradient-to-r from-primary via-accent-1 to-secondary bg-clip-text">
+									for React
 								</span>
 							</h1>
 
-							<p className="mt-6 max-w-2xl text-lg text-typography-secondary sm:text-xl md:text-2xl">
-								A comprehensive, opinionated UI and design-system platform.
-								Modern, accessible components built with React and Tailwind CSS
-								v4.
+							<p className="mt-6 max-w-2xl text-lg text-typography-secondary sm:text-xl">
+								A comprehensive, opinionated component library built for BCT's
+								frontend projects. Modern, accessible, and deeply integrated with
+								the design system your designers use in Figma.
 							</p>
 
-							<div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+							<div className="mt-10 flex flex-wrap items-center justify-center gap-4">
 								<Link
-									href={`/components/${version}`}
-									className="group inline-flex h-12 items-center gap-2 rounded-md bg-primary px-6 font-semibold text-primary-on text-sm shadow-sm transition-all hover:bg-primary-hover active:scale-[0.98] sm:w-auto"
+									href={`/components/${DEFAULT_VERSION}`}
+									className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-6 font-semibold text-primary-on shadow-sm transition-all hover:bg-primary-hover active:scale-[0.98]"
 								>
 									Browse Components
-									<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+									<ArrowRight className="h-4 w-4" />
 								</Link>
 								<Link
 									href="/getting-started"
-									className="inline-flex h-12 items-center gap-2 rounded-md bg-surface-1 px-6 font-semibold text-sm text-typography-primary shadow-sm transition-all hover:bg-surface-2 active:scale-[0.98]"
+									className="inline-flex h-11 items-center gap-2 rounded-lg border border-border bg-surface-1 px-6 font-semibold text-typography-primary transition-all hover:bg-surface-2 active:scale-[0.98]"
 								>
-									<Code2 className="h-4 w-4" />
+									<Terminal className="h-4 w-4" />
 									Get Started
 								</Link>
-							</div>
-
-							<div className="mt-8 flex items-center gap-6 text-sm text-typography-muted">
-								<div className="flex items-center gap-2">
-									<Check className="h-4 w-4 text-success" />
-									<span>Open Source</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<Check className="h-4 w-4 text-success" />
-									<span>TypeScript</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<Check className="h-4 w-4 text-success" />
-									<span>Accessible</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* Quick Start Section */}
-				<section className="border-border border-y bg-surface-1/50 py-16">
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="mx-auto max-w-4xl">
-							<div className="text-center">
-								<h2 className="font-bold text-3xl text-typography-primary sm:text-4xl">
-									Get started in seconds
-								</h2>
-								<p className="mt-4 text-lg text-typography-secondary">
-									Install the CLI and add components to your project
-								</p>
-							</div>
-
-							<div className="mt-12 grid gap-6 md:grid-cols-2">
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-6 shadow-sm">
-									<div className="flex items-start gap-4">
-										<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-											<Terminal className="h-5 w-5" />
-										</div>
-										<div className="flex-1">
-											<h3 className="font-semibold text-lg text-typography-primary">
-												1. Install CLI
-											</h3>
-											<div className="mt-3 rounded-lg bg-surface-2 p-3">
-												<code className="font-mono text-sm text-typography-primary">
-													npm install -g @bctechnology/ui
-												</code>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-6 shadow-sm">
-									<div className="flex items-start gap-4">
-										<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
-											<Package className="h-5 w-5" />
-										</div>
-										<div className="flex-1">
-											<h3 className="font-semibold text-lg text-typography-primary">
-												2. Add Components
-											</h3>
-											<div className="mt-3 rounded-lg bg-surface-2 p-3">
-												<code className="font-mono text-sm text-typography-primary">
-													npx bct add button
-												</code>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* Features Section */}
-				<section className="py-20 sm:py-24">
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="mx-auto max-w-7xl">
-							<div className="text-center">
-								<h2 className="font-bold text-3xl text-typography-primary sm:text-4xl">
-									Everything you need to build modern UIs
-								</h2>
-								<p className="mt-4 text-lg text-typography-secondary">
-									Powerful features that make development faster and more
-									enjoyable
-								</p>
-							</div>
-
-							<div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-primary/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary">
-											<Package className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											38+ Components
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Comprehensive collection of form inputs, feedback,
-											display, navigation, and layout components ready to use.
-										</p>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-secondary/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
-											<Zap className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											CLI Workflow
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Install components with{" "}
-											<code className="rounded bg-surface-2 px-1.5 py-0.5 font-mono text-sm">
-												bct add
-											</code>{" "}
-											command. Components are copied to your project for full
-											customization.
-										</p>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-accent-1/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent-1/10 text-accent-1">
-											<Palette className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											Design System
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Built on a centrally governed design system with
-											consistent tokens, spacing, and semantic colors.
-										</p>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-primary/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary">
-											<Code2 className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											TypeScript First
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Full TypeScript support with comprehensive type
-											definitions and IntelliSense for better developer
-											experience.
-										</p>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-secondary/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
-											<Layers className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											Tailwind CSS v4
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Built with the latest Tailwind CSS v4, leveraging modern
-											CSS features and design tokens for maximum flexibility.
-										</p>
-									</div>
-								</div>
-
-								<div className="relative overflow-hidden rounded-md bg-surface-1 p-8 shadow-sm transition-all">
-									<div className="absolute top-0 right-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-accent-1/5" />
-									<div className="relative">
-										<div className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent-1/10 text-accent-1">
-											<Check className="h-7 w-7" />
-										</div>
-										<h3 className="mt-6 font-semibold text-typography-primary text-xl">
-											Accessible
-										</h3>
-										<p className="mt-3 text-typography-secondary">
-											Built on Base UI primitives with WAI-ARIA compliance,
-											ensuring screen reader support and keyboard navigation.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* CTA Section */}
-				<section className="relative overflow-hidden border-border border-y bg-linear-to-br from-primary/5 via-secondary/5 to-accent-1/5 py-20 sm:py-24">
-					<div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
-					<div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="mx-auto max-w-3xl text-center">
-							<h2 className="font-bold text-3xl text-typography-primary sm:text-4xl md:text-5xl">
-								Ready to build something amazing?
-							</h2>
-							<p className="mt-6 text-lg text-typography-secondary sm:text-xl">
-								Start using BCT UI in your next project and experience the power
-								of a well-designed component library.
-							</p>
-							<div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-								<Link
-									href={`/components/${version}`}
-									className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 font-semibold text-primary-on text-sm shadow-md transition-all hover:bg-primary-hover active:scale-[0.98] sm:w-auto"
-								>
-									Explore Components
-									<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-								</Link>
-								<Link
+								<a
 									href="https://github.com/BC-Technology/bct-ui"
-									className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border-2 border-border bg-surface-1 px-8 font-semibold text-sm text-typography-primary transition-all hover:bg-surface-1 active:scale-[0.98] sm:w-auto"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="inline-flex h-11 items-center gap-2 rounded-lg px-4 font-medium text-typography-secondary transition-all hover:text-typography-primary"
 								>
 									<Github className="h-4 w-4" />
-									View on GitHub
-								</Link>
+									GitHub
+								</a>
+							</div>
+
+							<div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-typography-muted">
+								{["Open Source", "TypeScript", "Tailwind v4", "Base UI"].map(
+									(item) => (
+										<div key={item} className="flex items-center gap-1.5">
+											<Check className="h-3.5 w-3.5 text-success" />
+											{item}
+										</div>
+									),
+								)}
 							</div>
 						</div>
 					</div>
 				</section>
 
-				{/* Footer */}
-				<footer className="border-border border-t bg-surface-1/30 py-12">
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-							<div className="flex items-center gap-2">
-								<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-on">
-									<Package className="h-5 w-5" />
-								</div>
-								<span className="font-semibold text-typography-primary">
-									BCT UI
-								</span>
-							</div>
-							<div className="flex items-center gap-6">
-								<Link
-									href="/getting-started"
-									className="text-sm text-typography-secondary transition-colors hover:text-typography-primary"
-								>
-									Documentation
-								</Link>
-								<Link
-									href={`/components/${version}`}
-									className="text-sm text-typography-secondary transition-colors hover:text-typography-primary"
-								>
-									Components
-								</Link>
-								<Link
-									href="https://github.com/BC-Technology/bct-ui"
-									className="text-sm text-typography-secondary transition-colors hover:text-typography-primary"
-								>
-									GitHub
-								</Link>
-								<Link
-									href="https://www.npmjs.com/package/@bctechnology/ui"
-									className="text-sm text-typography-secondary transition-colors hover:text-typography-primary"
-								>
-									npm
-								</Link>
-							</div>
-						</div>
-						<div className="mt-8 border-border border-t pt-8 text-center">
-							<p className="text-sm text-typography-muted">
-								© {new Date().getFullYear()} BC Technology. Built with React and
-								Tailwind CSS v4.
+				{/* Quick Start */}
+				<section className="border-y border-border bg-surface-1/50 py-16">
+					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+						<div className="mx-auto max-w-3xl">
+							<h2 className="mb-2 text-center font-bold text-3xl text-typography-primary">
+								Up and running in minutes
+							</h2>
+							<p className="mb-10 text-center text-typography-secondary">
+								Three commands to set up your project with BCT UI.
 							</p>
+							<div className="flex flex-col gap-4">
+								{steps.map(({ step, title, description, code }) => (
+									<div
+										key={step}
+										className="flex gap-4 rounded-xl border border-border bg-background p-5"
+									>
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10 font-mono text-xs font-bold text-primary">
+											{step}
+										</div>
+										<div className="flex-1 overflow-hidden">
+											<h3 className="mb-0.5 font-semibold text-typography-primary">
+												{title}
+											</h3>
+											<p className="mb-3 text-sm text-typography-secondary">
+												{description}
+											</p>
+											<TerminalBlock code={code} />
+										</div>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</footer>
+				</section>
+
+				{/* Features */}
+				<section className="py-16">
+					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+						<div className="mb-12 text-center">
+							<h2 className="mb-3 font-bold text-3xl text-typography-primary">
+								Why BCT UI?
+							</h2>
+							<p className="text-typography-secondary">
+								Everything you need for consistent, high-quality frontend
+								development at BCT.
+							</p>
+						</div>
+						<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+							{features.map(({ icon: Icon, title, description }) => (
+								<div
+									key={title}
+									className="rounded-xl border border-border bg-surface-1 p-6 transition-shadow hover:shadow-shadow-md"
+								>
+									<div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+										<Icon className="h-5 w-5 text-primary" />
+									</div>
+									<h3 className="mb-2 font-semibold text-typography-primary">
+										{title}
+									</h3>
+									<p className="text-sm text-typography-secondary">{description}</p>
+								</div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				{/* Stats */}
+				<section className="border-y border-border bg-surface-1/50 py-12">
+					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+						<div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+							{[
+								{ value: "39", label: "Components" },
+								{ value: "3", label: "Versions" },
+								{ value: "100+", label: "Design Tokens" },
+								{ value: "0", label: "Runtime deps" },
+							].map(({ value, label }) => (
+								<div key={label} className="text-center">
+									<div className="font-bold text-4xl text-primary">{value}</div>
+									<div className="mt-1 text-sm text-typography-muted">{label}</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</section>
+
+				{/* CTA */}
+				<section className="py-20">
+					<div className="mx-auto max-w-2xl px-4 text-center">
+						<h2 className="mb-4 font-bold text-3xl text-typography-primary">
+							Ready to build?
+						</h2>
+						<p className="mb-8 text-typography-secondary">
+							Start using BCT UI in your project today. It takes less than 5
+							minutes to get set up.
+						</p>
+						<div className="flex flex-wrap items-center justify-center gap-4">
+							<Link
+								href="/getting-started"
+								className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-6 font-semibold text-primary-on shadow-sm transition-all hover:bg-primary-hover"
+							>
+								Read the Docs
+								<ArrowRight className="h-4 w-4" />
+							</Link>
+							<Link
+								href={`/components/${DEFAULT_VERSION}`}
+								className="inline-flex h-11 items-center gap-2 rounded-lg border border-border px-6 font-semibold text-typography-primary transition-all hover:bg-surface-1"
+							>
+								View Components
+							</Link>
+						</div>
+					</div>
+				</section>
 			</main>
+
+			{/* Footer */}
+			<footer className="border-t border-border py-8">
+				<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+						<div className="flex items-center gap-2 text-sm text-typography-muted">
+							<div className="flex h-5 w-5 items-center justify-center rounded bg-primary">
+								<Layers className="h-3 w-3 text-primary-on" />
+							</div>
+							<span>BCT UI — Built by BC Technology</span>
+						</div>
+						<div className="flex items-center gap-6 text-sm text-typography-muted">
+							<Link href="/getting-started" className="hover:text-typography-primary">
+								Docs
+							</Link>
+							<Link href="/changelog" className="hover:text-typography-primary">
+								Changelog
+							</Link>
+							<a
+								href="https://github.com/BC-Technology/bct-ui"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:text-typography-primary"
+							>
+								GitHub
+							</a>
+						</div>
+					</div>
+				</div>
+			</footer>
 		</div>
 	)
 }

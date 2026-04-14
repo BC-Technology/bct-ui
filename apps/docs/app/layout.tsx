@@ -3,16 +3,20 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 
 export const metadata: Metadata = {
-	title: "BCT UI - Component Library",
+	title: {
+		default: "BCT UI",
+		template: "%s — BCT UI",
+	},
 	description:
-		"A comprehensive, opinionated UI and design-system platform for BCT's frontend projects",
+		"A comprehensive, opinionated UI and design-system platform for BCT's frontend projects. Modern accessible components built with React and Tailwind CSS v4.",
+	keywords: ["BCT", "UI", "components", "design system", "React", "Tailwind"],
 }
 
 export default function RootLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode
-}>) {
+}) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className="antialiased">
