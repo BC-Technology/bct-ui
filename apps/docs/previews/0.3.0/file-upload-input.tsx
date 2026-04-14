@@ -6,7 +6,8 @@ import type { VariantPreview } from "../types"
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Advanced file upload with image grid previews and expand dialog",
+		description:
+			"Advanced file upload with image grid previews and expand dialog",
 		code: `<FileUploadInput
   onFileSelect={(files) => handleFiles(files)}
   accept="image/*"

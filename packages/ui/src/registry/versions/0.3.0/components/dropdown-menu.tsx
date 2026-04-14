@@ -41,8 +41,8 @@ export function DropdownMenu({
 						className={twMerge(
 							clsx(
 								"z-50 min-w-48 rounded-rounded-md border border-border bg-surface-1 p-1 shadow-shadow-lg",
-								"data-[state=open]:animate-animate-fade-in",
-								"data-[state=closed]:animate-animate-fade-out",
+								"data-open:animate-animate-fade-in",
+								"data-closed:animate-animate-fade-out",
 							),
 							classNames?.popup,
 							className,

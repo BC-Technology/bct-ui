@@ -19,19 +19,27 @@ function PanelDialogDemo() {
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="panel-name"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Name
 						</label>
 						<input
+							id="panel-name"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							defaultValue="Jonas Blendstrup"
 						/>
 					</div>
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="panel-email"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Email
 						</label>
 						<input
+							id="panel-email"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							defaultValue="jonas@bctechnology.dk"
 						/>
@@ -62,10 +70,14 @@ function ModalDialogDemo() {
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="modal-project-name"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Project name
 						</label>
 						<input
+							id="modal-project-name"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							placeholder="My awesome project"
 						/>

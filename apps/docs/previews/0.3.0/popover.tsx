@@ -54,7 +54,11 @@ export const variants: VariantPreview[] = [
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-typography-primary">Notifications</span>
-							<input type="checkbox" defaultChecked className="h-4 w-4 accent-primary" />
+							<input
+								type="checkbox"
+								defaultChecked
+								className="h-4 w-4 accent-primary"
+							/>
 						</div>
 					</div>
 				</Popover>

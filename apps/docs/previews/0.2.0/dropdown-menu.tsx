@@ -1,14 +1,36 @@
 "use client"
 
-import { ChevronDown, Copy, Edit, MoreHorizontal, Share, Trash2 } from "lucide-react"
+import {
+	ChevronDown,
+	Copy,
+	Edit,
+	MoreHorizontal,
+	Share,
+	Trash2,
+} from "lucide-react"
 import { Button } from "../../../../packages/ui/src/registry/versions/0.2.0/components/button"
 import { DropdownMenu } from "../../../../packages/ui/src/registry/versions/0.2.0/components/dropdown-menu"
 import type { VariantPreview } from "../types"
 
 const actions = [
-	{ value: "edit", label: "Edit", icon: <Edit className="h-4 w-4" />, onClick: () => {} },
-	{ value: "copy", label: "Copy link", icon: <Copy className="h-4 w-4" />, onClick: () => {} },
-	{ value: "share", label: "Share", icon: <Share className="h-4 w-4" />, onClick: () => {} },
+	{
+		value: "edit",
+		label: "Edit",
+		icon: <Edit className="h-4 w-4" />,
+		onClick: () => {},
+	},
+	{
+		value: "copy",
+		label: "Copy link",
+		icon: <Copy className="h-4 w-4" />,
+		onClick: () => {},
+	},
+	{
+		value: "share",
+		label: "Share",
+		icon: <Share className="h-4 w-4" />,
+		onClick: () => {},
+	},
 	{
 		value: "delete",
 		label: "Delete",

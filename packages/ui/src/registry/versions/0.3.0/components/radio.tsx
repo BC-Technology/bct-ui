@@ -8,7 +8,6 @@ export interface RadioProps
 	extends React.ComponentPropsWithoutRef<typeof BaseRadio.Root> {
 	label?: string
 	variant?: "inline" | "card"
-	checked?: boolean
 	className?: string
 	classNames?: {
 		root?: string
@@ -21,7 +20,6 @@ export interface RadioProps
 export function Radio({
 	label,
 	variant = "inline",
-	checked,
 	className,
 	classNames,
 	disabled,
@@ -33,7 +31,7 @@ export function Radio({
 				disabled={disabled}
 				className={twMerge(
 					clsx(
-						"relative flex w-full cursor-pointer items-center gap-3 rounded-rounded-md border px-3 py-2.5 transition-all duration-200",
+						"group relative flex w-full cursor-pointer items-center gap-3 rounded-md border px-3 py-2.5 transition-all duration-200",
 						"outline-none ring-offset-2 ring-offset-background",
 						"focus-visible:ring-2 focus-visible:ring-primary-focus",
 						"disabled:cursor-not-allowed disabled:opacity-50",
@@ -46,11 +44,8 @@ export function Radio({
 				{...props}
 			>
 				<div className={twMerge("shrink-0", classNames?.indicator)}>
-					{checked ? (
-						<CircleCheck className="size-4 text-primary transition-all" />
-					) : (
-						<Circle className="size-4 text-typography-muted" />
-					)}
+					<Circle className="size-4 text-typography-muted group-data-checked:hidden" />
+					<CircleCheck className="hidden size-4 text-primary transition-all group-data-checked:block" />
 				</div>
 				{label && (
 					<span
@@ -78,7 +73,7 @@ export function Radio({
 				disabled={disabled}
 				className={twMerge(
 					clsx(
-						"flex size-5 cursor-pointer items-center justify-center rounded-full border bg-surface-1 transition-all duration-200",
+						"group flex size-5 cursor-pointer items-center justify-center rounded-full border bg-surface-1 transition-all duration-200",
 						"outline-none ring-offset-2 ring-offset-background",
 						"focus-visible:ring-2 focus-visible:ring-primary-focus",
 						"disabled:cursor-not-allowed disabled:opacity-50",
@@ -94,11 +89,8 @@ export function Radio({
 						classNames?.indicator,
 					)}
 				>
-					{checked ? (
-						<CircleCheck className="size-4 text-primary transition-all" />
-					) : (
-						<Circle className="size-4 text-typography-muted" />
-					)}
+					<Circle className="size-4 text-typography-muted group-data-checked:hidden" />
+					<CircleCheck className="hidden size-4 text-primary transition-all group-data-checked:block" />
 				</div>
 			</BaseRadio.Root>
 			{label && (

@@ -8,7 +8,10 @@ import {
 import type { VariantPreview } from "../types"
 
 function DateRangeDemo() {
-	const [range, setRange] = useState<DateRange>({ startDate: null, endDate: null })
+	const [range, setRange] = useState<DateRange>({
+		startDate: null,
+		endDate: null,
+	})
 	return (
 		<div className="flex w-full max-w-sm flex-col gap-3">
 			<DateRangePicker

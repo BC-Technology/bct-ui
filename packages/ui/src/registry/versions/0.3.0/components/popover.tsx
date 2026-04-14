@@ -42,8 +42,8 @@ export function Popover({
 						className={twMerge(
 							clsx(
 								"z-50 w-72 rounded-rounded-md border border-border bg-surface-1 shadow-shadow-lg",
-								"data-[state=open]:animate-animate-fade-in",
-								"data-[state=closed]:animate-animate-fade-out",
+								"data-open:animate-animate-fade-in",
+								"data-closed:animate-animate-fade-out",
 							),
 							classNames?.popup,
 							className,

@@ -53,18 +53,18 @@ export function Dialog({
 					<BaseDialog.Backdrop
 						className={twMerge(
 							"fixed inset-0 z-50 bg-overlay backdrop-blur-sm",
-							"data-[state=open]:animate-animate-fade-in",
-							"data-[state=closed]:animate-animate-fade-out",
+							"data-open:animate-animate-fade-in",
+							"data-closed:animate-animate-fade-out",
 							classNames?.backdrop,
 						)}
 					/>
 					<BaseDialog.Popup
 						className={twMerge(
 							clsx(
-								"fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2",
+								"-translate-1/2 fixed top-1/2 left-1/2 z-50 w-full",
 								"rounded-radius-lg border border-border bg-surface-1 shadow-shadow-lg",
-								"data-[state=open]:animate-animate-slide-up",
-								"data-[state=closed]:animate-animate-fade-out",
+								"data-open:animate-animate-slide-up",
+								"data-closed:animate-animate-fade-out",
 								modalSizeStyles[size],
 							),
 							classNames?.popup,
@@ -122,8 +122,8 @@ export function Dialog({
 				<BaseDialog.Backdrop
 					className={twMerge(
 						"fixed inset-0 z-50 bg-overlay backdrop-blur-sm",
-						"data-[state=open]:animate-animate-fade-in",
-						"data-[state=closed]:animate-animate-fade-out",
+						"data-open:animate-animate-fade-in",
+						"data-closed:animate-animate-fade-out",
 						classNames?.backdrop,
 					)}
 				/>
@@ -134,8 +134,8 @@ export function Dialog({
 								clsx(
 									"relative flex h-full w-full flex-col bg-surface-1 shadow-shadow-lg transition-all duration-300",
 									"rounded-t-radius-lg sm:rounded-radius-lg",
-									"data-[state=closed]:translate-y-full data-[state=open]:translate-y-0",
-									"sm:data-[state=closed]:translate-x-full sm:data-[state=open]:translate-x-0 sm:data-[state=closed]:translate-y-0",
+									"data-closed:translate-y-full data-open:translate-y-0",
+									"sm:data-closed:translate-x-full sm:data-open:translate-x-0",
 									"sm:h-full sm:max-h-full sm:w-full",
 									panelSizeStyles[size],
 								),

@@ -18,19 +18,27 @@ function EditProfileDemo() {
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="edit-name"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Name
 						</label>
 						<input
+							id="edit-name"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							defaultValue="Jonas Blendstrup"
 						/>
 					</div>
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="edit-email"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Email
 						</label>
 						<input
+							id="edit-email"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							defaultValue="jonas@bctechnology.dk"
 						/>
@@ -60,10 +68,14 @@ function CreateProjectDemo() {
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<label className="text-sm font-medium text-typography-primary">
+						<label
+							htmlFor="create-project-name"
+							className="font-medium text-sm text-typography-primary"
+						>
 							Project name
 						</label>
 						<input
+							id="create-project-name"
 							className="rounded-md border border-border bg-surface-1 px-3 py-2 text-sm"
 							placeholder="My awesome project"
 						/>

@@ -1,6 +1,13 @@
 "use client"
 
-import { BarChart2, FileText, Home, Layers, Settings, Users } from "lucide-react"
+import {
+	BarChart2,
+	FileText,
+	Home,
+	Layers,
+	Settings,
+	Users,
+} from "lucide-react"
 import type { SidebarNavItem } from "../../../../packages/ui/src/registry/versions/0.3.0/components/sidebar"
 import { Sidebar } from "../../../../packages/ui/src/registry/versions/0.3.0/components/sidebar"
 import type { VariantPreview } from "../types"
@@ -22,7 +29,8 @@ const user = {
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Application sidebar with logo, nav items, and user account section",
+		description:
+			"Application sidebar with logo, nav items, and user account section",
 		code: `<Sidebar
   logo={<span className="font-bold text-lg">MyApp</span>}
   navItems={navItems}

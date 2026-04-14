@@ -5,7 +5,10 @@ import { DateRangePicker } from "../../../../packages/ui/src/registry/versions/0
 import type { VariantPreview } from "../types"
 
 function DateRangeDemo() {
-	const [range, setRange] = useState({ startDate: null as string | null, endDate: null as string | null })
+	const [range, setRange] = useState({
+		startDate: null as string | null,
+		endDate: null as string | null,
+	})
 	return (
 		<div className="flex w-full max-w-sm flex-col gap-3">
 			<DateRangePicker

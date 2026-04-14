@@ -141,7 +141,7 @@ export function ImagePreviewDialog({
 				size="xl"
 				className={classNames?.dialog}
 			>
-				<div className="flex w-full flex-col gap-4">
+				<div className="flex max-h-[calc(100vh-8rem)] w-full flex-col gap-4 overflow-y-auto">
 					{!hideMetadata && metadata && (
 						<div
 							className={twMerge(
@@ -206,7 +206,7 @@ export function ImagePreviewDialog({
 							<img
 								src={src}
 								alt={alt || "Image preview"}
-								className="h-auto w-full rounded-md object-contain"
+								className="h-auto max-h-[60vh] w-full rounded-md object-contain"
 							/>
 						)}
 					</div>

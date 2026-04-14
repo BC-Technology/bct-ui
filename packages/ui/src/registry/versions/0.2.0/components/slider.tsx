@@ -71,7 +71,7 @@ export function Slider({
 			</div>
 			<BaseSlider.Root
 				className={twMerge(
-					"relative flex items-center",
+					"relative flex w-full items-center",
 					classNames?.sliderRoot,
 				)}
 				value={value}
@@ -82,7 +82,13 @@ export function Slider({
 						className={twMerge(indicatorStyles, classNames?.indicator)}
 					/>
 				</BaseSlider.Track>
-				<BaseSlider.Thumb className={twMerge(thumbStyles, classNames?.thumb)} />
+				{(Array.isArray(value) ? value : [value ?? 0]).map((_, i) => (
+					<BaseSlider.Thumb
+						// biome-ignore lint/suspicious/noArrayIndexKey: slider thumbs are positionally stable
+						key={i}
+						className={twMerge(thumbStyles, classNames?.thumb)}
+					/>
+				))}
 			</BaseSlider.Root>
 			{error && (
 				<span className={twMerge("text-error text-text-sm", classNames?.error)}>

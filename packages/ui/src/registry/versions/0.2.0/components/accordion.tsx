@@ -60,7 +60,7 @@ export function Accordion({
 							)}
 						>
 							{item.title}
-							<ChevronDown className="size-4 shrink-0 transition-transform duration-200 data-[state=open]:rotate-180" />
+							<ChevronDown className="size-4 shrink-0 transition-transform duration-200 data-open:rotate-180" />
 						</BaseAccordion.Trigger>
 					</BaseAccordion.Header>
 					<BaseAccordion.Panel

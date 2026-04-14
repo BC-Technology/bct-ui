@@ -67,7 +67,7 @@ export function Slider({
 			</div>
 			<BaseSlider.Root
 				className={twMerge(
-					"relative flex items-center py-2",
+					"relative flex w-full items-center py-2",
 					classNames?.sliderRoot,
 				)}
 				value={value}
@@ -86,18 +86,22 @@ export function Slider({
 						)}
 					/>
 				</BaseSlider.Track>
-				<BaseSlider.Thumb
-					className={twMerge(
-						clsx(
-							"size-5 rounded-full border-2 border-primary bg-surface-1 shadow-shadow-sm",
-							"cursor-grab outline-none transition-all duration-200 active:cursor-grabbing",
-							"ring-offset-2 ring-offset-background",
-							"focus-visible:ring-2 focus-visible:ring-primary-focus",
-							"disabled:cursor-not-allowed disabled:opacity-50",
-						),
-						classNames?.thumb,
-					)}
-				/>
+				{(Array.isArray(value) ? value : [value ?? 0]).map((_, i) => (
+					<BaseSlider.Thumb
+						// biome-ignore lint/suspicious/noArrayIndexKey: slider thumbs are positionally stable
+						key={i}
+						className={twMerge(
+							clsx(
+								"size-5 rounded-full border-2 border-primary bg-surface-1 shadow-shadow-sm",
+								"cursor-grab outline-none transition-all duration-200 active:cursor-grabbing",
+								"ring-offset-2 ring-offset-background",
+								"focus-visible:ring-2 focus-visible:ring-primary-focus",
+								"disabled:cursor-not-allowed disabled:opacity-50",
+							),
+							classNames?.thumb,
+						)}
+					/>
+				))}
 			</BaseSlider.Root>
 			{error && (
 				<span className={twMerge("text-error text-text-sm", classNames?.error)}>

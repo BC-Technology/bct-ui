@@ -34,7 +34,7 @@ export const variants: VariantPreview[] = [
 					}}
 					className="w-64 rounded-md"
 				/>
-				<p className="text-xs text-typography-muted">Click image to expand</p>
+				<p className="text-typography-muted text-xs">Click image to expand</p>
 			</div>
 		),
 	},

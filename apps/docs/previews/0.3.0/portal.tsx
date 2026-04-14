@@ -9,6 +9,7 @@ function PortalDemo() {
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<button
+				type="button"
 				onClick={() => setShow(!show)}
 				className="rounded-md border border-border bg-surface-1 px-4 py-2 text-sm text-typography-primary transition-colors hover:bg-surface-2"
 			>
@@ -16,13 +17,14 @@ function PortalDemo() {
 			</button>
 			{show && (
 				<Portal>
-					<div className="fixed bottom-4 right-4 z-50 rounded-lg border border-border bg-surface-1 p-4 shadow-shadow-lg">
+					<div className="fixed right-4 bottom-4 z-50 rounded-lg border border-border bg-surface-1 p-4 shadow-shadow-lg">
 						<p className="text-sm text-typography-primary">
 							This is rendered in a portal (outside the React tree)
 						</p>
 						<button
+							type="button"
 							onClick={() => setShow(false)}
-							className="mt-2 text-xs text-typography-muted underline"
+							className="mt-2 text-typography-muted text-xs underline"
 						>
 							Dismiss
 						</button>
@@ -36,7 +38,8 @@ function PortalDemo() {
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Renders content outside the React component tree using createPortal",
+		description:
+			"Renders content outside the React component tree using createPortal",
 		code: `<Portal>
   <div className="fixed bottom-4 right-4">
     Portal content rendered at document.body

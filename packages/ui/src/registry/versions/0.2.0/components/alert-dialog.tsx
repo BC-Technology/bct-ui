@@ -42,18 +42,18 @@ export function AlertDialog({
 				<BaseAlertDialog.Backdrop
 					className={twMerge(
 						"fixed inset-0 z-50 bg-overlay backdrop-blur-sm",
-						"data-[state=open]:animate-animate-fade-in",
-						"data-[state=closed]:animate-animate-fade-out",
+						"data-open:animate-animate-fade-in",
+						"data-closed:animate-animate-fade-out",
 						classNames?.backdrop,
 					)}
 				/>
 				<BaseAlertDialog.Popup
 					className={twMerge(
 						clsx(
-							"fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2",
+							"-translate-1/2 fixed top-1/2 left-1/2 z-50 w-full max-w-md",
 							"rounded-radius-lg border border-border bg-surface-1 p-6 shadow-shadow-lg",
-							"data-[state=open]:animate-animate-slide-up",
-							"data-[state=closed]:animate-animate-fade-out",
+							"data-open:animate-animate-slide-up",
+							"data-closed:animate-animate-fade-out",
 						),
 						classNames?.popup,
 						className,

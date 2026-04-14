@@ -25,9 +25,13 @@ export const variants: VariantPreview[] = [
 				{fileExamples.map(({ name, mimeType, label }) => (
 					<div key={name} className="flex flex-col items-center gap-1.5">
 						<div className="flex h-12 w-12 items-center justify-center rounded-md border border-border bg-surface-1">
-							<FileIcon name={name} mimeType={mimeType} className="h-6 w-6 text-typography-secondary" />
+							<FileIcon
+								name={name}
+								mimeType={mimeType}
+								className="h-6 w-6 text-typography-secondary"
+							/>
 						</div>
-						<span className="text-xs text-typography-muted">{label}</span>
+						<span className="text-typography-muted text-xs">{label}</span>
 					</div>
 				))}
 			</div>

@@ -6,7 +6,8 @@ import type { VariantPreview } from "../types"
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Multi-line text input with optional label, error, and character counter",
+		description:
+			"Multi-line text input with optional label, error, and character counter",
 		code: `<TextArea
   label="Message"
   placeholder="Type your message here..."

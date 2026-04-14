@@ -18,10 +18,15 @@
 	--animate-animate-spin: spin 1s linear infinite;
 	--animate-animate-spin-slow: spin 2s linear infinite;
 	--animate-animate-spin-fast: spin 500ms linear infinite;
+	--animate-animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 	--animate-animate-pulse-wave: pulse-wave 1.4s ease-in-out infinite;
 }
 
 @layer base {
+	html {
+		overflow-y: scroll;
+	}
+
 	* {
 		border-color: var(--color-border);
 	}

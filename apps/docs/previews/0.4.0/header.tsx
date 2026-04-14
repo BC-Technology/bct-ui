@@ -21,7 +21,8 @@ const user = {
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Application header with navigation, user section, and mobile hamburger menu",
+		description:
+			"Application header with navigation, user section, and mobile hamburger menu",
 		code: `<Header
   logo={<span className="font-bold">MyApp</span>}
   navItems={navItems}
@@ -30,7 +31,7 @@ export const variants: VariantPreview[] = [
   onLogout={() => {}}
 />`,
 		render: () => (
-			<div className="w-full overflow-hidden rounded-xl border border-border">
+			<div className="relative min-h-16 w-full translate-x-0 overflow-hidden rounded-xl border border-border">
 				<Header
 					logo={
 						<div className="flex items-center gap-2">

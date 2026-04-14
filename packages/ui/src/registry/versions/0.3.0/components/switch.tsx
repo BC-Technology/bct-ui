@@ -32,14 +32,14 @@ export function Switch({
 		"outline-none ring-offset-2 ring-offset-background",
 		"focus-visible:ring-2 focus-visible:ring-primary-focus",
 		"disabled:cursor-not-allowed disabled:opacity-50",
-		"bg-surface-2 hover:bg-surface-3",
-		"data-[state=checked]:bg-primary data-[state=checked]:hover:bg-primary-hover",
+		"border border-border bg-surface-2 hover:bg-surface-3",
+		"data-checked:border-primary data-checked:bg-primary data-checked:hover:bg-primary-hover",
 	)
 
 	const thumbStyles = clsx(
 		"pointer-events-none inline-block size-5 rounded-full bg-surface-1 shadow-shadow-sm transition-transform duration-200",
 		"translate-x-0.5",
-		"data-[state=checked]:translate-x-5",
+		"data-checked:translate-x-5",
 	)
 
 	return (

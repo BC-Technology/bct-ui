@@ -9,8 +9,8 @@ const tabItems = [
 		label: "Overview",
 		content: (
 			<p className="text-typography-secondary">
-				This is the overview tab content. It provides a high-level summary of the
-				component's purpose and usage.
+				This is the overview tab content. It provides a high-level summary of
+				the component's purpose and usage.
 			</p>
 		),
 	},

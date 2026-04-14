@@ -14,7 +14,9 @@ function ColorPickerDemo() {
 					className="h-6 w-12 rounded border border-border"
 					style={{ backgroundColor: color }}
 				/>
-				<span className="font-mono text-sm text-typography-secondary">{color}</span>
+				<span className="font-mono text-sm text-typography-secondary">
+					{color}
+				</span>
 			</div>
 		</div>
 	)

@@ -22,7 +22,9 @@ export const variants: VariantPreview[] = [
 						variant={variant}
 						className="w-52"
 						header={<h3 className="font-semibold capitalize">{variant}</h3>}
-						footer={<p className="text-xs text-typography-muted">Card footer</p>}
+						footer={
+							<p className="text-typography-muted text-xs">Card footer</p>
+						}
 					>
 						<p className="text-sm text-typography-secondary">
 							Card content with some descriptive text.

@@ -167,8 +167,8 @@ export function Header({
 												<Popover.Popup
 													className={clsx(
 														"z-50 w-60 rounded-lg border border-border bg-surface-1 p-1 shadow-shadow-md outline-none",
-														"data-[state=open]:animate-animate-fade-in",
-														"data-[state=closed]:animate-animate-fade-out",
+														"data-open:animate-animate-fade-in",
+														"data-closed:animate-animate-fade-out",
 													)}
 												>
 													<div className="px-3 py-2">
