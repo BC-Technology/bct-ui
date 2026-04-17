@@ -12,8 +12,8 @@ import {
 	Zap,
 } from "lucide-react"
 import Link from "next/link"
-import { Header } from "@/components/layout/header"
 import { TerminalBlock } from "@/components/docs/code-block"
+import { Header } from "@/components/layout/header"
 import { DEFAULT_VERSION } from "@/lib/versions"
 
 const features = [
@@ -59,13 +59,15 @@ const steps = [
 	{
 		step: "01",
 		title: "Initialize",
-		description: "Set up your project with BCT UI's design system, Tailwind v4, and Biome.",
+		description:
+			"Set up your project with BCT UI's design system, Tailwind v4, and Biome.",
 		code: "npx @bctechnology/ui@latest init",
 	},
 	{
 		step: "02",
 		title: "Add Components",
-		description: "Copy any component directly into your project with a single command.",
+		description:
+			"Copy any component directly into your project with a single command.",
 		code: "npx @bctechnology/ui@latest add button",
 	},
 	{
@@ -89,7 +91,7 @@ export default function HomePage() {
 			<main className="flex-1">
 				{/* Hero */}
 				<section className="relative overflow-hidden">
-					<div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent-1/8" />
+					<div className="absolute inset-0 bg-linear-to-br from-primary/8 via-background to-accent-1/8" />
 					<div
 						className="pointer-events-none absolute inset-0 opacity-40"
 						style={{
@@ -98,28 +100,28 @@ export default function HomePage() {
 							backgroundSize: "32px 32px",
 						}}
 					/>
-					<div className="absolute top-0 right-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/4 rounded-full bg-primary/10 blur-3xl" />
-					<div className="absolute bottom-0 left-0 h-[400px] w-[400px] translate-y-1/4 -translate-x-1/4 rounded-full bg-accent-1/10 blur-3xl" />
+					<div className="absolute top-0 right-0 h-[600px] w-[600px] translate-x-1/4 -translate-y-1/4 rounded-full bg-primary/10 blur-3xl" />
+					<div className="absolute bottom-0 left-0 h-[400px] w-[400px] -translate-x-1/4 translate-y-1/4 rounded-full bg-accent-1/10 blur-3xl" />
 
-					<div className="relative mx-auto max-w-screen-xl px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36">
+					<div className="relative mx-auto max-w-7xl px-4 pt-20 pb-24 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36">
 						<div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-							<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-								<Sparkles className="h-3.5 w-3.5" />
-								v{DEFAULT_VERSION} — 39 Components
+							<div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 font-medium text-primary text-sm">
+								<Sparkles className="h-3.5 w-3.5" />v{DEFAULT_VERSION} — 39
+								Components
 							</div>
 
-							<h1 className="bg-gradient-to-br from-typography-primary via-typography-primary to-typography-secondary bg-clip-text font-bold text-5xl text-transparent tracking-tight sm:text-6xl lg:text-7xl">
+							<h1 className="bg-linear-to-br from-typography-primary via-typography-primary to-typography-secondary bg-clip-text font-bold text-5xl text-transparent tracking-tight sm:text-6xl lg:text-7xl">
 								The BCT Design System
 								<br />
-								<span className="bg-gradient-to-r from-primary via-accent-1 to-secondary bg-clip-text">
+								<span className="bg-linear-to-r from-primary via-accent-1 to-secondary bg-clip-text">
 									for React
 								</span>
 							</h1>
 
 							<p className="mt-6 max-w-2xl text-lg text-typography-secondary sm:text-xl">
 								A comprehensive, opinionated component library built for BCT's
-								frontend projects. Modern, accessible, and deeply integrated with
-								the design system your designers use in Figma.
+								frontend projects. Modern, accessible, and deeply integrated
+								with the design system your designers use in Figma.
 							</p>
 
 							<div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -163,8 +165,8 @@ export default function HomePage() {
 				</section>
 
 				{/* Quick Start */}
-				<section className="border-y border-border bg-surface-1/50 py-16">
-					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+				<section className="border-border border-y bg-surface-1/50 py-16">
+					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 						<div className="mx-auto max-w-3xl">
 							<h2 className="mb-2 text-center font-bold text-3xl text-typography-primary">
 								Up and running in minutes
@@ -178,7 +180,7 @@ export default function HomePage() {
 										key={step}
 										className="flex gap-4 rounded-xl border border-border bg-background p-5"
 									>
-										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10 font-mono text-xs font-bold text-primary">
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10 font-bold font-mono text-primary text-xs">
 											{step}
 										</div>
 										<div className="flex-1 overflow-hidden">
@@ -199,7 +201,7 @@ export default function HomePage() {
 
 				{/* Features */}
 				<section className="py-16">
-					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 						<div className="mb-12 text-center">
 							<h2 className="mb-3 font-bold text-3xl text-typography-primary">
 								Why BCT UI?
@@ -221,7 +223,9 @@ export default function HomePage() {
 									<h3 className="mb-2 font-semibold text-typography-primary">
 										{title}
 									</h3>
-									<p className="text-sm text-typography-secondary">{description}</p>
+									<p className="text-sm text-typography-secondary">
+										{description}
+									</p>
 								</div>
 							))}
 						</div>
@@ -229,8 +233,8 @@ export default function HomePage() {
 				</section>
 
 				{/* Stats */}
-				<section className="border-y border-border bg-surface-1/50 py-12">
-					<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+				<section className="border-border border-y bg-surface-1/50 py-12">
+					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 						<div className="grid grid-cols-2 gap-8 md:grid-cols-4">
 							{[
 								{ value: "39", label: "Components" },
@@ -240,7 +244,9 @@ export default function HomePage() {
 							].map(({ value, label }) => (
 								<div key={label} className="text-center">
 									<div className="font-bold text-4xl text-primary">{value}</div>
-									<div className="mt-1 text-sm text-typography-muted">{label}</div>
+									<div className="mt-1 text-sm text-typography-muted">
+										{label}
+									</div>
 								</div>
 							))}
 						</div>
@@ -277,17 +283,20 @@ export default function HomePage() {
 			</main>
 
 			{/* Footer */}
-			<footer className="border-t border-border py-8">
-				<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+			<footer className="border-border border-t py-8">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
 						<div className="flex items-center gap-2 text-sm text-typography-muted">
 							<div className="flex h-5 w-5 items-center justify-center rounded bg-primary">
 								<Layers className="h-3 w-3 text-primary-on" />
 							</div>
-							<span>BCT UI — Built by BC Technology</span>
+							<span>BCT UI — Built by Black Capital Technology</span>
 						</div>
 						<div className="flex items-center gap-6 text-sm text-typography-muted">
-							<Link href="/getting-started" className="hover:text-typography-primary">
+							<Link
+								href="/getting-started"
+								className="hover:text-typography-primary"
+							>
 								Docs
 							</Link>
 							<Link href="/changelog" className="hover:text-typography-primary">

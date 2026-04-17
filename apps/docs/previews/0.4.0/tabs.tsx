@@ -1,61 +1,59 @@
 "use client"
 
+import { useState } from "react"
 import { Tabs } from "../../../../packages/ui/src/registry/versions/0.4.0/components/tabs"
 import type { VariantPreview } from "../types"
 
 const tabItems = [
-	{
-		value: "overview",
-		label: "Overview",
-		content: (
-			<p className="text-typography-secondary">
-				This is the overview tab content. It provides a high-level summary of
-				the component's purpose and usage.
-			</p>
-		),
-	},
-	{
-		value: "props",
-		label: "Props",
-		content: (
-			<p className="text-typography-secondary">
-				Props documentation would be listed here with types and default values.
-			</p>
-		),
-	},
-	{
-		value: "examples",
-		label: "Examples",
-		content: (
-			<p className="text-typography-secondary">
-				Code examples and usage patterns for common scenarios.
-			</p>
-		),
-	},
-	{
-		value: "disabled",
-		label: "Disabled",
-		content: <p>You won't see this.</p>,
-		disabled: true,
-	},
+	{ value: "overview", label: "Overview" },
+	{ value: "props", label: "Props" },
+	{ value: "examples", label: "Examples" },
 ]
+
+function ControlledTabsDemo() {
+	const [value, setValue] = useState("overview")
+	return (
+		<div className="flex w-full max-w-lg flex-col gap-4">
+			<Tabs tabs={tabItems} value={value} onChange={setValue} />
+			<p className="text-sm text-typography-muted">
+				Selected: <span className="font-medium text-typography-primary">{value}</span>
+			</p>
+		</div>
+	)
+}
 
 export const variants: VariantPreview[] = [
 	{
 		name: "Default",
-		description: "Tab navigation with animated underline indicator",
+		description: "Uncontrolled segmented control with default selection",
 		code: `<Tabs
   defaultValue="overview"
-  items={[
-    { value: "overview", label: "Overview", content: <p>Overview content</p> },
-    { value: "props", label: "Props", content: <p>Props content</p> },
-    { value: "examples", label: "Examples", content: <p>Examples content</p> },
+  tabs={[
+    { value: "overview", label: "Overview" },
+    { value: "props", label: "Props" },
+    { value: "examples", label: "Examples" },
   ]}
 />`,
 		render: () => (
 			<div className="w-full max-w-lg">
-				<Tabs defaultValue="overview" items={tabItems} />
+				<Tabs defaultValue="overview" tabs={tabItems} />
 			</div>
 		),
+	},
+	{
+		name: "Controlled",
+		description: "Controlled segmented control with external state",
+		code: `const [value, setValue] = useState("overview")
+
+<Tabs
+  tabs={[
+    { value: "overview", label: "Overview" },
+    { value: "props", label: "Props" },
+    { value: "examples", label: "Examples" },
+  ]}
+  value={value}
+  onChange={setValue}
+/>`,
+		render: () => <ControlledTabsDemo />,
 	},
 ]

@@ -111,7 +111,7 @@ export function Select({
 									<BaseSelect.ItemIndicator className="shrink-0">
 										<Check className="size-3.5 text-primary" />
 									</BaseSelect.ItemIndicator>
-									<div className="flex min-w-0 flex-col">
+									<div className="flex min-w-0 items-center gap-1">
 										<BaseSelect.ItemText className="truncate">
 											{option.label}
 										</BaseSelect.ItemText>

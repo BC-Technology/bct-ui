@@ -1,7 +1,7 @@
 "use client"
 import { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox"
 import clsx from "clsx"
-import { Square, SquareCheck } from "lucide-react"
+import { Check, Square, SquareCheck } from "lucide-react"
 import * as React from "react"
 import { twMerge } from "tailwind-merge"
 
@@ -112,12 +112,13 @@ export function Checkbox({
 					disabled={disabled}
 					className={twMerge(
 						clsx(
-							"flex size-5 cursor-pointer items-center justify-center rounded-sm border bg-surface-1 transition-all duration-200 ease-in-out",
+							"flex size-5 cursor-pointer items-center justify-center rounded-sm border-2 bg-surface-1 transition-all duration-200 ease-in-out",
 							"outline-none ring-offset-2 ring-offset-background",
 							"focus-visible:ring-2 focus-visible:ring-primary-focus",
 							"disabled:cursor-not-allowed disabled:opacity-50",
+							"data-checked:border-primary data-checked:bg-primary",
 							{
-								"border-border hover:border-border-hover": !error,
+								"border-border hover:border-primary/50": !error,
 								"border-error": !!error,
 							},
 						),
@@ -131,11 +132,15 @@ export function Checkbox({
 							classNames?.indicator,
 						)}
 					>
-						{resolvedChecked ? (
-							<SquareCheck className="size-4 text-primary transition-all" />
-						) : (
-							<Square className="size-4 text-typography-muted" />
-						)}
+						<Check
+							className={clsx(
+								"size-3.5 text-surface-1 transition-all duration-200",
+								"stroke-[3px]",
+								resolvedChecked
+									? "scale-110 opacity-100"
+									: "scale-0 opacity-0",
+							)}
+						/>
 					</div>
 				</BaseCheckbox.Root>
 				{label && (

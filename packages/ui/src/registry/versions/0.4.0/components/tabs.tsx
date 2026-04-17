@@ -6,69 +6,64 @@ import { twMerge } from "tailwind-merge"
 export interface TabItem {
 	value: string
 	label: React.ReactNode
-	content: React.ReactNode
-	disabled?: boolean
 }
 
 export interface TabsProps
 	extends Omit<
 		React.ComponentPropsWithoutRef<typeof BaseTabs.Root>,
-		"children"
+		"children" | "onValueChange"
 	> {
-	items: TabItem[]
+	tabs: TabItem[]
+	onChange?: (value: string) => void
 	className?: string
 	classNames?: {
 		root?: string
 		list?: string
 		tab?: string
-		panel?: string
 	}
 }
 
-export function Tabs({ items, className, classNames, ...props }: TabsProps) {
+export function Tabs({
+	tabs,
+	onChange,
+	className,
+	classNames,
+	...props
+}: TabsProps) {
 	return (
 		<BaseTabs.Root
-			className={twMerge("flex flex-col", classNames?.root, className)}
+			onValueChange={onChange}
+			className={twMerge(
+				"flex w-full items-center gap-1 rounded-md border border-border bg-surface-1 p-1",
+				classNames?.root,
+				className,
+			)}
 			{...props}
 		>
 			<BaseTabs.List
-				className={twMerge(
-					"flex gap-1 border-border border-b",
-					classNames?.list,
-				)}
+				className={twMerge("flex w-full gap-1", classNames?.list)}
 			>
-				{items.map((item) => (
+				{tabs.map((tab) => (
 					<BaseTabs.Tab
-						key={item.value}
-						value={item.value}
-						disabled={item.disabled}
+						key={tab.value}
+						value={tab.value}
 						className={twMerge(
 							clsx(
-								"relative px-4 py-2.5 font-medium text-base transition-colors",
-								"text-typography-muted hover:text-typography-secondary",
+								"relative flex flex-1 cursor-pointer items-center justify-center rounded-md px-4 py-2 transition-colors",
+								"text-typography-muted hover:bg-surface-1-hover hover:text-typography-primary",
 								"outline-none ring-offset-2 ring-offset-background",
 								"focus-visible:ring-2 focus-visible:ring-primary-focus",
-								"disabled:cursor-not-allowed disabled:opacity-50",
-								"data-selected:font-semibold data-selected:text-primary",
-								"data-selected:after:absolute data-selected:after:right-0 data-selected:after:bottom-0 data-selected:after:left-0",
-								"data-selected:after:h-0.5 data-selected:after:rounded-full data-selected:after:bg-primary",
+								"data-selected:border data-selected:border-accent-2 data-selected:bg-accent-2-muted data-selected:text-typography-primary",
 							),
 							classNames?.tab,
 						)}
 					>
-						{item.label}
+						<span className="font-bold text-sm tracking-tight">
+							{tab.label}
+						</span>
 					</BaseTabs.Tab>
 				))}
 			</BaseTabs.List>
-			{items.map((item) => (
-				<BaseTabs.Panel
-					key={item.value}
-					value={item.value}
-					className={twMerge("py-4", classNames?.panel)}
-				>
-					{item.content}
-				</BaseTabs.Panel>
-			))}
 		</BaseTabs.Root>
 	)
 }

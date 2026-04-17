@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Header } from "@/components/layout/header"
 import { DocsLayout } from "@/components/layout/docs-layout"
+import { Header } from "@/components/layout/header"
 import {
 	CATEGORY_META,
 	getComponentsByCategory,
 	getSortedCategories,
 } from "@/lib/registry"
-import { getNewInVersion } from "@/lib/versions"
-import { VALID_VERSIONS, isValidVersion } from "@/lib/versions"
+import { getNewInVersion, isValidVersion, VALID_VERSIONS } from "@/lib/versions"
 
 interface ComponentsPageProps {
 	params: Promise<{ version: string }>
@@ -19,7 +18,9 @@ export async function generateStaticParams() {
 	return VALID_VERSIONS.map((version) => ({ version }))
 }
 
-export async function generateMetadata({ params }: ComponentsPageProps): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: ComponentsPageProps): Promise<Metadata> {
 	const { version } = await params
 	return {
 		title: `Components — v${version}`,
@@ -65,7 +66,7 @@ export default async function ComponentsPage({ params }: ComponentsPageProps) {
 							return (
 								<section key={category}>
 									<div className="mb-4">
-										<h2 className="font-semibold text-xl text-typography-primary">
+										<h2 className="font-semibold text-typography-primary text-xl">
 											{meta?.label ?? category}
 										</h2>
 										{meta?.description && (
@@ -84,7 +85,7 @@ export default async function ComponentsPage({ params }: ComponentsPageProps) {
 													className="group relative flex flex-col gap-2 rounded-xl border border-border bg-surface-1 p-5 transition-all hover:border-primary/30 hover:bg-surface-2 hover:shadow-shadow-sm"
 												>
 													{newIn && (
-														<span className="absolute right-3 top-3 rounded-full bg-success-muted px-2 py-0.5 text-[10px] font-semibold text-typography-primary">
+														<span className="absolute top-3 right-3 rounded-full bg-success-muted px-2 py-0.5 font-semibold text-typography-primary text-xs">
 															New in v{newIn}
 														</span>
 													)}
@@ -92,7 +93,7 @@ export default async function ComponentsPage({ params }: ComponentsPageProps) {
 														{component.title}
 													</h3>
 													{component.description && (
-														<p className="text-sm text-typography-secondary line-clamp-2">
+														<p className="line-clamp-2 text-sm text-typography-secondary">
 															{component.description}
 														</p>
 													)}
@@ -101,13 +102,15 @@ export default async function ComponentsPage({ params }: ComponentsPageProps) {
 															{component.deps.slice(0, 2).map((dep) => (
 																<span
 																	key={dep}
-																	className="rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-typography-muted"
+																	className="rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-typography-muted text-xs"
 																>
-																	{dep.replace("@base-ui/react", "@base-ui").replace("@bctechnology/", "")}
+																	{dep
+																		.replace("@base-ui/react", "@base-ui")
+																		.replace("@bctechnology/", "")}
 																</span>
 															))}
 															{component.deps.length > 2 && (
-																<span className="rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-typography-muted">
+																<span className="rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-typography-muted text-xs">
 																	+{component.deps.length - 2} more
 																</span>
 															)}

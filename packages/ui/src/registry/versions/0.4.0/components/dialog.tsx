@@ -132,10 +132,12 @@ export function Dialog({
 						<BaseDialog.Popup
 							className={twMerge(
 								clsx(
-									"relative flex h-full w-full flex-col bg-surface-1 shadow-shadow-lg transition-all duration-300",
+									"relative flex h-full w-full flex-col border border-border bg-surface-1 shadow-shadow-lg transition-all duration-300",
 									"rounded-t-radius-lg sm:rounded-lg",
-									"data-closed:translate-y-full data-open:translate-y-0",
-									"sm:data-closed:translate-x-full sm:data-open:translate-x-0",
+									"data-starting-style:translate-y-full",
+									"sm:data-starting-style:translate-x-full sm:data-starting-style:translate-y-0",
+									"data-closed:translate-y-full",
+									"sm:data-closed:translate-x-full sm:data-closed:translate-y-0",
 									"sm:h-full sm:max-h-full sm:w-full",
 									panelSizeStyles[size],
 								),
