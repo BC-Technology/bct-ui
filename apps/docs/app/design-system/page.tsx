@@ -1,10 +1,11 @@
 import type { Metadata } from "next"
-import { Header } from "@/components/layout/header"
 import { DocsLayout } from "@/components/layout/docs-layout"
+import { Header } from "@/components/layout/header"
 
 export const metadata: Metadata = {
 	title: "Design System",
-	description: "Color tokens, typography, spacing, and visual foundations of BCT UI.",
+	description:
+		"Color tokens, typography, spacing, and visual foundations of BCT UI.",
 }
 
 interface ColorSwatch {
@@ -24,38 +25,94 @@ const colorGroups: ColorGroup[] = [
 		title: "Primary",
 		description: "The main brand color used for CTAs and interactive elements",
 		swatches: [
-			{ name: "Primary", token: "bg-primary text-primary-on", description: "Main action color" },
-			{ name: "Primary Muted", token: "bg-primary-muted", description: "Soft background" },
-			{ name: "Primary On", token: "bg-primary-on border border-border", description: "Text on primary" },
+			{
+				name: "Primary",
+				token: "bg-primary text-primary-on",
+				description: "Main action color",
+			},
+			{
+				name: "Primary Muted",
+				token: "bg-primary-muted",
+				description: "Soft background",
+			},
+			{
+				name: "Primary On",
+				token: "bg-primary-on border border-border",
+				description: "Text on primary",
+			},
 		],
 	},
 	{
 		title: "Secondary",
 		description: "Secondary brand color for supporting actions",
 		swatches: [
-			{ name: "Secondary", token: "bg-secondary text-secondary-on", description: "Secondary action" },
-			{ name: "Secondary Muted", token: "bg-secondary-muted", description: "Soft background" },
+			{
+				name: "Secondary",
+				token: "bg-secondary text-secondary-on",
+				description: "Secondary action",
+			},
+			{
+				name: "Secondary Muted",
+				token: "bg-secondary-muted",
+				description: "Soft background",
+			},
 		],
 	},
 	{
 		title: "Tertiary",
 		description: "Neutral/border-based color for subtle actions",
 		swatches: [
-			{ name: "Tertiary", token: "bg-tertiary text-tertiary-on", description: "Neutral action" },
-			{ name: "Tertiary Muted", token: "bg-tertiary-muted border border-border", description: "Very subtle" },
+			{
+				name: "Tertiary",
+				token: "bg-tertiary text-tertiary-on",
+				description: "Neutral action",
+			},
+			{
+				name: "Tertiary Muted",
+				token: "bg-tertiary-muted border border-border",
+				description: "Very subtle",
+			},
 		],
 	},
 	{
 		title: "Status",
 		description: "Semantic status colors for feedback and states",
 		swatches: [
-			{ name: "Success", token: "bg-success text-success-on", description: "Positive outcome" },
-			{ name: "Success Muted", token: "bg-success-muted", description: "Soft success" },
-			{ name: "Warning", token: "bg-warning text-warning-on", description: "Caution state" },
-			{ name: "Warning Muted", token: "bg-warning-muted", description: "Soft warning" },
-			{ name: "Error", token: "bg-error text-error-on", description: "Error state" },
-			{ name: "Error Muted", token: "bg-error-muted", description: "Soft error" },
-			{ name: "Info", token: "bg-info text-info-on", description: "Informational" },
+			{
+				name: "Success",
+				token: "bg-success text-success-on",
+				description: "Positive outcome",
+			},
+			{
+				name: "Success Muted",
+				token: "bg-success-muted",
+				description: "Soft success",
+			},
+			{
+				name: "Warning",
+				token: "bg-warning text-warning-on",
+				description: "Caution state",
+			},
+			{
+				name: "Warning Muted",
+				token: "bg-warning-muted",
+				description: "Soft warning",
+			},
+			{
+				name: "Error",
+				token: "bg-error text-error-on",
+				description: "Error state",
+			},
+			{
+				name: "Error Muted",
+				token: "bg-error-muted",
+				description: "Soft error",
+			},
+			{
+				name: "Info",
+				token: "bg-info text-info-on",
+				description: "Informational",
+			},
 			{ name: "Info Muted", token: "bg-info-muted", description: "Soft info" },
 		],
 	},
@@ -63,29 +120,73 @@ const colorGroups: ColorGroup[] = [
 		title: "Surfaces",
 		description: "Background layers for content hierarchy",
 		swatches: [
-			{ name: "Background", token: "bg-background border border-border", description: "Page background" },
-			{ name: "Surface 1", token: "bg-surface-1 border border-border", description: "Card/panel" },
-			{ name: "Surface 2", token: "bg-surface-2 border border-border", description: "Hover state" },
-			{ name: "Surface 3", token: "bg-surface-3 border border-border", description: "Active state" },
+			{
+				name: "Background",
+				token: "bg-background border border-border",
+				description: "Page background",
+			},
+			{
+				name: "Surface 1",
+				token: "bg-surface-1 border border-border",
+				description: "Card/panel",
+			},
+			{
+				name: "Surface 2",
+				token: "bg-surface-2 border border-border",
+				description: "Hover state",
+			},
+			{
+				name: "Surface 3",
+				token: "bg-surface-3 border border-border",
+				description: "Active state",
+			},
 		],
 	},
 	{
 		title: "Accents",
 		description: "Accent colors for decorative and highlight use",
 		swatches: [
-			{ name: "Accent 1", token: "bg-accent-1 text-accent-1-on", description: "Purple" },
-			{ name: "Accent 2", token: "bg-accent-2 text-accent-2-on", description: "Pink" },
-			{ name: "Accent 3", token: "bg-accent-3 text-accent-3-on", description: "Orange" },
-			{ name: "Accent 4", token: "bg-accent-4 text-accent-4-on", description: "Teal" },
+			{
+				name: "Accent 1",
+				token: "bg-accent-1 text-accent-1-on",
+				description: "Purple",
+			},
+			{
+				name: "Accent 2",
+				token: "bg-accent-2 text-accent-2-on",
+				description: "Pink",
+			},
+			{
+				name: "Accent 3",
+				token: "bg-accent-3 text-accent-3-on",
+				description: "Orange",
+			},
+			{
+				name: "Accent 4",
+				token: "bg-accent-4 text-accent-4-on",
+				description: "Teal",
+			},
 		],
 	},
 	{
 		title: "Typography",
 		description: "Text color hierarchy",
 		swatches: [
-			{ name: "Typography Primary", token: "bg-surface-1 text-typography-primary border border-border", description: "Main body text" },
-			{ name: "Typography Secondary", token: "bg-surface-1 text-typography-secondary border border-border", description: "Supporting text" },
-			{ name: "Typography Muted", token: "bg-surface-1 text-typography-muted border border-border", description: "Placeholder/hint" },
+			{
+				name: "Typography Primary",
+				token: "bg-surface-1 text-typography-primary border border-border",
+				description: "Main body text",
+			},
+			{
+				name: "Typography Secondary",
+				token: "bg-surface-1 text-typography-secondary border border-border",
+				description: "Supporting text",
+			},
+			{
+				name: "Typography Muted",
+				token: "bg-surface-1 text-typography-muted border border-border",
+				description: "Placeholder/hint",
+			},
 		],
 	},
 ]
@@ -160,17 +261,17 @@ export default function DesignSystemPage() {
 												>
 													{swatch.token.includes("text-") &&
 													swatch.token.includes("typography") ? (
-														<div className="flex h-full items-center justify-center text-sm font-medium">
+														<div className="flex h-full items-center justify-center font-medium text-sm">
 															Aa
 														</div>
 													) : null}
 												</div>
 												<div>
-													<p className="text-xs font-medium text-typography-primary">
+													<p className="font-medium text-typography-primary text-xs">
 														{swatch.name}
 													</p>
 													{swatch.description && (
-														<p className="text-xs text-typography-muted">
+														<p className="text-typography-muted text-xs">
 															{swatch.description}
 														</p>
 													)}
@@ -195,7 +296,7 @@ export default function DesignSystemPage() {
 
 						<div className="mb-8 flex flex-col gap-4 rounded-xl border border-border bg-surface-1 p-6">
 							<div className="font-sans">
-								<p className="mb-1 text-xs text-typography-muted">
+								<p className="mb-1 text-typography-muted text-xs">
 									--font-sans (Quicksand)
 								</p>
 								<p className="text-2xl">
@@ -204,7 +305,7 @@ export default function DesignSystemPage() {
 							</div>
 							<div className="h-px bg-border" />
 							<div className="font-serif">
-								<p className="mb-1 text-xs text-typography-muted">
+								<p className="mb-1 text-typography-muted text-xs">
 									--font-serif (League Spartan)
 								</p>
 								<p className="text-2xl">
@@ -220,17 +321,15 @@ export default function DesignSystemPage() {
 							{textSizes.map((size, i) => (
 								<div
 									key={size.name}
-									className={`flex items-baseline gap-4 px-5 py-3 ${i !== 0 ? "border-t border-border" : ""}`}
+									className={`flex items-baseline gap-4 px-5 py-3 ${i !== 0 ? "border-border border-t" : ""}`}
 								>
-									<div className="w-16 shrink-0 font-mono text-xs text-typography-muted">
+									<div className="w-16 shrink-0 font-mono text-typography-muted text-xs">
 										{size.name}
 									</div>
-									<div className="w-12 shrink-0 text-xs text-typography-muted">
+									<div className="w-12 shrink-0 text-typography-muted text-xs">
 										{size.size}
 									</div>
-									<div
-										className={`${size.class} text-typography-primary`}
-									>
+									<div className={`${size.class} text-typography-primary`}>
 										BCT UI
 									</div>
 								</div>
@@ -250,13 +349,13 @@ export default function DesignSystemPage() {
 							{radiusTokens.map((r) => (
 								<div key={r.name} className="flex flex-col items-center gap-2">
 									<div
-										className={`h-16 w-16 bg-primary/20 border-2 border-primary/40 ${r.class}`}
+										className={`h-16 w-16 border-2 border-primary/40 bg-primary/20 ${r.class}`}
 									/>
 									<div className="text-center">
-										<p className="text-xs font-medium text-typography-primary">
+										<p className="font-medium text-typography-primary text-xs">
 											{r.name}
 										</p>
-										<p className="text-xs text-typography-muted">{r.value}</p>
+										<p className="text-typography-muted text-xs">{r.value}</p>
 									</div>
 								</div>
 							))}
@@ -277,7 +376,7 @@ export default function DesignSystemPage() {
 									<div
 										className={`h-20 w-32 rounded-lg bg-surface-1 ${s.class}`}
 									/>
-									<p className="text-xs text-typography-muted">{s.label}</p>
+									<p className="text-typography-muted text-xs">{s.label}</p>
 								</div>
 							))}
 						</div>
@@ -299,8 +398,8 @@ export default function DesignSystemPage() {
 										className="bg-primary/30"
 										style={{ width: `${n * 4}px`, height: "32px" }}
 									/>
-									<p className="text-xs text-typography-muted">{n}</p>
-									<p className="text-xs text-typography-muted">{n * 4}px</p>
+									<p className="text-typography-muted text-xs">{n}</p>
+									<p className="text-typography-muted text-xs">{n * 4}px</p>
 								</div>
 							))}
 						</div>
