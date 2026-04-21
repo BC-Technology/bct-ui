@@ -1070,3 +1070,117 @@
 .bct-dialog-panel-left[data-closed] {
 	animation: slide-out-to-left 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
 }
+
+/* ─── BCT Drawer animations ─────────────────────────────────────────────────── */
+
+/* Drawer — right */
+.bct-drawer-right[data-open] {
+	animation: slide-in-from-right 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-drawer-right[data-closed] {
+	animation: slide-out-to-right 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Drawer — left */
+.bct-drawer-left[data-open] {
+	animation: slide-in-from-left 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-drawer-left[data-closed] {
+	animation: slide-out-to-left 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Drawer — top */
+.bct-drawer-top[data-open] {
+	animation: slide-in-from-top 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-drawer-top[data-closed] {
+	animation: slide-out-to-top 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Drawer — bottom */
+.bct-drawer-bottom[data-open] {
+	animation: slide-in-from-bottom 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-drawer-bottom[data-closed] {
+	animation: slide-out-to-bottom 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Drawer backdrop */
+.bct-drawer-backdrop[data-open] {
+	animation: fade-in 150ms ease-out;
+}
+.bct-drawer-backdrop[data-closed] {
+	animation: fade-out 300ms ease-out forwards;
+}
+
+/* ─── BCT Tooltip animations ────────────────────────────────────────────────── */
+
+.bct-tooltip-popup[data-open] {
+	animation: scale-in 100ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-tooltip-popup[data-closed] {
+	animation: scale-out 75ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT Popover animations (Popover, PreviewCard) ─────────────────────────── */
+
+.bct-popover-popup[data-open] {
+	animation: scale-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-popover-popup[data-closed] {
+	animation: scale-out 100ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT Menu animations (Menu, ContextMenu, Menubar) ──────────────────────── */
+
+.bct-menu-popup[data-open] {
+	animation: scale-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-menu-popup[data-closed] {
+	animation: scale-out 100ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT Select animations ─────────────────────────────────────────────────── */
+
+.bct-select-popup[data-open] {
+	animation: scale-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-select-popup[data-closed] {
+	animation: scale-out 100ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT Combobox animations (Combobox, Autocomplete) ──────────────────────── */
+
+.bct-combobox-popup[data-open] {
+	animation: scale-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-combobox-popup[data-closed] {
+	animation: scale-out 100ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT Toast animations ──────────────────────────────────────────────────── */
+
+.bct-toast-item[data-open] {
+	animation: slide-in-from-right 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-toast-item[data-closed] {
+	animation: slide-out-to-right 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ─── BCT AlertDialog animations ────────────────────────────────────────────── */
+
+/* AlertDialog backdrop */
+.bct-alert-dialog-backdrop[data-open] {
+	animation: fade-in 150ms ease-out;
+}
+.bct-alert-dialog-backdrop[data-closed] {
+	animation: fade-out 300ms ease-out forwards;
+}
+
+/* AlertDialog popup */
+.bct-alert-dialog-popup[data-open] {
+	animation: slide-up 150ms ease-out;
+}
+.bct-alert-dialog-popup[data-closed] {
+	animation: scale-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
