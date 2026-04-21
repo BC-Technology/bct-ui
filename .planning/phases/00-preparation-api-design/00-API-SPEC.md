@@ -286,3 +286,56 @@ Usage pattern:
 **How to avoid:** Type all icon props as `React.ReactNode` per D-09. The component renders the prop directly without calling it.
 
 **Warning signs:** `import type { LucideIcon } from "lucide-react"` appearing in any 0.5.0 component.
+
+---
+
+## 7. Token Audit
+
+### 7.1 Coverage Summary
+
+Audit date: 2026-04-21. All 37 target components draw from the BCT CSS variable token set. The audit below maps each token category to its `index.css` coverage status.
+
+| Token need | Present? | Token name |
+|-----------|---------|------------|
+| Backdrop overlay color | YES | --color-overlay |
+| Surface colors (popup backgrounds) | YES | --color-surface-1, --color-surface-2, --color-surface-3 |
+| Border color | YES | --color-border, --color-border-hover, --color-border-focus |
+| Focus ring color | YES | --color-primary-focus |
+| Disabled states | YES | --color-surface-1-disabled, --color-primary-disabled |
+| Error states | YES | --color-error, --color-error-on, --color-error-hover, --color-error-muted |
+| Success/warning/info variants | YES | All status families present |
+| Typography colors | YES | --color-typography-primary, secondary, muted, inverse |
+| Spacing | YES | --spacing: 0.25rem base unit |
+| Border radius | YES | --radius-sm through --radius-3xl |
+| Shadows (popup elevation) | YES | --shadow-sm, --shadow-md, --shadow-lg |
+| Z-index layering | YES | --z-header, --z-dropdown, --z-popover, --z-tooltip, --z-dialog-backdrop, --z-dialog-popup |
+| Toast z-index | GAP — FIX IN PLAN 02 | --z-toast: 120 (add above --z-dialog-backdrop) |
+| Toast variant colors | YES | info/success/warning/error families all present |
+| Scroll area track/thumb colors | YES | --color-surface-1, --color-primary |
+| Navigation/interactive hover | YES | --color-surface-1-hover, --color-surface-2-hover |
+| Progress/meter fill | YES | --color-primary, status color families |
+| Slider thumb/track | YES | --color-primary, --color-surface-2, --color-border |
+| OTP segment borders | YES | --color-border, --color-primary-focus |
+| Separator/divider | YES | --color-divider, --color-border |
+| border-muted tokens | GAP — FIX IN PLAN 02 | --color-border-muted and --color-border-muted-hover declared in @theme but NO values in :root or .dark |
+
+### 7.2 Token Gaps and Fixes
+
+Two gaps were identified. Both are fixed in Plan 02 (index.css edits).
+
+**Gap 1 — Missing z-index token:**
+
+- Token: `--z-toast`
+- Problem: Toast renders above dialogs but no z-index token exists for it
+- Fix: Add `--z-toast: 120;` to the `@theme` block in `index.css`, after `--z-dialog-popup: 110`
+
+**Gap 2 — border-muted tokens with no theme values:**
+
+- Tokens: `--color-border-muted` and `--color-border-muted-hover`
+- Problem: Both tokens are declared in `@theme` (forwarding to CSS vars) but have no values set in `:root` (light) or `.dark` blocks — they resolve to empty/invalid
+- Fix: Add to `:root` block: `--color-border-muted: #f0f0f0;` and `--color-border-muted-hover: #e0e0e0;`
+- Fix: Add to `.dark` block: `--color-border-muted: #525252;` and `--color-border-muted-hover: #666666;`
+
+### 7.3 Audit Verdict
+
+**PASS with two gaps.** All 37 components can be implemented using existing BCT token variables. Two tokens require value assignments before Phase 1 begins — these are handled by Plan 02.
