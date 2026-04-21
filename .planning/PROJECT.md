@@ -19,6 +19,12 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 - ✓ BCT design token system in `index.css` (`--color-primary`, `--color-surface-1`, etc.) — existing
 - ✓ Tailwind v4 + CSS variable bridge via `@theme` in index.css — existing
 
+### Validated in Phase 00 (Preparation & API Design)
+
+- ✓ `classNames` 20-slot closed vocabulary established (`00-API-SPEC.md`) — PREP-01
+- ✓ `index.css` extended: `--z-toast: 120`, `--color-border-muted`/`--color-border-muted-hover` values, 4 new slide keyframes, 13 animation class families for Phase 5–7 overlays — PREP-02, PREP-03
+- ✓ API conventions locked: icon props typed as `React.ReactNode`, ref forwarding targets for 11 form inputs, 7-type `MenuItem` discriminated union, `renderItem` escape hatch — PREP-04
+
 ### Active
 
 - [ ] All 36 Base UI components implemented as props-driven wrapper components
@@ -28,7 +34,6 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 - [ ] Components using icons use Lucide defaults with a prop to override (`triggerIcon`, `closeIcon`, etc.)
 - [ ] All components registered in `packages/ui/src/registry/versions/0.5.0/registry.json`
 - [ ] Docs site updated: `VALID_VERSIONS` includes `"0.5.0"`, preview wrappers added for all components
-- [ ] `index.css` updated if new CSS variable tokens are needed for new component types
 
 ### Out of Scope
 
@@ -86,4 +91,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-21 after initialization*
+*Last updated: 2026-04-21 after Phase 00 (Preparation & API Design) complete*
