@@ -30,7 +30,11 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   2. A token audit report confirms every CSS variable required by the 37 target components is already present in `index.css`; any additions are committed before Phase 1
   3. Standardized overlay open/close animation CSS classes (extending the `.bct-dialog-*` 0.4.0 pattern) are defined in `index.css` and cover enter/exit with correct fill-mode behavior
   4. Documented API conventions exist for icon prop naming (`triggerIcon`, `closeIcon`, etc. as `ReactNode`), ref forwarding targets for form inputs, `items` discriminated union shape for menu family, and `renderItem` escape hatch pattern
-**Plans**: TBD
+
+**Plans:** 2 plans
+
+- [ ] 00-01-PLAN.md — Author 00-API-SPEC.md with slot vocabulary, API conventions, and token audit
+- [ ] 00-02-PLAN.md — Extend index.css with missing keyframes, token gap fixes, and 13 animation class families
 
 ### Phase 1: Foundation Components
 **Goal**: Developers can install and use the five simplest Base UI primitives via `bct add <component>` from the new 0.5.0 registry
@@ -42,6 +46,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   3. Developer can run `bct add separator`, `bct add avatar`, `bct add progress`, and `bct add meter` and each produces a working single-file component with documented props (orientation / src+alt+fallback / value+min+max / value+min+max+label)
   4. Every Phase 1 component uses only BCT CSS variable tokens, exposes `className` and `classNames` overrides, and renders usefully without any required props beyond content
   5. Each Phase 1 component has a valid `registry.json` entry with correct `deps` and `registryDeps` (all empty for this phase)
+
 **Plans**: TBD
 
 ### Phase 2: Form Basics
@@ -53,6 +58,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   2. Developer can run `bct add input` and get an Input with `type`, `placeholder`, `size`, inline label/error/helperText props; its ref forwards to the native `<input>` element so react-hook-form `register` works
   3. Developer can run `bct add switch` and `bct add toggle` and get controlled/uncontrolled components; Switch thumb animates on state change and Toggle exposes `pressed`, `size`, `variant` props
   4. All Phase 2 components forward ref to their native form element and accept `className` / `classNames` per the Phase 0 vocabulary
+
 **Plans**: TBD
 
 ### Phase 3: Selection Inputs
@@ -64,6 +70,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   2. Developer can run `bct add checkbox-group`, `bct add radio-group`, and `bct add toggle-group` and get items-array driven components with correct `registryDeps` (`["checkbox"]`, `["radio"]`, `["toggle"]`) that install the base component alongside
   3. Developer can run `bct add slider` and get a Slider with `value`/`defaultValue`, `min`, `max`, `step`, `orientation` props; ref forwards to the native input element
   4. All Phase 3 components use Lucide icons exclusively (no inline SVG) and expose icon-override props where icons are used
+
 **Plans**: TBD
 
 ### Phase 4: Specialized Inputs
@@ -74,6 +81,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   1. Developer can run `bct add number-field` and get a Number Field with `label`, `value`/`defaultValue`, `min`, `max`, `step` props; increment/decrement use Lucide defaults with override props
   2. Developer can run `bct add otp-field` and get an OTP Field with configurable `length` (default 6), inline segment rendering, and an `onComplete` callback that fires when all segments are filled
   3. Both Phase 4 components forward ref to their native input element and render with only the minimum props required
+
 **Plans**: TBD
 
 ### Phase 5: Overlays & Feedback
@@ -86,6 +94,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   3. Developer can run `bct add tooltip` and `bct add preview-card` and position them via `side` / `align` / `delay` props
   4. Developer can wrap their app in `<ToastProvider>`, call `toast({ title, description, variant })` from anywhere, and see toasts rendered with the four variants (default, success, error, warning)
   5. All Phase 5 components use the standardized overlay animation classes from Phase 0 and expose `classNames` slots including `backdrop` and `popup`
+
 **Plans**: TBD
 **Research required before planning**: yes — confirm Base UI 1.1 Drawer primitive availability, Toast imperative API shape (`toastManager`), and exact `data-open`/`data-closed` attribute names
 **UI hint**: yes
@@ -100,6 +109,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   3. Developer can run `bct add menubar` and get a horizontal multi-menu with `menus: [{label, items}]`; the registry entry declares `registryDeps: ["menu"]`
   4. Developer can run `bct add combobox` and `bct add autocomplete` and get filterable selection inputs; both accept `options`, `value`/`defaultValue`, `placeholder`, `filterFn`; Autocomplete additionally supports `freeSolo`
   5. Every items-array component in this phase accepts the `renderItem` escape hatch defined in Phase 0
+
 **Plans**: TBD
 **Research required before planning**: yes — verify Combobox / Autocomplete filtering API in Base UI 1.1, decide Combobox vs Autocomplete split, confirm Menubar composition model
 **UI hint**: yes
@@ -114,6 +124,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   3. Docs site `VALID_VERSIONS` includes `"0.5.0"` and `PREVIEW_REGISTRY` has preview wrappers rendering every one of the 37 components
   4. `pnpm verify-registry-version` passes against 0.5.0 with no errors
   5. Cross-cutting audit confirms: no arbitrary hex/rgb values in any component source, all form inputs forward ref to their native element, every component exposes `className` + `classNames`, every component renders with zero required props beyond content, and no inline SVG appears in any component file
+
 **Plans**: TBD
 **Research required before planning**: yes — verify Navigation Menu Viewport model in Base UI 1.1 before planning
 **UI hint**: yes
@@ -142,7 +153,7 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 0. Preparation & API Design | 0/0 | Not started | - |
+| 0. Preparation & API Design | 0/2 | Not started | - |
 | 1. Foundation Components | 0/0 | Not started | - |
 | 2. Form Basics | 0/0 | Not started | - |
 | 3. Selection Inputs | 0/0 | Not started | - |
@@ -176,4 +187,4 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 
 ---
 *Roadmap created: 2026-04-21*
-*Next: `/gsd-plan-phase 0`*
+*Last updated: 2026-04-21 — Phase 0 planned (2 plans)*
