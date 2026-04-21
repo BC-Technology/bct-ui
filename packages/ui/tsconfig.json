@@ -4,5 +4,5 @@
 		"jsx": "react-jsx"
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["src/registry/**/*"]
+	"exclude": ["src/registry/versions/*/components/**/*"]
 }
