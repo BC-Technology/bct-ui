@@ -176,8 +176,11 @@
 	/* //? Radius Tokens */
 	--radius-none: 0px;
 	--radius-sm: 2px;
-	--rounded-md: 4px;
+	--radius-md: 4px;
 	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-2xl: 16px;
+	--radius-3xl: 24px;
 
 	/* //? Shadow Tokens */
 	/* Box Shadow */
@@ -221,6 +224,20 @@
 	--animate-slide-down-and-fade: slide-down-and-fade 400ms ease-out;
 	--animate-spin-slow: spin 2s linear infinite;
 	--animate-spin-fast: spin 500ms linear infinite;
+	--animate-slide-in-from-right: slide-in-from-right 300ms cubic-bezier(0, 0, 0.2, 1);
+	--animate-slide-out-to-right: slide-out-to-right 300ms cubic-bezier(0.4, 0, 1, 1);
+	--animate-slide-in-from-left: slide-in-from-left 300ms cubic-bezier(0, 0, 0.2, 1);
+	--animate-slide-out-to-left: slide-out-to-left 300ms cubic-bezier(0.4, 0, 1, 1);
+	--animate-scale-in: scale-in 200ms cubic-bezier(0, 0, 0.2, 1);
+	--animate-scale-out: scale-out 150ms cubic-bezier(0.4, 0, 1, 1);
+
+	/* //? Z-index Tokens */
+	--z-header: 50;
+	--z-dropdown: 50;
+	--z-popover: 50;
+	--z-tooltip: 60;
+	--z-dialog-backdrop: 100;
+	--z-dialog-popup: 110;
 
 	/* //? Keyframes */
 	@keyframes spin {
@@ -323,6 +340,72 @@
 		}
 		100% {
 			transform: scale(2);
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-from-right {
+		0% {
+			transform: translateX(100%);
+			opacity: 0;
+		}
+		100% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-to-right {
+		0% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+		100% {
+			transform: translateX(100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-from-left {
+		0% {
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+		100% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-to-left {
+		0% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+		100% {
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes scale-in {
+		0% {
+			transform: scale(0.95);
+			opacity: 0;
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes scale-out {
+		0% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(0.95);
 			opacity: 0;
 		}
 	}
@@ -890,4 +973,47 @@
 
 @utility animation-delay-5000 {
 	animation-delay: 5s;
+}
+
+/* ─── BCT Dialog animations ─────────────────────────────────────────────────
+ * These rules animate Base UI Dialog elements using the data-open / data-closed
+ * attributes that Base UI adds during open/close transitions.
+ *
+ * `animation-fill-mode: forwards` on closing animations is critical: it keeps
+ * the element at the final keyframe values (opacity: 0 / translated off-screen)
+ * while Base UI waits for ALL sibling animations to finish before unmounting.
+ * Without it, the backdrop would snap back to opacity: 1 after its own animation
+ * ends but before the longer panel slide-out finishes, causing a double flash.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/* Backdrop */
+.bct-dialog-backdrop[data-open] {
+	animation: fade-in 150ms ease-out;
+}
+.bct-dialog-backdrop[data-closed] {
+	animation: fade-out 300ms ease-out forwards;
+}
+
+/* Modal popup */
+.bct-dialog-modal[data-open] {
+	animation: scale-in 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-dialog-modal[data-closed] {
+	animation: scale-out 200ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Side panel — right */
+.bct-dialog-panel-right[data-open] {
+	animation: slide-in-from-right 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-dialog-panel-right[data-closed] {
+	animation: slide-out-to-right 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Side panel — left */
+.bct-dialog-panel-left[data-open] {
+	animation: slide-in-from-left 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.bct-dialog-panel-left[data-closed] {
+	animation: slide-out-to-left 300ms cubic-bezier(0.4, 0, 1, 1) forwards;
 }

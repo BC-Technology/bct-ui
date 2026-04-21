@@ -50,7 +50,7 @@ export function ComponentPreview({
 	const hasVariants = variants.length > 0
 
 	return (
-		<div className="rounded-xl border border-border">
+		<div className="overflow-hidden rounded-xl border border-border">
 			{/* Tab bar */}
 			<div className="flex items-center justify-between border-border border-b bg-surface-1 px-4">
 				<div className="flex gap-0">

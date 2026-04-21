@@ -60,7 +60,7 @@ export function Header({
 	return (
 		<div
 			className={twMerge(
-				"fixed top-0 z-50 w-full lg:sticky",
+				"fixed top-0 z-header w-full lg:sticky",
 				classNames?.root,
 				className,
 			)}

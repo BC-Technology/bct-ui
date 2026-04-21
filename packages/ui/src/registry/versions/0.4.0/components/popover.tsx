@@ -41,7 +41,7 @@ export function Popover({
 					<BasePopover.Popup
 						className={twMerge(
 							clsx(
-								"z-50 w-72 rounded-md border border-border bg-surface-1 shadow-shadow-lg",
+								"z-popover w-72 rounded-md border border-border bg-surface-1 shadow-shadow-lg",
 								"data-open:animate-animate-fade-in",
 								"data-closed:animate-animate-fade-out",
 							),

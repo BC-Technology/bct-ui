@@ -26,7 +26,7 @@ export function Header({
 		: undefined
 
 	return (
-		<header className="sticky top-0 z-50 border-border border-b bg-background/80 backdrop-blur-md">
+		<header className="sticky top-0 z-header border-border border-b bg-background/80 backdrop-blur-md">
 			<div className="flex h-14 w-full items-center gap-4 px-4 sm:px-6 lg:px-8">
 				{/* Logo */}
 				<Link

@@ -56,7 +56,7 @@ export function Select({
 	)
 
 	const popupStyles = clsx(
-		"z-50 max-h-64 overflow-auto rounded-md border border-border bg-surface-1 p-1 shadow-shadow-lg",
+		"z-popover max-h-64 overflow-auto rounded-md border border-border bg-surface-1 p-1 shadow-shadow-lg",
 	)
 
 	const optionStyles = clsx(

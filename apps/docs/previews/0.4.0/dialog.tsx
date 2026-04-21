@@ -16,6 +16,7 @@ function PanelDialogDemo() {
 				title="Edit Profile"
 				description="Make changes to your profile information."
 				mode="panel"
+				size="xl"
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
