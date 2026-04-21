@@ -134,7 +134,7 @@ export function Dialog({
 				<BaseDialog.Portal>
 					<BaseDialog.Backdrop
 						className={twMerge(
-							"bct-dialog-backdrop fixed inset-0 z-[100] bg-overlay backdrop-blur-md",
+							"bct-dialog-backdrop fixed inset-0 z-100 bg-overlay backdrop-blur-md",
 							classNames?.backdrop,
 						)}
 					/>
@@ -142,7 +142,7 @@ export function Dialog({
 					 * Plain div centering wrapper — BaseDialog.Popup lives inside it as
 					 * a flex child so its dimensions and position are fully predictable.
 					 */}
-					<div className="fixed inset-0 z-[110] flex items-center justify-center p-8">
+					<div className="fixed inset-0 z-110 flex items-center justify-center p-8">
 						<BaseDialog.Popup
 							className={twMerge(
 								"bct-dialog-modal",
@@ -185,13 +185,13 @@ export function Dialog({
 			<BaseDialog.Portal>
 				<BaseDialog.Backdrop
 					className={twMerge(
-						"bct-dialog-backdrop fixed inset-0 z-[100] bg-overlay backdrop-blur-md",
+						"bct-dialog-backdrop fixed inset-0 z-100 bg-overlay backdrop-blur-md",
 						classNames?.backdrop,
 					)}
 				/>
 				<div
 					className={twMerge(
-						"fixed inset-0 z-[110] flex p-4",
+						"fixed inset-0 z-110 flex p-4",
 						side === "right" ? "justify-end" : "justify-start",
 					)}
 				>

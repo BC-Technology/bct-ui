@@ -118,7 +118,7 @@ export function ComponentPreview({
 					data-theme={previewTheme}
 					className={`min-h-80 p-8 ${previewTheme === "dark" ? "dark" : ""}`}
 					style={{
-						backgroundColor: "var(--color-background)",
+						backgroundColor: "var(--color-surface-2)",
 					}}
 				>
 					{loading ? (
@@ -139,7 +139,7 @@ export function ComponentPreview({
 
 			{/* Code pane (variant code) */}
 			{activeTab === "code" && (
-				<div className="p-4">
+				<div className="bg-surface-2 p-4">
 					{currentVariant ? (
 						<>
 							{currentVariant.description && (
@@ -159,7 +159,7 @@ export function ComponentPreview({
 
 			{/* Source pane (full component source) */}
 			{activeTab === "source" && (
-				<div className="p-4">
+				<div className="bg-surface-2 p-4">
 					<CodeBlock
 						code={sourceCode}
 						language="tsx"
