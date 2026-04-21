@@ -1,0 +1,42 @@
+{
+	"button": {
+		"title": "Button",
+		"description": "Accessible button with 9 variants (primary, secondary, tertiary, error, success, warning, info, text, icon) and 3 sizes. Built on Base UI with BCT design tokens.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/button.tsx", "dst": "button.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"separator": {
+		"title": "Separator",
+		"description": "Semantic horizontal or vertical separator built on Base UI. Sets role=separator and aria-orientation automatically.",
+		"category": "display",
+		"files": [{ "src": "components/separator.tsx", "dst": "separator.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"avatar": {
+		"title": "Avatar",
+		"description": "Avatar with image, initials fallback, and icon fallback. Built on Base UI Avatar primitives with size and shape props.",
+		"category": "display",
+		"files": [{ "src": "components/avatar.tsx", "dst": "avatar.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"progress": {
+		"title": "Progress",
+		"description": "Progress bar with determinate and indeterminate states. Built on Base UI with BCT design tokens.",
+		"category": "feedback",
+		"files": [{ "src": "components/progress.tsx", "dst": "progress.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"meter": {
+		"title": "Meter",
+		"description": "Meter bar for displaying a scalar value within a defined range. Renders a visible label. Built on Base UI with BCT design tokens.",
+		"category": "feedback",
+		"files": [{ "src": "components/meter.tsx", "dst": "meter.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	}
+}
