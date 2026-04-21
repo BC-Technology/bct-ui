@@ -33,8 +33,8 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 
 **Plans:** 2 plans
 
-- [ ] 00-01-PLAN.md — Author 00-API-SPEC.md with slot vocabulary, API conventions, and token audit
-- [ ] 00-02-PLAN.md — Extend index.css with missing keyframes, token gap fixes, and 13 animation class families
+- [x] 00-01-PLAN.md — Author 00-API-SPEC.md with slot vocabulary, API conventions, and token audit
+- [x] 00-02-PLAN.md — Extend index.css with missing keyframes, token gap fixes, and 13 animation class families
 
 ### Phase 1: Foundation Components
 **Goal**: Developers can install and use the five simplest Base UI primitives via `bct add <component>` from the new 0.5.0 registry
