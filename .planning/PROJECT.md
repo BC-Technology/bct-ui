@@ -25,6 +25,18 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 - ✓ `index.css` extended: `--z-toast: 120`, `--color-border-muted`/`--color-border-muted-hover` values, 4 new slide keyframes, 13 animation class families for Phase 5–7 overlays — PREP-02, PREP-03
 - ✓ API conventions locked: icon props typed as `React.ReactNode`, ref forwarding targets for 11 form inputs, 7-type `MenuItem` discriminated union, `renderItem` escape hatch — PREP-04
 
+### Validated in Phase 01 (Foundation Components)
+
+- ✓ 0.5.0 registry directory structure with `registry.json` and `components/` subfolder — INFRA-01
+- ✓ 5 foundation components implemented as single-file .tsx registry components — FOUND-01 through FOUND-05
+  - `button.tsx` — 9 variants (primary/secondary/tertiary/error/success/warning/info/text/icon), 3 sizes, no "use client"
+  - `separator.tsx` — orientation prop, `bg-divider` token, no "use client"
+  - `avatar.tsx` — Base UI tri-part composition, size/shape/fallbackIcon, "use client"
+  - `progress.tsx` — determinate/indeterminate via `bct-progress-indeterminate` CSS class, "use client"
+  - `meter.tsx` — visible `BaseMeter.Label`, `h-3` track, required `value: number`, "use client"
+- ✓ vitest configured for `packages/ui` with 5 passing test stubs — INFRA-02 (partial)
+- ✓ `bct-progress-indeterminate` animation added to `index.css` — required before progress.tsx
+
 ### Active
 
 - [ ] All 36 Base UI components implemented as props-driven wrapper components
@@ -91,4 +103,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-21 after Phase 00 (Preparation & API Design) complete*
+*Last updated: 2026-04-21 after Phase 01 (Foundation Components) complete*
