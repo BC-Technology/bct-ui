@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import { Header } from "@/components/layout/header"
-import { DocsLayout } from "@/components/layout/docs-layout"
 import { CodeBlock, TerminalBlock } from "@/components/docs/code-block"
+import { DocsLayout } from "@/components/layout/docs-layout"
+import { Header } from "@/components/layout/header"
 
 export const metadata: Metadata = {
 	title: "Getting Started",
@@ -17,15 +17,17 @@ export default function GettingStartedPage() {
 					<h1>Getting Started</h1>
 					<p>
 						BCT UI is a CLI-driven component library. Components are copied
-						directly into your project, giving you full ownership and the freedom
-						to customize without abstraction layers.
+						directly into your project, giving you full ownership and the
+						freedom to customize without abstraction layers.
 					</p>
 
 					<h2>Prerequisites</h2>
 					<ul>
 						<li>Node.js 20 or later</li>
 						<li>pnpm, npm, or yarn</li>
-						<li>React 18+ project (Next.js App Router or Vite + React Router)</li>
+						<li>
+							React 18+ project (Next.js App Router or Vite + React Router)
+						</li>
 					</ul>
 
 					<h2>Installation</h2>
@@ -38,12 +40,8 @@ export default function GettingStartedPage() {
 
 					<p>The init command will:</p>
 					<ul>
-						<li>
-							Install Tailwind CSS v4 and configure it for your framework
-						</li>
-						<li>
-							Copy the BCT design token CSS file to your project
-						</li>
+						<li>Install Tailwind CSS v4 and configure it for your framework</li>
+						<li>Copy the BCT design token CSS file to your project</li>
 						<li>
 							Set up Biome for linting and formatting (replaces ESLint/Prettier)
 						</li>
@@ -58,8 +56,8 @@ export default function GettingStartedPage() {
 					<h3>Next.js (App Router)</h3>
 					<p>
 						BCT UI configures <code>@tailwindcss/postcss</code>, creates
-						<code>postcss.config.mjs</code>, and imports the design tokens in your
-						global CSS file.
+						<code>postcss.config.mjs</code>, and imports the design tokens in
+						your global CSS file.
 					</p>
 
 					<h3>Vite + React Router</h3>
@@ -77,8 +75,8 @@ export default function GettingStartedPage() {
 
 					<p>
 						The component will be copied to <code>src/components/</code> (or{" "}
-						<code>components/</code> if no <code>src</code> directory exists). You
-						can override the output directory with <code>--out</code>:
+						<code>components/</code> if no <code>src</code> directory exists).
+						You can override the output directory with <code>--out</code>:
 					</p>
 					<TerminalBlock code="npx @bctechnology/ui@latest add button --out src/ui" />
 
@@ -99,8 +97,8 @@ export function MyPage() {
 
 					<h2>Interactive Component Selection</h2>
 					<p>
-						Running <code>add</code> without a component name opens an interactive
-						selector:
+						Running <code>add</code> without a component name opens an
+						interactive selector:
 					</p>
 					<TerminalBlock code="npx @bctechnology/ui@latest add" />
 
@@ -117,8 +115,8 @@ export function MyPage() {
 
 					<h2>Validating Your Setup</h2>
 					<p>
-						Run <code>doctor</code> to verify your project has the correct BCT UI
-						configuration:
+						Run <code>doctor</code> to verify your project has the correct BCT
+						UI configuration:
 					</p>
 					<TerminalBlock code="npx @bctechnology/ui@latest doctor" />
 

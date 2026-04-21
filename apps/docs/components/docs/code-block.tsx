@@ -38,14 +38,14 @@ export function CodeBlock({
 			<div className="relative overflow-x-auto">
 				{highlightedHtml ? (
 					<div
-						className="p-4 text-sm [&>pre]:overflow-x-auto [&>pre]:bg-transparent! [&>pre]:p-0!"
+						className="p-4 text-sm [&>pre]:mt-0! [&>pre]:mb-0! [&>pre]:overflow-x-auto [&>pre]:border-0! [&>pre]:bg-transparent! [&>pre]:p-0!"
 						// biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki-generated safe HTML
 						dangerouslySetInnerHTML={{ __html: highlightedHtml }}
 					/>
 				) : (
-					<pre className="overflow-x-auto p-4">
+					<pre className="mt-0! mb-0! overflow-x-auto border-0! bg-transparent! p-4!">
 						<code
-							className={`font-mono text-sm text-typography-primary language-${language}`}
+							className={`font-mono text-sm text-typography-primary! language-${language}`}
 						>
 							{code}
 						</code>
@@ -72,7 +72,7 @@ export function CodeBlock({
 // Inline code variant
 export function InlineCode({ children }: { children: React.ReactNode }) {
 	return (
-		<code className="rounded border border-border bg-surface-1 px-1.5 py-0.5 font-mono text-sm text-typography-primary">
+		<code className="rounded border-0! border-border bg-surface-1! px-1.5 py-0.5 font-mono text-sm text-typography-primary!">
 			{children}
 		</code>
 	)
@@ -96,8 +96,8 @@ export function TerminalBlock({ code }: { code: string }) {
 				<div className="h-2.5 w-2.5 rounded-full bg-success/60" />
 			</div>
 			<div className="relative overflow-x-auto p-4">
-				<pre className="overflow-x-auto">
-					<code className="font-mono text-secondary-on text-sm">
+				<pre className="mt-0! mb-0! overflow-x-auto border-0! bg-transparent! p-0!">
+					<code className="bg-transparent! p-0! font-mono text-secondary-on! text-sm">
 						<span className="select-none text-success/70">$ </span>
 						{code}
 					</code>
