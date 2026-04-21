@@ -47,7 +47,11 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
   4. Every Phase 1 component uses only BCT CSS variable tokens, exposes `className` and `classNames` overrides, and renders usefully without any required props beyond content
   5. Each Phase 1 component has a valid `registry.json` entry with correct `deps` and `registryDeps` (all empty for this phase)
 
-**Plans**: TBD
+**Plans:** 3 plans
+
+- [ ] 01-01-PLAN.md — Scaffold 0.5.0 registry directory, registry.json (5 entries), Progress indeterminate animation in index.css, vitest setup with test stubs
+- [ ] 01-02-PLAN.md — Implement button.tsx (9 variants, 3 sizes) and separator.tsx (orientation prop)
+- [ ] 01-03-PLAN.md — Implement avatar.tsx (Base UI tri-part), progress.tsx (indeterminate), meter.tsx (visible label)
 
 ### Phase 2: Form Basics
 **Goal**: Developers can compose basic HTML-form UIs using bct-ui form container and input primitives
@@ -154,7 +158,7 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. Preparation & API Design | 0/2 | Not started | - |
-| 1. Foundation Components | 0/0 | Not started | - |
+| 1. Foundation Components | 0/3 | Not started | - |
 | 2. Form Basics | 0/0 | Not started | - |
 | 3. Selection Inputs | 0/0 | Not started | - |
 | 4. Specialized Inputs | 0/0 | Not started | - |
@@ -180,11 +184,11 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 | STRUCT-01–06 | 6 | Phase 7 |
 | XCUT-01–05 | 5 | Phase 7 (final audit) |
 | INFRA-01 | 1 | Phase 1 |
-| INFRA-02 | 1 | Phases 1 + 7 (authored per phase, completed in 7) |
+| INFRA-02 | 1 | Phases 1–7 (authored incrementally; completed Phase 7) |
 | INFRA-03–05 | 3 | Phase 7 |
 
 **Note on cross-cutting requirements:** XCUT-01–05 are enforced in every phase during implementation but validated as a milestone audit in Phase 7's success criterion 5. INFRA-02 (registry entries) is authored phase-by-phase as components ship; the final complete-set validation runs in Phase 7.
 
 ---
 *Roadmap created: 2026-04-21*
-*Last updated: 2026-04-21 — Phase 0 planned (2 plans)*
+*Last updated: 2026-04-21 — Phase 1 planned (3 plans)*
