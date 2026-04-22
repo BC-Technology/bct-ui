@@ -74,7 +74,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 		const errorId = `${textareaId}-error`
 		const helperId = `${textareaId}-helper`
 
-		const [charCount, setCharCount] = useState(0)
+		const [charCount, setCharCount] = useState(() => {
+			const initial = props.defaultValue ?? props.value ?? ""
+			return typeof initial === "string" ? initial.length : 0
+		})
 
 		const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setCharCount(e.target.value.length)
@@ -123,7 +126,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 					}
 				/>
 				{showCharCount && (
-					<span className="text-xs text-typography-muted">
+					<span aria-live="polite" className="text-xs text-typography-muted">
 						{maxLength ? `${charCount} / ${maxLength}` : `${charCount}`}
 					</span>
 				)}

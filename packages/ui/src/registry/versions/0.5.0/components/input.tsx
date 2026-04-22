@@ -17,6 +17,7 @@ export interface InputProps
 	icon?: React.ReactNode
 	iconPosition?: "left" | "right"
 	onIconClick?: () => void
+	iconLabel?: string
 	className?: string
 	classNames?: {
 		root?: string
@@ -54,6 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			icon,
 			iconPosition = "right",
 			onIconClick,
+			iconLabel,
 			id: idProp,
 			className,
 			classNames,
@@ -105,11 +107,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					/>
 					{icon && (
 						<span
-							aria-label={onIconClick ? "Icon action" : undefined}
+							aria-label={onIconClick ? (iconLabel ?? "Icon action") : undefined}
 							className={twMerge(
 								clsx(
 									"absolute inset-y-0 flex items-center",
 									"text-typography-muted",
+									"rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-focus",
 									iconPosition === "left" ? "left-3" : "right-3",
 									onIconClick
 										? "cursor-pointer"
