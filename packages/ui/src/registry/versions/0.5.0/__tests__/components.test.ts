@@ -28,4 +28,54 @@ describe("0.5.0 component exports", () => {
 		const mod = await import("../components/meter")
 		expect(typeof mod.Meter).toBe("function")
 	})
+
+	it("field.tsx exports Field", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"field"}`)
+		expect(typeof mod.Field).toBe("function")
+	})
+
+	it("fieldset.tsx exports Fieldset", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"fieldset"}`)
+		expect(typeof mod.Fieldset).toBe("function")
+	})
+
+	it("form.tsx exports Form", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"form"}`)
+		expect(typeof mod.Form).toBe("function")
+	})
+
+	it("input.tsx exports Input", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"input"}`)
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Input).toBeDefined()
+		expect(mod.Input).not.toBeNull()
+	})
+
+	it("switch.tsx exports Switch", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"switch"}`)
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Switch).toBeDefined()
+		expect(mod.Switch).not.toBeNull()
+	})
+
+	it("toggle.tsx exports Toggle", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"toggle"}`)
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Toggle).toBeDefined()
+		expect(mod.Toggle).not.toBeNull()
+	})
+
+	it("text-area.tsx exports TextArea", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"text-area"}`)
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.TextArea).toBeDefined()
+		expect(mod.TextArea).not.toBeNull()
+	})
 })
