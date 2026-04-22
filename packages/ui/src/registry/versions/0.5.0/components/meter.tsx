@@ -29,21 +29,10 @@ export function Meter({
 }: MeterProps) {
 	return (
 		<div className="flex flex-col gap-1">
-			{label != null && (
-				<BaseMeter.Label
-					className={twMerge(
-						clsx("text-sm text-typography-secondary"),
-						classNames?.label,
-					)}
-				>
-					{label}
-				</BaseMeter.Label>
-			)}
 			<BaseMeter.Root
 				value={value}
 				min={min}
 				max={max}
-				aria-label={label}
 				className={twMerge(
 					clsx("relative h-3 w-full overflow-hidden rounded-full bg-surface-2"),
 					classNames?.root,
@@ -51,6 +40,16 @@ export function Meter({
 				)}
 				{...props}
 			>
+				{label != null && (
+					<BaseMeter.Label
+						className={twMerge(
+							clsx("text-sm text-typography-secondary"),
+							classNames?.label,
+						)}
+					>
+						{label}
+					</BaseMeter.Label>
+				)}
 				<BaseMeter.Track className="size-full">
 					<BaseMeter.Indicator
 						className={twMerge(
