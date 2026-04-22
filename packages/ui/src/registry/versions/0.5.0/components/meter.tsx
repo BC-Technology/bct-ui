@@ -43,7 +43,7 @@ export function Meter({
 				value={value}
 				min={min}
 				max={max}
-				aria-label={label}
+				aria-label={label == null ? "Meter" : undefined}
 				className={twMerge(
 					clsx("relative h-3 w-full overflow-hidden rounded-full bg-surface-2"),
 					classNames?.root,
