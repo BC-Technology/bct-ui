@@ -31,11 +31,15 @@ describe("0.5.0 component exports", () => {
 
 	it("switch.tsx exports Switch", async () => {
 		const mod = await import(/* @vite-ignore */ "../components/switch")
-		expect(typeof mod.Switch).toBe("function")
+		// forwardRef returns an object (ForwardRefExoticComponent), not a plain function
+		expect(mod.Switch).toBeDefined()
+		expect(mod.Switch).not.toBeNull()
 	})
 
 	it("toggle.tsx exports Toggle", async () => {
 		const mod = await import(/* @vite-ignore */ "../components/toggle")
-		expect(typeof mod.Toggle).toBe("function")
+		// forwardRef returns an object (ForwardRefExoticComponent), not a plain function
+		expect(mod.Toggle).toBeDefined()
+		expect(mod.Toggle).not.toBeNull()
 	})
 })
