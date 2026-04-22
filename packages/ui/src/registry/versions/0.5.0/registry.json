@@ -38,5 +38,61 @@
 		"files": [{ "src": "components/meter.tsx", "dst": "meter.tsx" }],
 		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
 		"registryDeps": []
+	},
+	"field": {
+		"title": "Field",
+		"description": "Form field container with label, helper text, error text, and required marker. Wraps Base UI Field primitives for automatic aria association.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/field.tsx", "dst": "field.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"fieldset": {
+		"title": "Fieldset",
+		"description": "Semantic fieldset container with a legend prop. Renders a native <fieldset> with a proper <legend> element for accessible group labeling.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/fieldset.tsx", "dst": "fieldset.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"form": {
+		"title": "Form",
+		"description": "Thin form wrapper with onSubmit passthrough. Composes Field + Input inside as children. Built on Base UI Form.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/form.tsx", "dst": "form.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"input": {
+		"title": "Input",
+		"description": "Text input with inline label, helper text, error text, icon (left or right), and size variants (sm/md/lg). Ref forwards to the native <input> for react-hook-form compatibility.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/input.tsx", "dst": "input.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"switch": {
+		"title": "Switch",
+		"description": "Toggle switch with animated thumb. Accepts checked/defaultChecked and onCheckedChange. Renders a label alongside the track.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/switch.tsx", "dst": "switch.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"toggle": {
+		"title": "Toggle",
+		"description": "Pressable toggle button with three variants (default, outline, ghost) and three sizes (sm/md/lg). Uses data-pressed for pressed-state styling.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/toggle.tsx", "dst": "toggle.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
+	},
+	"text-area": {
+		"title": "TextArea",
+		"description": "Multiline text input with inline label, helper text, error text, optional char count display, and rows/maxLength props. Ref forwards to the native <textarea>.",
+		"category": "form-inputs",
+		"files": [{ "src": "components/text-area.tsx", "dst": "text-area.tsx" }],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
+		"registryDeps": []
 	}
 }
