@@ -77,7 +77,7 @@ export function Avatar({
 			{...props}
 		>
 			<BaseAvatar.Image
-				src={src ?? ""}
+				src={src}
 				alt={alt ?? "Avatar"}
 				className={twMerge("size-full object-cover", classNames?.image)}
 			/>
