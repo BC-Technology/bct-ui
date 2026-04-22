@@ -68,7 +68,7 @@
 		"description": "Text input with inline label, helper text, error text, icon (left or right), and size variants (sm/md/lg). Ref forwards to the native <input> for react-hook-form compatibility.",
 		"category": "form-inputs",
 		"files": [{ "src": "components/input.tsx", "dst": "input.tsx" }],
-		"deps": ["@base-ui/react", "clsx", "lucide-react", "tailwind-merge"],
+		"deps": ["@base-ui/react", "clsx", "tailwind-merge"],
 		"registryDeps": []
 	},
 	"switch": {
