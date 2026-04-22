@@ -12,7 +12,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 
 - [ ] **Phase 0: Preparation & API Design** - Lock cross-cutting conventions (slot vocabulary, tokens, animations, icon props) before any component is written
 - [ ] **Phase 1: Foundation Components** - Scaffold 0.5.0 registry and ship the five simplest primitives (Button, Separator, Avatar, Progress, Meter)
-- [ ] **Phase 2: Form Basics** - Ship form container and basic input primitives (Field, Fieldset, Form, Input, Switch, Toggle)
+- [ ] **Phase 2: Form Basics** - Ship form container and basic input primitives (Field, Fieldset, Form, Input, Switch, Toggle, TextArea)
 - [ ] **Phase 3: Selection Inputs** - Ship choice-based inputs (Checkbox, Checkbox Group, Radio, Radio Group, Toggle Group, Slider)
 - [ ] **Phase 4: Specialized Inputs** - Ship numeric and OTP input primitives (Number Field, OTP Field)
 - [ ] **Phase 5: Overlays & Feedback** - Ship portal-backed overlays and feedback surfaces (Dialog, Alert Dialog, Drawer, Tooltip, Preview Card, Toast)
@@ -52,14 +52,21 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 ### Phase 2: Form Basics
 **Goal**: Developers can compose basic HTML-form UIs using bct-ui form container and input primitives
 **Depends on**: Phase 1
-**Requirements**: FORM-01, FORM-02, FORM-03, FORM-04, FORM-05, FORM-06
+**Requirements**: FORM-01, FORM-02, FORM-03, FORM-04, FORM-05, FORM-06, FORM-07
 **Success Criteria** (what must be TRUE):
   1. Developer can run `bct add field` / `fieldset` / `form` and assemble a labeled form with helper text, error text, required markers, a legend, and `onSubmit` passthrough using only props
   2. Developer can run `bct add input` and get an Input with `type`, `placeholder`, `size`, inline label/error/helperText props; its ref forwards to the native `<input>` element so react-hook-form `register` works
   3. Developer can run `bct add switch` and `bct add toggle` and get controlled/uncontrolled components; Switch thumb animates on state change and Toggle exposes `pressed`, `size`, `variant` props
-  4. All Phase 2 components forward ref to their native form element and accept `className` / `classNames` per the Phase 0 vocabulary
+  4. Developer can run `bct add text-area` and get a TextArea with inline label/error/helperText, `size`, `rows`, `showCharCount`; ref forwards to native `<textarea>`
+  5. All Phase 2 components accept `className` / `classNames` per the Phase 0 vocabulary; input primitives forward ref to their native form element
 
-**Plans**: TBD
+**Plans:** 5 plans
+
+- [ ] 02-01-PLAN.md — Add 7 Phase 2 export stubs to components.test.ts (Wave 0 Nyquist contract)
+- [ ] 02-02-PLAN.md — Implement Field, Fieldset, Form structural containers (Wave 1)
+- [ ] 02-03-PLAN.md — Implement Switch and Toggle stateful primitives (Wave 1, parallel with 02-02)
+- [ ] 02-04-PLAN.md — Implement Input and TextArea field-composed inputs (Wave 2)
+- [ ] 02-05-PLAN.md — Add 7 Phase 2 registry entries to registry.json (Wave 3)
 
 ### Phase 3: Selection Inputs
 **Goal**: Developers can build choice-based inputs — single, multi, and ranged — from bct-ui primitives
@@ -155,7 +162,7 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 |-------|----------------|--------|-----------|
 | 0. Preparation & API Design | 0/2 | Not started | - |
 | 1. Foundation Components | 0/0 | Not started | - |
-| 2. Form Basics | 0/0 | Not started | - |
+| 2. Form Basics | 0/5 | Not started | - |
 | 3. Selection Inputs | 0/0 | Not started | - |
 | 4. Specialized Inputs | 0/0 | Not started | - |
 | 5. Overlays & Feedback | 0/0 | Not started | - |
@@ -172,7 +179,7 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 |----------|-------|-------|
 | PREP-01–04 | 4 | Phase 0 |
 | FOUND-01–05 | 5 | Phase 1 |
-| FORM-01–06 | 6 | Phase 2 |
+| FORM-01–07 | 7 | Phase 2 (FORM-07 TextArea added per CONTEXT.md D-01) |
 | SEL-01–06 | 6 | Phase 3 |
 | SPEC-01–02 | 2 | Phase 4 |
 | OVER-01–06 | 6 | Phase 5 |
@@ -180,11 +187,11 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 | STRUCT-01–06 | 6 | Phase 7 |
 | XCUT-01–05 | 5 | Phase 7 (final audit) |
 | INFRA-01 | 1 | Phase 1 |
-| INFRA-02 | 1 | Phases 1 + 7 (authored per phase, completed in 7) |
+| INFRA-02 | 1 | Phases 1–7 (authored incrementally; completed Phase 7) |
 | INFRA-03–05 | 3 | Phase 7 |
 
 **Note on cross-cutting requirements:** XCUT-01–05 are enforced in every phase during implementation but validated as a milestone audit in Phase 7's success criterion 5. INFRA-02 (registry entries) is authored phase-by-phase as components ship; the final complete-set validation runs in Phase 7.
 
 ---
 *Roadmap created: 2026-04-21*
-*Last updated: 2026-04-21 — Phase 0 planned (2 plans)*
+*Last updated: 2026-04-22 — Phase 2 planned (5 plans)*
