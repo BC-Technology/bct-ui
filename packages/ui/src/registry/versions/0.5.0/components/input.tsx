@@ -92,10 +92,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					<BaseInput
 						ref={ref}
 						id={inputId}
-						aria-invalid={!!errorText || undefined}
-						aria-describedby={
-							errorText ? errorId : helperText ? helperId : undefined
-						}
 						className={twMerge(
 							INPUT_BASE,
 							SIZE_STYLES[size],
