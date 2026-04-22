@@ -1,5 +1,6 @@
 "use client"
 
+import { Field as BaseField } from "@base-ui/react/field"
 import { Switch as BaseSwitch } from "@base-ui/react/switch"
 import clsx from "clsx"
 import { forwardRef } from "react"
@@ -50,7 +51,10 @@ export const Switch = forwardRef<HTMLElement, SwitchProps>(
 		ref,
 	) => {
 		return (
-			<div className={twMerge("flex flex-col gap-1", className)}>
+			<BaseField.Root
+				invalid={!!errorText}
+				className={twMerge("flex flex-col gap-1", className)}
+			>
 				<div className="flex items-center gap-2">
 					<BaseSwitch.Root
 						ref={ref}
@@ -62,34 +66,35 @@ export const Switch = forwardRef<HTMLElement, SwitchProps>(
 						/>
 					</BaseSwitch.Root>
 					{label && (
-						<span
+						<BaseField.Label
 							className={twMerge(
 								"text-sm font-medium text-typography-primary",
 								classNames?.label,
 							)}
 						>
 							{label}
-						</span>
+						</BaseField.Label>
 					)}
 				</div>
 				{errorText && (
-					<span
+					<BaseField.Error
+						match={true}
 						className={twMerge("text-sm text-error", classNames?.errorText)}
 					>
 						{errorText}
-					</span>
+					</BaseField.Error>
 				)}
 				{description && !errorText && (
-					<span
+					<BaseField.Description
 						className={twMerge(
 							"text-sm text-typography-muted",
 							classNames?.description,
 						)}
 					>
 						{description}
-					</span>
+					</BaseField.Description>
 				)}
-			</div>
+			</BaseField.Root>
 		)
 	},
 )
