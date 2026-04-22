@@ -56,13 +56,17 @@ describe("0.5.0 component exports", () => {
 	it("switch.tsx exports Switch", async () => {
 		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
 		const mod = await import(/* @vite-ignore */ `../components/${"switch"}`)
-		expect(typeof mod.Switch).toBe("function")
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Switch).toBeDefined()
+		expect(mod.Switch).not.toBeNull()
 	})
 
 	it("toggle.tsx exports Toggle", async () => {
 		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
 		const mod = await import(/* @vite-ignore */ `../components/${"toggle"}`)
-		expect(typeof mod.Toggle).toBe("function")
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Toggle).toBeDefined()
+		expect(mod.Toggle).not.toBeNull()
 	})
 
 	it("text-area.tsx exports TextArea", async () => {
