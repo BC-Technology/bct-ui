@@ -6,6 +6,11 @@ import { twMerge } from "tailwind-merge"
 
 export interface ProgressProps
 	extends React.ComponentPropsWithoutRef<typeof BaseProgress.Root> {
+	/**
+	 * Current progress value (0–max). Pass `null` for indeterminate (animated) state.
+	 * Omitting this prop also produces the indeterminate state.
+	 * @default null
+	 */
 	value?: number | null
 	min?: number
 	max?: number
@@ -18,7 +23,7 @@ export interface ProgressProps
 }
 
 export function Progress({
-	value = 0,
+	value = null,
 	min = 0,
 	max = 100,
 	label,
