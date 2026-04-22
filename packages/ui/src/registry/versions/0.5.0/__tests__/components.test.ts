@@ -50,7 +50,9 @@ describe("0.5.0 component exports", () => {
 	it("input.tsx exports Input", async () => {
 		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
 		const mod = await import(/* @vite-ignore */ `../components/${"input"}`)
-		expect(typeof mod.Input).toBe("function")
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.Input).toBeDefined()
+		expect(mod.Input).not.toBeNull()
 	})
 
 	it("switch.tsx exports Switch", async () => {
@@ -72,6 +74,8 @@ describe("0.5.0 component exports", () => {
 	it("text-area.tsx exports TextArea", async () => {
 		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
 		const mod = await import(/* @vite-ignore */ `../components/${"text-area"}`)
-		expect(typeof mod.TextArea).toBe("function")
+		// forwardRef returns a ForwardRefExoticComponent object, not a plain function
+		expect(mod.TextArea).toBeDefined()
+		expect(mod.TextArea).not.toBeNull()
 	})
 })
