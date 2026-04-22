@@ -54,6 +54,7 @@ export function Field({
 			{children}
 			{errorText && (
 				<BaseField.Error
+					match={true}
 					className={twMerge("text-sm text-error", classNames?.errorText)}
 				>
 					{errorText}

@@ -130,6 +130,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 				{errorText && (
 					<Field.Error
 						id={errorId}
+						match={true}
 						className={twMerge("text-sm text-error", classNames?.errorText)}
 					>
 						{errorText}

@@ -138,6 +138,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				{errorText && (
 					<Field.Error
 						id={errorId}
+						match={true}
 						className={twMerge("text-sm text-error", classNames?.errorText)}
 					>
 						{errorText}
