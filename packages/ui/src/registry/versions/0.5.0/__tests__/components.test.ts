@@ -28,4 +28,46 @@ describe("0.5.0 component exports", () => {
 		const mod = await import("../components/meter")
 		expect(typeof mod.Meter).toBe("function")
 	})
+
+	it("field.tsx exports Field", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"field"}`)
+		expect(typeof mod.Field).toBe("function")
+	})
+
+	it("fieldset.tsx exports Fieldset", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"fieldset"}`)
+		expect(typeof mod.Fieldset).toBe("function")
+	})
+
+	it("form.tsx exports Form", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"form"}`)
+		expect(typeof mod.Form).toBe("function")
+	})
+
+	it("input.tsx exports Input", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"input"}`)
+		expect(typeof mod.Input).toBe("function")
+	})
+
+	it("switch.tsx exports Switch", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"switch"}`)
+		expect(typeof mod.Switch).toBe("function")
+	})
+
+	it("toggle.tsx exports Toggle", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"toggle"}`)
+		expect(typeof mod.Toggle).toBe("function")
+	})
+
+	it("text-area.tsx exports TextArea", async () => {
+		// biome-ignore lint: dynamic import used intentionally for Nyquist stub
+		const mod = await import(/* @vite-ignore */ `../components/${"text-area"}`)
+		expect(typeof mod.TextArea).toBe("function")
+	})
 })
