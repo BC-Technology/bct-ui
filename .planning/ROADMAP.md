@@ -12,7 +12,7 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 
 - [ ] **Phase 0: Preparation & API Design** - Lock cross-cutting conventions (slot vocabulary, tokens, animations, icon props) before any component is written
 - [ ] **Phase 1: Foundation Components** - Scaffold 0.5.0 registry and ship the five simplest primitives (Button, Separator, Avatar, Progress, Meter)
-- [ ] **Phase 2: Form Basics** - Ship form container and basic input primitives (Field, Fieldset, Form, Input, Switch, Toggle)
+- [x] **Phase 2: Form Basics** - Ship form container and basic input primitives (Field, Fieldset, Form, Input, Switch, Toggle)
 - [ ] **Phase 3: Selection Inputs** - Ship choice-based inputs (Checkbox, Checkbox Group, Radio, Radio Group, Toggle Group, Slider)
 - [ ] **Phase 4: Specialized Inputs** - Ship numeric and OTP input primitives (Number Field, OTP Field)
 - [ ] **Phase 5: Overlays & Feedback** - Ship portal-backed overlays and feedback surfaces (Dialog, Alert Dialog, Drawer, Tooltip, Preview Card, Toast)
@@ -155,7 +155,7 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 |-------|----------------|--------|-----------|
 | 0. Preparation & API Design | 0/2 | Not started | - |
 | 1. Foundation Components | 0/0 | Not started | - |
-| 2. Form Basics | 0/0 | Not started | - |
+| 2. Form Basics | 7/7 | Complete | 2026-04-22 |
 | 3. Selection Inputs | 0/0 | Not started | - |
 | 4. Specialized Inputs | 0/0 | Not started | - |
 | 5. Overlays & Feedback | 0/0 | Not started | - |
@@ -187,4 +187,4 @@ Phase 7 (Structure & Navigation + registry finalization) [research required]
 
 ---
 *Roadmap created: 2026-04-21*
-*Last updated: 2026-04-21 — Phase 0 planned (2 plans)*
+*Last updated: 2026-04-22 — Phase 2 complete (7/7 plans)*

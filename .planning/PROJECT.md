@@ -37,6 +37,17 @@ Every Base UI component has a working, styled, props-driven bct-ui wrapper that 
 - ✓ vitest configured for `packages/ui` with 5 passing test stubs — INFRA-02 (partial)
 - ✓ `bct-progress-indeterminate` animation added to `index.css` — required before progress.tsx
 
+### Validated in Phase 02 (Form Basics)
+
+- ✓ `field.tsx` — Base UI Field wrapper with label, helperText, errorText (via `match={true}`), required marker, inline/stacked layout — FORM-01
+- ✓ `fieldset.tsx` — Base UI Fieldset wrapper with legend and disabled propagation — FORM-02
+- ✓ `form.tsx` — Native `<form>` wrapper with onSubmit passthrough — FORM-03
+- ✓ `input.tsx` — Base UI Input with type/placeholder/size/icon/iconLabel props, forwardRef to native `<input>`, focus-visible ring on icon button — FORM-04
+- ✓ `switch.tsx` — Base UI Switch with animated thumb, wrapped in BaseField.Root for accessible label wiring — FORM-05
+- ✓ `toggle.tsx` — Base UI Toggle with pressed/size/variant props — FORM-06
+- ✓ 7 registry entries added to `registry.json` for all Phase 2 components — INFRA-02 (partial)
+- ✓ 12 vitest stubs passing
+
 ### Active
 
 - [ ] All 36 Base UI components implemented as props-driven wrapper components
@@ -103,4 +114,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-21 after Phase 01 (Foundation Components) complete*
+*Last updated: 2026-04-22 after Phase 02 (Form Basics) complete*
