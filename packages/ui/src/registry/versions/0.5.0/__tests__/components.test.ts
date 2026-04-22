@@ -28,4 +28,14 @@ describe("0.5.0 component exports", () => {
 		const mod = await import("../components/meter")
 		expect(typeof mod.Meter).toBe("function")
 	})
+
+	it("switch.tsx exports Switch", async () => {
+		const mod = await import(/* @vite-ignore */ "../components/switch")
+		expect(typeof mod.Switch).toBe("function")
+	})
+
+	it("toggle.tsx exports Toggle", async () => {
+		const mod = await import(/* @vite-ignore */ "../components/toggle")
+		expect(typeof mod.Toggle).toBe("function")
+	})
 })
